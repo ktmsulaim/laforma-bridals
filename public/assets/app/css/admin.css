@@ -1,3 +1,59 @@
-.styled {
-  font-family: "Dancing Script", cursive;
+.primary {
+  color: #a21d23;
 }
+
+.logo-box .styled {
+  font-family: "Dancing Script", cursive;
+  font-size: 22px;
+  color: #222;
+}
+
+.logo-box .logo-light .styled {
+  color: #fff;
+}
+
+.user-box svg {
+  width: 100px;
+}
+
+.nav .nav-link:hover {
+  border-color: transparent;
+}
+
+.nav .nav-link.active {
+  border: 0;
+  background: #71b6f9;
+  color: #fff;
+  border-radius: 0;
+}
+
+.gal-detail.thumb img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gal-detail.thumb {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+  border: 3px solid #e1e1e1;
+}
+
+.gal-detail.thumb.selected {
+  border-color: #71b6f9;
+}
+
+.media-file-picker .modal-body {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.media-file-picker .gal-detail.thumb:hover {
+  cursor: pointer;
+}
+
+

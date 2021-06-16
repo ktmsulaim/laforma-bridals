@@ -1,0 +1,1 @@
+<input type="text" name="{{ $name }}" id="{{ $name }}" parsley-trigger="change" class="form-control datepicker" {{ $required ? 'required' : '' }}>
