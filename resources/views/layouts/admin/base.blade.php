@@ -23,7 +23,12 @@
         
         <link href="{{ asset('assets/app/css/fonts.css') }}" rel="stylesheet" type="text/css" />
 
-        <link href="{{ asset('assets/app/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" rel="stylesheet">
+        <!-- Custom box css -->
+        <link href="{{ asset('assets/app/libs/custombox/custombox.min.css') }}" rel="stylesheet">
+
+        <link href="{{ asset('assets/app/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet" />
+        
+        <link href="{{ asset('assets/app/libs/select2/select2.min.css') }}" rel="stylesheet">
 
         @stack('libs_css')
         
@@ -360,10 +365,27 @@
         
         <script src="{{ asset('assets/app/libs/toastr/toastr.min.js') }}"></script>
 
+        <script src="{{ asset('assets/app/libs/custombox/custombox.min.js') }}"></script>
+        
+        <script src="{{ asset('assets/app/libs/select2/select2.min.js') }}"></script>
+        
+        <script src="{{ asset('assets/app/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+
         @stack('libs_js')
 
         <!-- App js -->
         <script src="{{ asset('assets/app/js/app.min.js') }}"></script>
+
+
+        <script>
+            $(function(){
+                $('.select2').select2({
+                    allowClear: true,
+                    width: '100%',
+                    placeholder: 'Select a tag'
+                })
+            })
+        </script>
 
         {!! Toastr::message() !!}
         

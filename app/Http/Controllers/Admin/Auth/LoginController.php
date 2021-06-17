@@ -50,6 +50,11 @@ class LoginController extends Controller
         return 'username';
     }
 
+    public function redirectTo()
+    {
+        return '/admin/';
+    }
+
     public function loggedOut(Request $request)
     {
         return Redirect::route('admin.login');

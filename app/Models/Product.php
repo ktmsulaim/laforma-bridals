@@ -19,7 +19,13 @@ class Product extends Model
     public function baseImage()
     {
         if($this->images()->exists()){
-            return $this->images()->wherePivot('type', '=', 'base_image')->first();
+            $image = $this->images()->wherePivot('type', '=', 'base_image')->first();
+
+            if($image && $image->isFileExists()) {
+                return $image->path;
+            }
+        } else {
+            return asset('img/470x290.png');
         }
     }
 
@@ -54,4 +60,22 @@ class Product extends Model
         return $slug;
     
     }
+
+    public function price()
+    {
+        if($this->price) {
+            return '₹' . number_format($this->price, 2);
+        }
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
 }

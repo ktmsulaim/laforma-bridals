@@ -254,7 +254,7 @@ import FileUploader from "./FileUploader.vue";
 
 export default {
   name: "FileManager",
-  props: ["type"],
+  props: ["type", "oldBaseImage", "oldAdditionalImages"],
   components: {
     FileUploader,
   },
@@ -399,6 +399,13 @@ export default {
         return this.additional_images.length > 0;
       }
     },
+  },
+  mounted(){
+    if(this.oldBaseImage) {
+      this.baseImage = this.oldBaseImage;
+    } else if(this.oldAdditionalImages) {
+      this.additional_images = this.oldAdditionalImages;
+    }
   },
   created() {
     this.getTotalImages();

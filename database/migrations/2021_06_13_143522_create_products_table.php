@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
@@ -24,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->date('special_price_start')->nullable();
             $table->date('special_price_end')->nullable();
             $table->string('sku')->nullable();
+            $table->boolean('track_stock')->default(1);
             $table->tinyInteger('in_stock')->default(0);
             $table->integer('qty')->default(1);
             $table->string('meta_title')->nullable();
@@ -31,8 +33,11 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('is_new')->default(0);
             $table->date('new_from')->nullable();
             $table->date('new_to')->nullable();
+            $table->boolean('is_orderable')->default(1);
             $table->boolean('is_active')->default(1);
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

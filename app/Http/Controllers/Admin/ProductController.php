@@ -20,6 +20,25 @@ class ProductController extends Controller
         return view('admin.products.index');
     }
 
+    public function listProducts()
+    {
+        $products = Product::latest()->get();
+
+        $products->transform(function($product){
+            return [
+                'id' => $product->id,
+                'image' => $product->baseImage(), 
+                'name' => $product->name,
+                'price' => $product->price(),
+                'is_active' => $product->is_active,
+                'created_at' => $product->created_at->format('d F, Y'),
+                'edit' => route('admin.products.edit', $product->id)
+            ];
+        });
+
+        return response()->json($products);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,7 +112,7 @@ class ProductController extends Controller
             }
         }
 
-        Toastr::success('The product has been created.', 'Success');
+        Toastr::success('The product has been created.', 'Created');
 
         return response()->json($product);
     }
@@ -117,7 +136,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $product->{'base_image'} = $product->images()->wherePivot('type', '=', 'base_image')->first();
+        $product->{'additional_images'} = $product->images()->wherePivot('type', '=', 'additional_images')->get();
+
+        return view('admin.products.edit', ['product' => $product]);
     }
 
     /**
@@ -129,7 +151,57 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'qty' => 'required|numeric'
+        ]);
+
+        $data = $request->except(['base_image', 'additional_images']);
+
+        // if title is changed change slug
+        if($data['name'] != $product->name) {
+            $data['slug'] = str_slug($data['name']);
+        }
+
+        if($request->has('base_image')) {
+            $image = $request->get('base_image');
+            if(!$product->images()->wherePivot('type', '=', 'base_image')->exists()) {
+                $product->images()->attach($image, [
+                    'type' => 'base_image'
+                ]);
+            } else {
+                $product->images()->wherePivot('type', '=', 'base_image')->sync([$image => ['type' => 'base_image']]);
+            }
+        }
+
+        if($request->has('additional_images')) {
+            $additional_images = $request->get('additional_images');
+            if($product->images()->wherePivot('type', '=', 'additional_images')->exists()) {
+                
+                if(is_array($additional_images) && count($additional_images)) {
+                    $new = [];
+                    foreach($additional_images as $ai) {
+                        $new[$ai] = ['type' => 'additional_images'];
+                    }
+
+                    $product->images()->wherePivot('type', '=', 'additional_images')->sync($new);
+                }
+            } else {
+                foreach($additional_images as $aimage) {
+                    $product->images()->attach($aimage, [
+                        'type' => 'additional_images'
+                    ]);
+                }
+            }
+        }
+
+        $product->update($data);
+
+        Toastr::success('The product has been updated!', 'Updated');
+
+        return response()->json($product);
     }
 
     /**

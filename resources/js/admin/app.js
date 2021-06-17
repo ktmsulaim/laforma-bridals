@@ -44,6 +44,7 @@ import Card from './components/Card'
 import FileManager from './components/FileManager'
 import ProductsForm from './components/products/ProductsForm'
 import Errors from './components/Errors'
+import ListProducts from './components/products/ListProducts'
 
 const app = new Vue({
     el: '#app',
@@ -51,7 +52,8 @@ const app = new Vue({
         Card,
         FileManager,
         ProductsForm,
-        Errors
+        Errors,
+        ListProducts
     },
     store
 })

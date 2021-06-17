@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function(){
      * Products
      * -------------------------------------------------------------------
      */
+    Route::get('/products/list', [ProductController::class, 'listProducts'])->name('products.list');
     Route::resource('products', ProductController::class);
    
     /**

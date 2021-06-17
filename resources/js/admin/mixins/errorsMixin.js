@@ -34,21 +34,24 @@ export default {
               return Object.keys(errors).includes(key);
           }
     },
-    created(){
+    mounted(){
+        this.$store.commit('resetErrors');
+
         const validations = this.validations;
         const data = this.data;
+        const mode = this.mode;
 
         Object.keys(data).forEach((item) => {
             if(Object.keys(validations).includes(item) && validations[item] == 'required') {
                 this.$watch(() => data[item], (oldval, newVal) => {
-                    if(!oldval && !this.hasError(item)) {
-                        // this.$store.dispatch('assignSingleError', {key: item, value: `${this.formattedKey(item)} is required`})
+                    if((!this.hasError(item) && !oldval) || !oldval) {
+                    
                         this.$set(this.$store.state.Errors.errors, item, `${this.formattedKey(item)} is required`);
+                        this.$store.dispatch('assignSingleError', {key: item, value: `${this.formattedKey(item)} is required`})
+                        
                     } else {
-                        if(this.hasError(item)) {
-                            // this.$store.commit('removeError', {key:item});
-                            this.$delete(this.$store.state.Errors.errors, item);
-                        }
+                        this.$delete(this.$store.state.Errors.errors, item);
+                        this.$store.commit('removeError', {key: item})
                     }
                 }, {deep: false, immediate: true});
             }

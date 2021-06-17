@@ -2,7 +2,6 @@
   <div>
     <form
       @submit.stop.prevent
-      ref="productsCreateForm"
       method="post"
       novalidate
       data-parsley-validate
@@ -87,6 +86,11 @@
                   <option value="0">Disalbed</option>
                 </select>
               </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <tags></tags>
             </div>
           </div>
         </div>
@@ -220,14 +224,14 @@
             <p>
               <strong>Base image</strong>
             </p>
-            <file-manager @selectImage="updateImage" type="base_image"></file-manager>
+            <file-manager :oldBaseImage="oldBaseImage" @selectImage="updateImage" type="base_image"></file-manager>
           </div>
           <hr />
           <div>
             <p>
               <strong>Additional images</strong>
             </p>
-            <file-manager @selectImage="updateImage" type="additional_images"></file-manager>
+            <file-manager :oldAdditionalImages="oldAdditionalImages" @selectImage="updateImage" type="additional_images"></file-manager>
           </div>
         </div>
       </div>
@@ -248,6 +252,7 @@
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import FileManager from '../FileManager.vue'
+import Tags from './Tags.vue'
 
 import ErrorsMixin from "../../mixins/errorsMixin";
 
@@ -256,9 +261,21 @@ export default {
   name: "ProductsForm",
   components: {
     DatePicker,
-    FileManager
+    FileManager,
+    Tags
   },
   mixins: [ErrorsMixin],
+  props: {
+    mode: {
+      type: String,
+      required: true,
+      default: 'create'
+    },
+    product: {
+      type: Object,
+      required: false,
+    }
+  },
   data(){
     return {
       loading: false,
@@ -288,9 +305,9 @@ export default {
       validations: {
         name: 'required',
         description: 'required',
-        status: "required",
+        is_active: "required",
         qty: 'required',
-        base_image: 'required',
+        base_image: this.mode == 'create' ? 'required' : '',
         price: 'required'
       }
     }
@@ -300,8 +317,19 @@ export default {
       this.validate();
 
       this.loading = true;
+      let url;
 
-      axios.post(route('admin.products.store'), this.data)
+      if (this.mode == 'create') {
+        url = route('admin.products.store');
+      } else {
+        url = route('admin.products.update', this.product.id);
+      }
+
+      axios({
+          method: this.mode == 'edit' ? 'PATCH' : 'POST', 
+          url,
+          data: this.data
+        })
       .then(resp => {
         window.location = route('admin.products.index');
       })
@@ -325,6 +353,37 @@ export default {
         return true;
       }
       return false;
+    },
+    oldBaseImage() {
+      if(this.mode == 'edit' && this.product) {
+        return this.product.base_image;
+      }
+    },
+    oldAdditionalImages() {
+      if(this.mode == 'edit' && this.product) {
+        return this.product.additional_images;
+      }
+    }
+  },
+  created() {
+    if(this.mode == 'edit' && this.product && Object.keys(this.product).length) {
+      
+        this.data.name =  this.product.name;
+        this.data.description =  this.product.description;
+        this.data.is_active =  this.product.is_active;
+        this.data.price =  this.product.price;
+        this.data.special_price =  this.product.special_price;
+        this.data.special_price_type =  this.product.special_price_type;
+        this.data.special_price_start =  this.product.special_price_start;
+        this.data.special_price_end =  this.product.special_price_end;
+        this.data.in_stock =  this.product.in_stock;
+        this.data.qty = this.product.qty;
+        this.data.is_new =  this.product.is_new;
+        this.data.new_from =  this.product.new_from;
+        this.data.new_to =  this.product.new_to;
+        this.data.meta_title =  this.product.meta_title;
+        this.data.meta_description =  this.product.meta_description;
+
     }
   }
 };
