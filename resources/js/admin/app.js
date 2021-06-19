@@ -16,13 +16,19 @@ if(token) {
 import Vue from 'vue'
 import VueSkeletonLoader from 'skeleton-loader-vue';
 import VueFileAgent from 'vue-file-agent';
-import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
-
 import VueQuillEditor from 'vue-quill-editor'
+import VueSlugify from 'vue-slugify'
+import Select2 from 'v-select2-component'
+import VueSweetalert2 from 'vue-sweetalert2';
+
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 
 import store from './store'
 
@@ -32,6 +38,21 @@ window.Vue = Vue
 Vue.use(VueFileAgent);
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.use(VueQuillEditor)
+Vue.use(VueSlugify)
+Vue.use(Select2)
+Vue.use(VueSweetalert2)
+
+Vue.mixin({
+    methods: {
+        slugify(text){
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/&/g, '-and-') // Replace & with 'and'
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/--+/g, '-'); // Replace multiple - with single -
+        }
+    }
+})
 
 
 /**
@@ -45,6 +66,7 @@ import FileManager from './components/FileManager'
 import ProductsForm from './components/products/ProductsForm'
 import Errors from './components/Errors'
 import ListProducts from './components/products/ListProducts'
+import ListCategories from './components/categories/ListCategories'
 
 const app = new Vue({
     el: '#app',
@@ -53,7 +75,10 @@ const app = new Vue({
         FileManager,
         ProductsForm,
         Errors,
-        ListProducts
+        ListProducts,
+        ListCategories
     },
     store
 })
+
+global.app = app;

@@ -56,4 +56,57 @@
   cursor: pointer;
 }
 
+.action-btn {
+  font-size: 22px;
+  color: #999;
+  transition: all 0.3s;
+  margin: 0 4px;
+}
+
+.action-btn:hover {
+  color: #444 !important;
+  cursor: pointer;
+}
+
+.action-btn.mdi-delete-outline:hover {
+  color: red !important;
+}
+
+/**
+* Select2 Custom style
+*/
+
+.select2-container .select2-selection--single,
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: calc(1.5em + .9rem + 2px) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: calc(1.5em + .9rem + 2px) !important;
+}
+
+/**
+* Sweet alert custom
+*/
+
+.swal2-popup {
+  flex-direction: column;
+}
+
+/**
+* Category list items
+*/
+
+.category-item .content {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+}
+
+.category-item .content .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 

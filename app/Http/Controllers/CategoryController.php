@@ -12,9 +12,27 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if($request->ajax() && $request->has('list')) {
+            $categories = Category::withCount('products')->with('childrenRecursive')->whereNull('parent')->get();
+            $categoryList = Category::active()->get()->transform(function($category){
+                $children = $category->getChildren();
+                return [
+                    'children' => $children ? $children->pluck('id')->toArray() : [],
+                    'id' => $category->id,
+                    'text' => $category->name
+                ];
+            });
+
+            return response()->json([
+                'categories' => $categories,
+                'categoryList' => $categoryList
+
+            ]);
+        }
+
+        return view('admin.categories.index');
     }
 
     /**
@@ -35,30 +53,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateData();
+
+        $category = Category::create($request->all());
+
+        return response()->json($category);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +71,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->validateData();
+
+        $category->update($request->all());
+
+        $category = $category->fresh();
+
+        return response()->json($category);
     }
 
     /**
@@ -80,6 +88,18 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return response()->json([], 204);
+    }
+
+    private function validateData() {
+        return request()->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'is_orderable' => 'required',
+            'show_in_nav' => 'required',
+            'status' => 'required'
+        ]);
     }
 }

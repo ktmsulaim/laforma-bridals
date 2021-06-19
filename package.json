@@ -28,8 +28,11 @@
         "gridjs": "^5.0.1",
         "skeleton-loader-vue": "^1.0.10",
         "sweetalert2": "^11.0.17",
+        "v-select2-component": "^0.4.7",
         "vue-file-agent": "^1.7.3",
         "vue-quill-editor": "^3.0.6",
+        "vue-slugify": "^0.1.0",
+        "vue-sweetalert2": "^4.3.1",
         "vue2-datepicker": "^3.9.1",
         "vuex": "^3.6.2"
     }

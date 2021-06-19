@@ -23,12 +23,8 @@
         
         <link href="{{ asset('assets/app/css/fonts.css') }}" rel="stylesheet" type="text/css" />
 
-        <!-- Custom box css -->
-        <link href="{{ asset('assets/app/libs/custombox/custombox.min.css') }}" rel="stylesheet">
-
         <link href="{{ asset('assets/app/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet" />
         
-        <link href="{{ asset('assets/app/libs/select2/select2.min.css') }}" rel="stylesheet">
 
         @stack('libs_css')
         
@@ -228,10 +224,16 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.products.index') }}" class="{{ Request::is('admin/products*') ? 'active' : '' }}">
+                                <a href="javascript:void(0)" class="{{ Request::is('admin/products*') ? 'active' : '' }}">
                                     <i class="mdi mdi-view-list"></i>
                                     <span> Products </span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="{{ route('admin.products.index') }}">Catalog</a></li>
+                                    <li><a href="{{ route("admin.categories.index") }}">Categories</a></li>
+                                    <li><a href="#">Tags</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="javascript:void(0)">
@@ -361,15 +363,12 @@
         </div>
         <!-- Vendor js -->
         <script src="{{ asset('assets/app/js/vendor.min.js') }}"></script>
-        <script src="{{ mix('assets/app/js/admin.js') }}"></script>
         
         <script src="{{ asset('assets/app/libs/toastr/toastr.min.js') }}"></script>
-
-        <script src="{{ asset('assets/app/libs/custombox/custombox.min.js') }}"></script>
-        
-        <script src="{{ asset('assets/app/libs/select2/select2.min.js') }}"></script>
         
         <script src="{{ asset('assets/app/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+        
+        <script src="{{ mix('assets/app/js/admin.js') }}"></script>
 
         @stack('libs_js')
 
@@ -378,13 +377,13 @@
 
 
         <script>
-            $(function(){
-                $('.select2').select2({
-                    allowClear: true,
-                    width: '100%',
-                    placeholder: 'Select a tag'
-                })
-            })
+            // $(function(){
+            //     $('.select2').select2({
+            //         allowClear: true,
+            //         width: '100%',
+            //         placeholder: 'Select a tag'
+            //     })
+            // })
         </script>
 
         {!! Toastr::message() !!}

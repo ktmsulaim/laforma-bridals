@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import Errors from './modules/Errors'
+import Categories from './modules/Categories'
+
 
 export default new Vuex.Store({
     state: {
@@ -13,5 +15,6 @@ export default new Vuex.Store({
     },
     modules: {
         Errors,
+        Categories
     }
 })

@@ -1,4 +1,10 @@
 export default {
+    computed: {
+        hasErrors() {
+            const errors = this.$store.state.Errors.errors;
+            return  errors && Object.keys(errors).length;
+        }
+    },
     methods: {
         isValid(key) {
             if(this.$store.state.errors) {
