@@ -67,6 +67,7 @@ import ProductsForm from './components/products/ProductsForm'
 import Errors from './components/Errors'
 import ListProducts from './components/products/ListProducts'
 import ListCategories from './components/categories/ListCategories'
+import ListTags from './components/tags/ListTags'
 
 const app = new Vue({
     el: '#app',
@@ -76,7 +77,8 @@ const app = new Vue({
         ProductsForm,
         Errors,
         ListProducts,
-        ListCategories
+        ListCategories,
+        ListTags
     },
     store
 })

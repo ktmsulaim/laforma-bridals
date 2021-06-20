@@ -29,11 +29,20 @@ class TagsController extends Controller
 
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:tags,slug'
+        ]);
+
+        $tag = Tag::create($request->all());
+
+        return response()->json($tag);
     }
 
     public function destroy(Tag $tag)
     {
-        
+        $tag->delete();
+
+        return response()->json([], 204);
     }
 }

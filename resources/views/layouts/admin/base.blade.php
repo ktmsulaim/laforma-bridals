@@ -232,7 +232,7 @@
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href="{{ route('admin.products.index') }}">Catalog</a></li>
                                     <li><a href="{{ route("admin.categories.index") }}">Categories</a></li>
-                                    <li><a href="#">Tags</a></li>
+                                    <li><a href="{{ route('admin.tags.index') }}">Tags</a></li>
                                 </ul>
                             </li>
                             <li>
