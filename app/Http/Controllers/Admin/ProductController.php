@@ -65,32 +65,13 @@ class ProductController extends Controller
             'qty' => 'required|numeric'
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['base_image', 'additional_images', 'tags']);
 
         // 1. Make slug
         $data['slug'] = str_slug($request->name);
 
         // 2. Create product
-        // $product = Product::create($data);
-        $product = Product::create([
-            'name' => $data['name'],
-            'slug' => $data['slug'],
-            'description' => $data['description'],
-            'price' => $data['price'],
-            'special_price' => $data['special_price'],
-            'special_price_type' => $data['special_price_type'],
-            'special_price_start' => $data['special_price_start'],
-            'special_price_end' => $data['special_price_end'],
-            'sku' => $data['sku'],
-            'in_stock' => $data['in_stock'],
-            'qty' => $data['qty'],
-            'meta_title' => $data['meta_title'],
-            'meta_description' => $data['meta_description'],
-            'is_new' => $data['is_new'],
-            'new_from' => $data['new_from'],
-            'new_to' => $data['new_to'],
-            'is_active' => $data['is_active'],
-        ]);
+        $product = Product::create($data);
 
         // 3. Attach base image
         if($request->has('base_image')) {
@@ -112,7 +93,16 @@ class ProductController extends Controller
             }
         }
 
-        Toastr::success('The product has been created.', 'Created');
+        // 5. Attach tags if any
+        if($request->has('tags')) {
+            $tags = $request->get('tags');
+
+            if($tags && is_array($tags) && count($tags)) {
+                foreach ($tags as $key => $tag) {
+                    $product->tags()->attach($tag);
+                }
+            }
+        }
 
         return response()->json($product);
     }
@@ -138,6 +128,7 @@ class ProductController extends Controller
     {
         $product->{'base_image'} = $product->images()->wherePivot('type', '=', 'base_image')->first();
         $product->{'additional_images'} = $product->images()->wherePivot('type', '=', 'additional_images')->get();
+        $product->{'tags'} = $product->tags;
 
         return view('admin.products.edit', ['product' => $product]);
     }
@@ -158,48 +149,51 @@ class ProductController extends Controller
             'qty' => 'required|numeric'
         ]);
 
-        $data = $request->except(['base_image', 'additional_images']);
+        $data = $request->except(['base_image', 'additional_images', 'tags']);
 
         // if title is changed change slug
         if($data['name'] != $product->name) {
             $data['slug'] = str_slug($data['name']);
         }
 
+        $images = [];
+
         if($request->has('base_image')) {
-            $image = $request->get('base_image');
-            if(!$product->images()->wherePivot('type', '=', 'base_image')->exists()) {
-                $product->images()->attach($image, [
-                    'type' => 'base_image'
-                ]);
-            } else {
-                $product->images()->wherePivot('type', '=', 'base_image')->sync([$image => ['type' => 'base_image']]);
-            }
+            // $image = $request->get('base_image');
+            // if(!$product->images()->wherePivot('type', '=', 'base_image')->exists()) {
+            //     $product->images()->attach($image, [
+            //         'type' => 'base_image'
+            //     ]);
+            // } else {
+            //     $product->images()->wherePivot('type', '=', 'base_image')->sync([$image => ['type' => 'base_image']]);
+            // }
+
+            $images[$request->get('base_image')] = ['type' => 'base_image'];
         }
 
         if($request->has('additional_images')) {
             $additional_images = $request->get('additional_images');
-            if($product->images()->wherePivot('type', '=', 'additional_images')->exists()) {
-                
-                if(is_array($additional_images) && count($additional_images)) {
-                    $new = [];
-                    foreach($additional_images as $ai) {
-                        $new[$ai] = ['type' => 'additional_images'];
-                    }
-
-                    $product->images()->wherePivot('type', '=', 'additional_images')->sync($new);
-                }
-            } else {
-                foreach($additional_images as $aimage) {
-                    $product->images()->attach($aimage, [
-                        'type' => 'additional_images'
-                    ]);
+            if(is_array($additional_images) && count($additional_images)) {
+                foreach($additional_images as $ai) {
+                    $images[$ai] = ['type' => 'additional_images'];
                 }
             }
         }
 
-        $product->update($data);
+        // 5. Attach tags if any
+        if($request->has('tags')) {
+            $tags = $request->get('tags');
 
-        Toastr::success('The product has been updated!', 'Updated');
+            if($tags && is_array($tags) && count($tags)) {
+                $product->tags()->sync($tags);
+            }
+        }
+
+        if($images && count($images)) {
+            $product->images()->sync($images);
+        }
+
+        $product->update($data);
 
         return response()->json($product);
     }
@@ -212,6 +206,20 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        // Detach images
+        if($product->images()->exists()) {
+            $product->images()->detach();
+        }
+        // Detach tags
+        if($product->tags()->exists()) {
+            $product->tags()->detach();
+        }
+
+        // Delete it self
+        $product->delete();
+
+        Toastr::success('The product has been deleted', 'Success');
+
+        return Redirect::route('admin.products.index');
     }
 }

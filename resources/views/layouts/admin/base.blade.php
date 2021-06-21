@@ -23,7 +23,7 @@
         
         <link href="{{ asset('assets/app/css/fonts.css') }}" rel="stylesheet" type="text/css" />
 
-        <link href="{{ asset('assets/app/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/app/libs/custombox/custombox.min.css') }}" rel="stylesheet" />
         
 
         @stack('libs_css')
@@ -366,7 +366,7 @@
         
         <script src="{{ asset('assets/app/libs/toastr/toastr.min.js') }}"></script>
         
-        <script src="{{ asset('assets/app/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+        <script src="{{ asset('assets/app/libs/custombox/custombox.min.js') }}"></script>
         
         <script src="{{ mix('assets/app/js/admin.js') }}"></script>
 

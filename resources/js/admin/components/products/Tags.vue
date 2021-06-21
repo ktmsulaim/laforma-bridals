@@ -1,27 +1,71 @@
 <template>
-  <div>
-      <label for="tags">Tags</label>
-      <input type="text" name="tags" id="tags" data-role="tagsinput">
-  </div>
+  <div class="from-group">
+        <label for="tags">Tags</label>
+        <select2
+            v-model="selected"
+            :options="tagsList"
+            @select="updateTags"
+            :settings="{
+                placeholder: 'Select a tag',
+                width: '100%',
+                multiple: true,
+            }"
+        ></select2>
+    </div>
 </template>
 
 <script>
+import Select2 from "v-select2-component";
+
 export default {
     name: 'Tags',
     props: ['product'],
+    data() {
+        return {
+            tags: [],
+            selected: null,
+        }
+    },
+    components: {
+        Select2
+    },
     computed: {
         productId() {
             if(this.product) {
                 return this.product.id;
             } else {
-                return 1;
+                return 0;
             }
+        },
+        tagsList() {          
+          if(this.tags && this.tags.length) {
+              return this.tags.map(tag => {
+                  return {
+                      id: tag.id,
+                      text: tag.name
+                  }
+              })
+          }
+        },
+        
+    },
+    methods:{
+        fetchTags() {
+            axios.get(route('admin.tags.list'))
+            .then(resp => this.tags = resp.data)
+            .catch(err => toastr.error('Unable to fetch tags', 'Error'))
+        },
+        updateTags() {
+            this.$emit('select', this.selected)
+        }
+    },
+    mounted() {
+        if(this.product && this.product.tags && this.product.tags.length) {
+            this.selected = this.product.tags.map(tag => tag.id)
         }
     },
     created() {
-        if(this.product) {
-            
-        }
+       this.fetchTags()
     }
 }
 </script>

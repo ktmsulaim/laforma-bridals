@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-4">
             <errors></errors>
-            @include('components.admin.common.delete', ['item' => 'product', 'url' => route('admin.images.destroy', $product->id)])
+            @include('components.admin.common.delete', ['item' => 'product', 'url' => route('admin.products.destroy', ['product' => $product->id])])
         </div>
     </div>
 @endsection
