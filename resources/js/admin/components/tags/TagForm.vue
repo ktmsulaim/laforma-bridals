@@ -10,7 +10,7 @@
                 <input
                     type="text"
                     id="name"
-                    @input="updateSlug"
+                    @input="updateSlug('name', 'slug')"
                     class="form-control"
                     :class="{ 'is-invalid': hasError('name') }"
                     v-model="data.name"
@@ -40,9 +40,10 @@
 <script>
 
 import ErrorsMixin from '../../mixins/errorsMixin'
+import slugMixin from '../../mixins/slugMixin'
 export default {
     name: "TagForm",
-    mixins: [ErrorsMixin],
+    mixins: [ErrorsMixin, slugMixin],
      data() {
          return {
              loading: false,
@@ -57,13 +58,6 @@ export default {
          }
      },
      methods: {
-         updateSlug() {
-             if(this.data.name) {
-                this.data.slug = this.slugify(this.data.name);
-            } else {
-                this.data.slug = this.data.name;
-            }
-         },
          submit() {
              this.loading = true;
 

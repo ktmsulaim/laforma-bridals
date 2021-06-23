@@ -2593,8 +2593,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/errorsMixin */ "./resources/js/admin/mixins/errorsMixin.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var v_select2_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! v-select2-component */ "./node_modules/v-select2-component/dist/Select2.esm.js");
+/* harmony import */ var _mixins_slugMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/slugMixin */ "./resources/js/admin/mixins/slugMixin.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var v_select2_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-select2-component */ "./node_modules/v-select2-component/dist/Select2.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2674,11 +2675,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'CategoryForm',
-  mixins: [_mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_0__.default],
+  mixins: [_mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_0__.default, _mixins_slugMixin__WEBPACK_IMPORTED_MODULE_1__.default],
   components: {
-    Select2: v_select2_component__WEBPACK_IMPORTED_MODULE_1__.default
+    Select2: v_select2_component__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return {
@@ -2763,13 +2765,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       this.data.parent = category.parent;
       this.mode = category.parent ? 2 : 1;
     },
-    updateSlug: function updateSlug() {
-      if (this.data.name) {
-        this.data.slug = this.slugify(this.data.name);
-      } else {
-        this.data.slug = this.data.name;
-      }
-    },
     reset: function reset() {
       this.data = {
         name: null,
@@ -2800,7 +2795,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
     'categorySelectOptions': 'getForSelect',
     'selected': 'getSelected'
   })), {}, {
@@ -3018,10 +3013,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var v_select2_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-select2-component */ "./node_modules/v-select2-component/dist/Select2.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _FileManager_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../FileManager.vue */ "./resources/js/admin/components/FileManager.vue");
 /* harmony import */ var _Tags_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Tags.vue */ "./resources/js/admin/components/products/Tags.vue");
 /* harmony import */ var _mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../mixins/errorsMixin */ "./resources/js/admin/mixins/errorsMixin.js");
+/* harmony import */ var _mixins_slugMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/slugMixin */ "./resources/js/admin/mixins/slugMixin.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3370,6 +3366,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -3385,7 +3392,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     FileManager: _FileManager_vue__WEBPACK_IMPORTED_MODULE_3__.default,
     Tags: _Tags_vue__WEBPACK_IMPORTED_MODULE_4__.default
   },
-  mixins: [_mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_5__.default],
+  mixins: [_mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_5__.default, _mixins_slugMixin__WEBPACK_IMPORTED_MODULE_6__.default],
   props: {
     mode: {
       type: String,
@@ -3404,6 +3411,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         category_id: null,
         tags: null,
         name: null,
+        slug: null,
         description: null,
         is_active: 1,
         price: 1,
@@ -3475,7 +3483,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.data.tags = val;
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapGetters)({
     categorySelectOptions: "getForSelect"
   })), {}, {
     categoryOptions: function categoryOptions() {
@@ -3510,6 +3518,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     if (this.mode == "edit" && this.product && Object.keys(this.product).length) {
       this.data.name = this.product.name;
+      this.data.slug = this.product.slug;
       this.data.category_id = this.product.category_id;
       this.data.description = this.product.description;
       this.data.is_active = this.product.is_active;
@@ -3764,6 +3773,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/errorsMixin */ "./resources/js/admin/mixins/errorsMixin.js");
+/* harmony import */ var _mixins_slugMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/slugMixin */ "./resources/js/admin/mixins/slugMixin.js");
 //
 //
 //
@@ -3804,9 +3814,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TagForm",
-  mixins: [_mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_0__.default],
+  mixins: [_mixins_errorsMixin__WEBPACK_IMPORTED_MODULE_0__.default, _mixins_slugMixin__WEBPACK_IMPORTED_MODULE_1__.default],
   data: function data() {
     return {
       loading: false,
@@ -3821,13 +3832,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateSlug: function updateSlug() {
-      if (this.data.name) {
-        this.data.slug = this.slugify(this.data.name);
-      } else {
-        this.data.slug = this.data.name;
-      }
-    },
     submit: function submit() {
       var _this = this;
 
@@ -4052,6 +4056,31 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/mixins/slugMixin.js":
+/*!************************************************!*\
+  !*** ./resources/js/admin/mixins/slugMixin.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    updateSlug: function updateSlug(value, target) {
+      if (this.data[value]) {
+        this.data[target] = this.slugify(this.data[value]);
+      } else {
+        this.data[target] = this.data[value];
+      }
+    }
   }
 });
 
@@ -6453,7 +6482,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.mx-datepicker {\n  display: block;\n  width: 100%;\n}\n.ql-editor {\n  min-height: 200px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.mx-datepicker {\n  display: block;\n  width: 100%;\n}\n.ql-editor {\n  min-height: 200px;\n}\n#trackStockWrapper {\n  display: flex;\n  height: 100%;\n  align-items: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -59797,7 +59826,9 @@ var render = function() {
                     }
                     _vm.$set(_vm.data, "name", $event.target.value)
                   },
-                  _vm.updateSlug
+                  function($event) {
+                    return _vm.updateSlug("name", "slug")
+                  }
                 ]
               }
             })
@@ -60284,11 +60315,42 @@ var render = function() {
                   attrs: { type: "text", name: "name" },
                   domProps: { value: _vm.data.name },
                   on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.data, "name", $event.target.value)
+                      },
+                      function($event) {
+                        return _vm.updateSlug("name", "slug")
+                      }
+                    ]
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "slug" } }, [_vm._v("Slug")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.slug,
+                      expression: "data.slug"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "slug" },
+                  domProps: { value: _vm.data.slug },
+                  on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.data, "name", $event.target.value)
+                      _vm.$set(_vm.data, "slug", $event.target.value)
                     }
                   }
                 })
@@ -60731,64 +60793,77 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("div", { staticClass: "custom-control custom-switch" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.data.track_stock,
-                            expression: "data.track_stock"
-                          }
-                        ],
-                        staticClass: "custom-control-input",
-                        attrs: { type: "checkbox", id: "track_stock" },
-                        domProps: {
-                          checked: Array.isArray(_vm.data.track_stock)
-                            ? _vm._i(_vm.data.track_stock, null) > -1
-                            : _vm.data.track_stock
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.data.track_stock,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = null,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  _vm.$set(
-                                    _vm.data,
-                                    "track_stock",
-                                    $$a.concat([$$v])
-                                  )
-                              } else {
-                                $$i > -1 &&
-                                  _vm.$set(
-                                    _vm.data,
-                                    "track_stock",
-                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                  )
-                              }
-                            } else {
-                              _vm.$set(_vm.data, "track_stock", $$c)
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "form-group",
+                      attrs: { id: "trackStockWrapper" }
+                    },
+                    [
                       _c(
-                        "label",
-                        {
-                          staticClass: "custom-control-label",
-                          attrs: { for: "track_stock" }
-                        },
-                        [_vm._v("Track stock")]
+                        "div",
+                        { staticClass: "custom-control custom-switch" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.data.track_stock,
+                                expression: "data.track_stock"
+                              }
+                            ],
+                            staticClass: "custom-control-input",
+                            attrs: { type: "checkbox", id: "track_stock" },
+                            domProps: {
+                              checked: Array.isArray(_vm.data.track_stock)
+                                ? _vm._i(_vm.data.track_stock, null) > -1
+                                : _vm.data.track_stock
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$a = _vm.data.track_stock,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      _vm.$set(
+                                        _vm.data,
+                                        "track_stock",
+                                        $$a.concat([$$v])
+                                      )
+                                  } else {
+                                    $$i > -1 &&
+                                      _vm.$set(
+                                        _vm.data,
+                                        "track_stock",
+                                        $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1))
+                                      )
+                                  }
+                                } else {
+                                  _vm.$set(_vm.data, "track_stock", $$c)
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-control-label",
+                              attrs: { for: "track_stock" }
+                            },
+                            [_vm._v("Track stock")]
+                          )
+                        ]
                       )
-                    ])
-                  ])
+                    ]
+                  )
                 ])
               ]),
               _vm._v(" "),
@@ -61320,7 +61395,9 @@ var render = function() {
                 }
                 _vm.$set(_vm.data, "name", $event.target.value)
               },
-              _vm.updateSlug
+              function($event) {
+                return _vm.updateSlug("name", "slug")
+              }
             ]
           }
         })

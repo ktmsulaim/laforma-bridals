@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -48,6 +49,14 @@ Route::middleware('auth')->group(function(){
      */
     Route::get('/products/list', [ProductController::class, 'listProducts'])->name('products.list');
     Route::resource('products', ProductController::class);
+    
+    /**
+     * -------------------------------------------------------------------
+     * Services
+     * -------------------------------------------------------------------
+     */
+    Route::get('/services/list', [ServiceController::class, 'listServices'])->name('services.list');
+    Route::resource('services', ServiceController::class);
 
    
    

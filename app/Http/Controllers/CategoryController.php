@@ -88,6 +88,15 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // delete children first if any
+        $children = $category->getChildren();
+
+        if($children && $children->count()) {
+            $children->each(function($cat){
+                $cat->delete();
+            });
+        }
+        // delete it self
         $category->delete();
 
         return response()->json([], 204);

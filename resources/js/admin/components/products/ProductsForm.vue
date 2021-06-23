@@ -58,7 +58,17 @@
               name="name"
               class="form-control"
               v-model="data.name"
+              @input="updateSlug('name', 'slug')"
               :class="{ 'is-invalid': hasError('name') }"
+            />
+          </div>
+          <div class="form-group">
+            <label for="slug">Slug</label>
+            <input
+              type="text"
+              name="slug"
+              class="form-control"
+              v-model="data.slug"
             />
           </div>
           <div class="form-group">
@@ -220,7 +230,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group" id="trackStockWrapper">
                 <div class="custom-control custom-switch">
                   <input
                     type="checkbox"
@@ -350,6 +360,7 @@ import FileManager from "../FileManager.vue";
 import Tags from "./Tags.vue";
 
 import ErrorsMixin from "../../mixins/errorsMixin";
+import slugMixin from "../../mixins/slugMixin";
 
 export default {
   name: "ProductsForm",
@@ -359,7 +370,7 @@ export default {
     FileManager,
     Tags,
   },
-  mixins: [ErrorsMixin],
+  mixins: [ErrorsMixin, slugMixin],
   props: {
     mode: {
       type: String,
@@ -378,6 +389,7 @@ export default {
         category_id: null,
         tags: null,
         name: null,
+        slug: null,
         description: null,
         is_active: 1,
         price: 1,
@@ -495,6 +507,7 @@ export default {
       Object.keys(this.product).length
     ) {
       this.data.name = this.product.name;
+      this.data.slug = this.product.slug;
       this.data.category_id = this.product.category_id;
       this.data.description = this.product.description;
       this.data.is_active = this.product.is_active;
@@ -531,5 +544,11 @@ export default {
 }
 .ql-editor {
   min-height: 200px;
+}
+
+#trackStockWrapper {
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 </style>

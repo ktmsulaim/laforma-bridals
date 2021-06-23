@@ -31,7 +31,7 @@ class TagsController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:tags,slug'
+            'slug' => 'required'
         ]);
 
         $tag = Tag::create($request->all());

@@ -10,7 +10,7 @@
           <form @submit.prevent="submit" ref="categoryForm">
               <div class="form-group">
                   <label for="name">Name</label>
-                  <input type="text" id="name" @input="updateSlug" class="form-control" :class="{'is-invalid': hasError('name')}" v-model="data.name">
+                  <input type="text" id="name" @input="updateSlug('name', 'slug')" class="form-control" :class="{'is-invalid': hasError('name')}" v-model="data.name">
               </div>
               <div class="form-group">
                   <label for="slug">Slug</label>
@@ -68,12 +68,13 @@
 
 <script>
 import ErrorsMixin from '../../mixins/errorsMixin'
+import SlugMixin from '../../mixins/slugMixin'
 import { mapGetters } from 'vuex'
 import Select2 from 'v-select2-component'
 
 export default {
     name: 'CategoryForm',
-    mixins: [ErrorsMixin],
+    mixins: [ErrorsMixin, SlugMixin],
     components: {
         Select2
     },
@@ -162,13 +163,6 @@ export default {
             this.data.parent = category.parent;
 
             this.mode = category.parent ? 2 : 1;
-        },
-        updateSlug() {
-            if(this.data.name) {
-                this.data.slug = this.slugify(this.data.name);
-            } else {
-                this.data.slug = this.data.name;
-            }
         },
         reset() {
             this.data = {

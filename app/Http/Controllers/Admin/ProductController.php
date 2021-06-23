@@ -7,9 +7,11 @@ use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Traits\Controllers\Images;
 
 class ProductController extends Controller
 {
+    use Images;
     /**
      * Display a listing of the resource.
      *
@@ -68,30 +70,13 @@ class ProductController extends Controller
         $data = $request->except(['base_image', 'additional_images', 'tags']);
 
         // 1. Make slug
-        $data['slug'] = str_slug($request->name);
+        $data['slug'] = $request->get('slug') ?: str_slug($request->name);
 
         // 2. Create product
         $product = Product::create($data);
 
-        // 3. Attach base image
-        if($request->has('base_image')) {
-            $product->images()->attach($request->get('base_image'), [
-                'type' => 'base_image'
-            ]);
-        }
-
-        // 4. Attach additional images
-        if($request->has('additional_images')) {
-            $additional_images = $request->get('additional_images');
-
-            if(is_array($additional_images) && count($additional_images)) {
-                foreach($additional_images as $aimage) {
-                    $product->images()->attach($aimage, [
-                        'type' => 'additional_images'
-                    ]);
-                }
-            }
-        }
+        // attach images
+        $this->saveImages($request, $product);
 
         // 5. Attach tags if any
         if($request->has('tags')) {
@@ -156,30 +141,6 @@ class ProductController extends Controller
             $data['slug'] = str_slug($data['name']);
         }
 
-        $images = [];
-
-        if($request->has('base_image')) {
-            // $image = $request->get('base_image');
-            // if(!$product->images()->wherePivot('type', '=', 'base_image')->exists()) {
-            //     $product->images()->attach($image, [
-            //         'type' => 'base_image'
-            //     ]);
-            // } else {
-            //     $product->images()->wherePivot('type', '=', 'base_image')->sync([$image => ['type' => 'base_image']]);
-            // }
-
-            $images[$request->get('base_image')] = ['type' => 'base_image'];
-        }
-
-        if($request->has('additional_images')) {
-            $additional_images = $request->get('additional_images');
-            if(is_array($additional_images) && count($additional_images)) {
-                foreach($additional_images as $ai) {
-                    $images[$ai] = ['type' => 'additional_images'];
-                }
-            }
-        }
-
         // 5. Attach tags if any
         if($request->has('tags')) {
             $tags = $request->get('tags');
@@ -189,11 +150,9 @@ class ProductController extends Controller
             }
         }
 
-        if($images && count($images)) {
-            $product->images()->sync($images);
-        }
-
         $product->update($data);
+
+        $this->saveImages($request, $product);
 
         return response()->json($product);
     }
