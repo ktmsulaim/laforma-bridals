@@ -50,7 +50,7 @@ export default {
         Object.keys(data).forEach((item) => {
             if(Object.keys(validations).includes(item) && validations[item] == 'required') {
                 this.$watch(() => data[item], (oldval, newVal) => {
-                    if((!this.hasError(item) && !oldval) || !oldval) {
+                    if((!this.hasError(item) && !oldval) || !oldval || (Array.isArray(oldval) && !oldval.length)) {
                     
                         this.$set(this.$store.state.Errors.errors, item, `${this.formattedKey(item)} is required`);
                         this.$store.dispatch('assignSingleError', {key: item, value: `${this.formattedKey(item)} is required`})

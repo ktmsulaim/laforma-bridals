@@ -20,6 +20,7 @@ import VueQuillEditor from 'vue-quill-editor'
 import VueSlugify from 'vue-slugify'
 import Select2 from 'v-select2-component'
 import VueSweetalert2 from 'vue-sweetalert2';
+import JwPagination from 'jw-vue-pagination';
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -36,11 +37,13 @@ import store from './store'
 
 window.Vue = Vue
 Vue.use(VueFileAgent);
-Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.use(VueQuillEditor)
 Vue.use(VueSlugify)
 Vue.use(Select2)
 Vue.use(VueSweetalert2)
+
+Vue.component('vue-skeleton-loader', VueSkeletonLoader);
+Vue.component('jw-pagination', JwPagination)
 
 Vue.mixin({
     methods: {
@@ -68,17 +71,22 @@ import Errors from './components/Errors'
 import ListProducts from './components/products/ListProducts'
 import ListCategories from './components/categories/ListCategories'
 import ListTags from './components/tags/ListTags'
+import ListServices from './components/services/ListServices'
+import ServicesForm from './components/services/ServicesForm'
+
+Vue.component('file-manager', FileManager)
 
 const app = new Vue({
     el: '#app',
     components: {
         Card,
-        FileManager,
         ProductsForm,
         Errors,
         ListProducts,
         ListCategories,
-        ListTags
+        ListTags,
+        ListServices,
+        ServicesForm
     },
     store
 })
