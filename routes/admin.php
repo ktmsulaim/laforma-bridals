@@ -8,8 +8,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagsController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\JobController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -55,8 +56,16 @@ Route::middleware('auth')->group(function(){
      * Services
      * -------------------------------------------------------------------
      */
-    Route::get('/services/list', [ServiceController::class, 'listServices'])->name('services.list');
     Route::resource('services', ServiceController::class);
+    
+    
+    /**
+     * -------------------------------------------------------------------
+     * Jobs
+     * -------------------------------------------------------------------
+     */
+    Route::get('jobs/list', [JobController::class, 'listJobs'])->name('jobs.list');
+    Route::resource('jobs', JobController::class);
 
    
    

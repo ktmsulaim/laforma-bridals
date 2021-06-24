@@ -254,7 +254,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
+                                <a href="{{ route('admin.jobs.index') }}">
                                     <i class="mdi mdi-card-account-details-outline"></i>
                                     <span> Jobs </span>
                                 </a>

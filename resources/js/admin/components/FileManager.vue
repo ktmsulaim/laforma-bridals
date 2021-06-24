@@ -7,6 +7,7 @@
     <div v-if="baseImage">
       <input type="hidden" name="base_image" :value="baseImage.id" />
       <div class="thumb">
+        <span @click="removeImage" class="close-btn mdi mdi-close-thick"></span>
         <img :src="baseImage.path" alt="" width="200" />
       </div>
     </div>
@@ -19,6 +20,7 @@
         >
           <input type="hidden" name="additional_images[]" :value="image.id" />
           <div class="gal-detail thumb">
+            <span @click="removeImage(image)" class="close-btn mdi mdi-close-thick"></span>
             <div class="image-popup" :title="image.filename">
               <img
                 :src="image.path"
@@ -337,8 +339,8 @@ export default {
           this.baseImage = null;
         } else {
           this.baseImage = image;
-          this.$emit('selectImage', {type: 'base_image', id: image.id});
         }
+          
       } else if (this.type == "additional_images") {
         if (this.additional_images.includes(image)) {
           const index = this.additional_images.indexOf(image);
@@ -348,8 +350,15 @@ export default {
           }
         } else {
           this.additional_images.push(image);
-          this.$emit('selectImage', {type: 'additional_images', ids: this.additional_images.map(img => img.id)});
         }
+      }
+      this.setImages();
+    },
+    setImages(){
+      if(this.type == 'base_image') {
+        this.$emit('selectImage', {type: 'base_image', id: this.baseImage ? this.baseImage.id : null});
+      } else if(this.type == 'additional_images') {
+        this.$emit('selectImage', {type: 'additional_images', ids: this.additional_images ? this.additional_images.map(img => img.id) : []});
       }
     },
     closeFileManager() {
@@ -375,6 +384,16 @@ export default {
     },
     clearUploads() {
       this.$refs.fileUploader.clearUploads();
+    },
+    removeImage(obj = null) {
+      if(this.type == 'base_image') {
+        this.baseImage = null;
+      } else if(this.type == 'additional_images' && this.additional_images.length && obj) {
+        const index = this.additional_images.indexOf(obj);
+        this.additional_images.splice(index, 1);
+      }
+
+      this.setImages();
     }
   },
   computed: {
@@ -413,4 +432,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.thumb {
+  position: relative;
+}
+.thumb .close-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  color: #fff;
+  z-index: 1;
+}
+</style>

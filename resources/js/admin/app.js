@@ -73,20 +73,24 @@ import ListCategories from './components/categories/ListCategories'
 import ListTags from './components/tags/ListTags'
 import ListServices from './components/services/ListServices'
 import ServicesForm from './components/services/ServicesForm'
+import ListJobs from './components/jobs/ListJobs'
+import JobForm from './components/jobs/JobForm'
 
 Vue.component('file-manager', FileManager)
+Vue.component('errors', Errors)
 
 const app = new Vue({
     el: '#app',
     components: {
         Card,
         ProductsForm,
-        Errors,
         ListProducts,
         ListCategories,
         ListTags,
         ListServices,
-        ServicesForm
+        ServicesForm,
+        ListJobs,
+        JobForm
     },
     store
 })
