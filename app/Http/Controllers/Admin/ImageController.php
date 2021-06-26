@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
+    public function media()
+    {
+        return view('admin.media.index');
+    }
+
     public function index(Request $request)
     {
         if($request->has('offset') && $request->has('limit')) {
@@ -20,8 +25,23 @@ class ImageController extends Controller
             $images = Image::latest('id')->get(); 
         }
 
+        return response()->json($images);   
+    }
+
+    public function listImages()
+    {
+        $images = Image::latest()->get();
+        $images = $images->transform(function($image){
+            return [
+                'id' => $image->id,
+                'path' => $image->path,
+                'filename' => $image->filename,
+                'size' => $image->size,
+                'created_at' => $image->created_at->format('d F, Y'),
+            ];
+        });
+
         return response()->json($images);
-        
     }
 
     public function store(Request $request)
@@ -52,6 +72,38 @@ class ImageController extends Controller
 
     public function destroy(Image $image)
     {
+        if(request()->ajax()){
+            $data = request()->get('data');
+
+            if(is_array($data) && count($data)) {
+                foreach($data as $id) {
+                    $image = Image::find($id);
+
+                    if($image->isFileExists()){
+                        Storage::delete('media/' . pathinfo($image->path, PATHINFO_BASENAME));
+                    }
+            
+                    $image->delete();
+                }
+
+            } elseif($data) {
+                $image = Image::find($data);
+
+                if($image) {
+                    if($image->isFileExists()){
+                        Storage::delete('media/' . pathinfo($image->path, PATHINFO_BASENAME));
+                    }
+            
+                    $image->delete();
+                } else {
+                    return response()->json(['message' => 'Unable to find the image', 404]);
+                }
+            }
+
+
+            return response()->json(['message' => 'The image has been deleted'], 204);
+        }
+
         if($image->isFileExists()){
             Storage::delete('media/' . pathinfo($image->path, PATHINFO_BASENAME));
         }

@@ -74,7 +74,9 @@ Route::middleware('auth')->group(function(){
      * File manager
      * -------------------------------------------------------------------
      */
-    Route::get('/images', [ImageController::class, 'index'])->name('images.index');
-    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
-    Route::delete('/images', [ImageController::class, 'destroy'])->name('images.destroy');
+    Route::get('media', [ImageController::class, 'media'])->name('media');
+    Route::get('images/list', [ImageController::class, 'listImages'])->name('images.list');
+    Route::get('images', [ImageController::class, 'index'])->name('images.index');
+    Route::post('images', [ImageController::class, 'store'])->name('images.store');
+    Route::delete('images', [ImageController::class, 'destroy'])->name('images.destroy');
 });

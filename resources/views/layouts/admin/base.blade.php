@@ -260,7 +260,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
+                                <a href="{{ route('admin.media') }}">
                                     <i class="mdi mdi-file-image"></i>
                                     <span> Media </span>
                                 </a>

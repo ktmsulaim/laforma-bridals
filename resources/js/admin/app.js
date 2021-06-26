@@ -75,6 +75,7 @@ import ListServices from './components/services/ListServices'
 import ServicesForm from './components/services/ServicesForm'
 import ListJobs from './components/jobs/ListJobs'
 import JobForm from './components/jobs/JobForm'
+import ListMedia from './components/media/ListMedia'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
@@ -90,7 +91,8 @@ const app = new Vue({
         ListServices,
         ServicesForm,
         ListJobs,
-        JobForm
+        JobForm,
+        ListMedia
     },
     store
 })

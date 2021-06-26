@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 import Errors from './modules/Errors'
 import Categories from './modules/Categories'
+import Media from './modules/Media'
 
 
 export default new Vuex.Store({
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     },
     modules: {
         Errors,
-        Categories
+        Categories,
+        Media
     }
 })
