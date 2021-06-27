@@ -1,18 +1,17 @@
 <?php
 
+use App\Http\Controllers\Customer\CustomerController;
 use Illuminate\Support\Facades\Route;
-
-// Dashboard
-Route::get('/', 'HomeController@index')->name('home');
 
 // Login
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('login', 'Auth\LoginController@login')->name('login.post');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout.post');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 // Register
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+Route::post('register', 'Auth\RegisterController@register')->name('register.post');
 
 // Reset Password
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -22,9 +21,13 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 // Confirm Password
 Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
-Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
+Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirm.post');
+
+Route::middleware('customer.auth')->group(function(){
+    Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
+});
 
 // Verify Email
-// Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-// Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
-// Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
+Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');

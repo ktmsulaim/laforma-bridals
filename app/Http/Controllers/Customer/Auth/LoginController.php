@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/customer';
+    protected $redirectTo = '/customer/dashboard';
 
     /**
      * Create a new controller instance.
@@ -59,6 +59,11 @@ class LoginController extends Controller
         return view('customer.auth.login');
     }
 
+    public function username()
+    {
+        return 'username';
+    }
+
     /**
      * Log the customer out of the application.
      *
@@ -72,6 +77,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect()->route('customer.home');
+        return $this->loggedOut($request) ?: redirect()->route('customer.login');
     }
 }

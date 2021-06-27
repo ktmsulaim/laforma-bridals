@@ -4,11 +4,12 @@ namespace App\Models;
 
 use App\Notifications\Customer\Auth\ResetPassword;
 use App\Notifications\Customer\Auth\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -18,7 +19,13 @@ class Customer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'photo', 
+        'username', 
+        'email', 
+        'phone', 
+        'password',
+        'is_active',
     ];
 
     /**

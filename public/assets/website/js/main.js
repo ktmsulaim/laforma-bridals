@@ -43,6 +43,8 @@
 	}).resize();
 	
 	// Mobile Mmenu
+	const date = new Date();
+
 	var $menu = $("#menu").mmenu({
 		"extensions": ["pagedim-black"],
 		counters: true,
@@ -56,7 +58,7 @@
 		offCanvas: {
 		  pageSelector: "#page"
 	   },
-		navbars: [{position:'bottom',content: ['<a href="#0">© 2020 Allaia</a>']}]}, 
+		navbars: [{position:'bottom',content: [`<a href="javascript:void(0)">© ${date.getFullYear()} La'forma bridals</a>`]}]}, 
 		{
 		// configuration
 		clone: true,
