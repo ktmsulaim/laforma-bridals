@@ -45,6 +45,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', 1);
+    }
+    
+    public function scopeProductManager($query)
+    {
+        return $query->where('role', 2);
+    }
+    
+    public function scopeWebsiteManager($query)
+    {
+        return $query->where('role', 3);
+    }
+
     public function setPasswordAttribute($val)
     {
         if($val) {

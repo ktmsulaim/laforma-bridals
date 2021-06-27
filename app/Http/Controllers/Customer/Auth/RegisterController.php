@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer\Auth;
 
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -83,6 +84,8 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         $customer = $this->create($request->all());
+
+        event(new Registered($customer));
 
         return $customer;
     }

@@ -20,10 +20,10 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // Confirm Password
-Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
-Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirm.post');
+// Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
+// Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirm.post');
 
-Route::middleware('customer.auth')->group(function(){
+Route::middleware(['customer.auth', 'customer.verified'])->group(function(){
     Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
 });
 

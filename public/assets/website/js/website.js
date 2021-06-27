@@ -2138,6 +2138,8 @@ __webpack_require__.r(__webpack_exports__);
           message: "Success! your account has been created",
           type: "success"
         });
+
+        window.location = route('customer.verification.notice');
       })["catch"](function (err) {
         _this.$toast.open({
           message: "Unable to proccess the request",

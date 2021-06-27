@@ -55,7 +55,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'customer.auth' => \App\Http\Middleware\RedirectIfNotCustomer::class,
         'customer.guest' => \App\Http\Middleware\RedirectIfCustomer::class,
-        // 'customer.verified' => \App\Http\Middleware\EnsureCustomerEmailIsVerified::class,
+        'customer.verified' => \App\Http\Middleware\EnsureCustomerEmailIsVerified::class,
         // 'customer.password.confirm' => \App\Http\Middleware\RequireCustomerPassword::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

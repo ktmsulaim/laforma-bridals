@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer\Auth;
 
+use App\Events\CustomerEmailVerified;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -29,7 +30,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/customer';
+    protected $redirectTo = '/customer/dashboard';
 
     /**
      * Create a new controller instance.
@@ -80,7 +81,7 @@ class VerificationController extends Controller
         }
 
         if ($request->user('customer')->markEmailAsVerified()) {
-            event(new Verified($request->user('customer')));
+            event(new CustomerEmailVerified($request->user('customer')));
         }
 
         return redirect($this->redirectPath())->with('verified', true);

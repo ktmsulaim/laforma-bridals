@@ -136,6 +136,8 @@ export default {
             message: "Success! your account has been created",
             type: "success",
           });
+
+          window.location = route('customer.verification.notice')
         })
         .catch((err) => {
           this.$toast.open({

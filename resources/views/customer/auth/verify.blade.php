@@ -1,28 +1,25 @@
-@extends('customer.layouts.app')
+@extends('layouts.website.secondary', ['title' => 'Verify email address'])
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="box_account">
+                <div class="form_container">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
                     @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('customer.verification.resend') }}">
+                    
+                    <h4>Email verification</h4>
+                    <p>Before proceeding, please check your email <b>({{ auth('customer')->user()->email }})</b> for a verification link. If you did not receive the email request for verification link again. If you couldn't find the email in your inbox kindly check your spam folder also.</p>
+                    <form class="d-block mt-3" method="POST" action="{{ route('customer.verification.resend') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <button type="submit"
+                            class="btn_1 full-width">Request verification link</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

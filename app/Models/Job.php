@@ -10,5 +10,7 @@ class Job extends Model
 {
     use HasFactory, ImagesTrait;
 
+    protected $table = 'jobs_model';
+
     protected $guarded = [];
 }
