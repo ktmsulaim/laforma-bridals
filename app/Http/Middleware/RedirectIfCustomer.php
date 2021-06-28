@@ -17,8 +17,8 @@ class RedirectIfCustomer
      */
     public function handle($request, Closure $next, $guard = 'customer')
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect()->route('customer.home');
+        if (Auth::guard($guard)->check() && Auth::user()->status === 1) {
+            return redirect()->route('customer.dashboard');
         }
 
         return $next($request);

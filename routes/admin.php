@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCustomersController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
@@ -27,6 +28,17 @@ Route::middleware('auth')->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     /**
+     * -------------------------------------------------------------------
+     * Customers
+     * -------------------------------------------------------------------
+     */
+    Route::get('customers', [AdminCustomersController::class, 'index'])->name('customers.index');
+    Route::get('customers/list', [AdminCustomersController::class, 'listCustomers'])->name('customers.list');
+    Route::get('customers/{customer}', [AdminCustomersController::class, 'show'])->name('customers.show');
+    Route::patch('customers/{customer}', [AdminCustomersController::class, 'update'])->name('customers.update');
+
+    
+     /**
      * -------------------------------------------------------------------
      * Categories
      * -------------------------------------------------------------------

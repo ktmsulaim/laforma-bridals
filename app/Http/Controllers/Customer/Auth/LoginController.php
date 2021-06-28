@@ -65,6 +65,14 @@ class LoginController extends Controller
     }
 
     /**
+     * Show inactive message 
+     */
+    public function inactive()
+    {
+        return view('customer.auth.inactive');
+    }
+
+    /**
      * Log the customer out of the application.
      *
      * @param \Illuminate\Http\Request  $request

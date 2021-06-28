@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer\Auth;
 
 use App\Events\CustomerEmailVerified;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -81,6 +82,10 @@ class VerificationController extends Controller
         }
 
         if ($request->user('customer')->markEmailAsVerified()) {
+            $customer = Customer::find($request->user('customer')->id);
+            $customer->status = 1;
+            $customer->save();
+            
             event(new CustomerEmailVerified($request->user('customer')));
         }
 

@@ -218,7 +218,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('admin.customers.index') }}">
                                     <i class="mdi mdi-account-multiple"></i>
                                     <span> Customers </span>
                                 </a>

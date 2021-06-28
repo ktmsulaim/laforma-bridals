@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\CustomerController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,11 +24,19 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 // Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 // Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirm.post');
 
-Route::middleware(['customer.auth', 'customer.verified'])->group(function(){
-    Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
-});
 
 // Verify Email
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
+Route::get('inactive', [LoginController::class, 'inactive'])->name('inactive');
+
+/**
+ * ---------------------------------------------------------------------
+ * Account
+ * ---------------------------------------------------------------------
+ */
+Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->group(function(){
+    Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
+});
