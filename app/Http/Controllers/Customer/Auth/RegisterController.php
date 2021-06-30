@@ -85,6 +85,8 @@ class RegisterController extends Controller
 
         $customer = $this->create($request->all());
 
+        $this->guard()->login($customer);
+
         event(new Registered($customer));
 
         return $customer;

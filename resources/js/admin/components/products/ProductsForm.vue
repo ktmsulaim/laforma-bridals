@@ -104,19 +104,33 @@
           </div>
           <div class="row mt-2">
             <div class="col-md-6">
-              <div class="from-group">
-                <label for="is_active"
-                  >Status <span class="text-danger">*</span></label
-                >
-                <select
-                  v-model="data.is_active"
-                  name="is_active"
-                  class="form-control"
-                  required
-                >
-                  <option value="1">Enabled</option>
-                  <option value="0">Disalbed</option>
-                </select>
+              <div class="form-group switch-wrapper">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    id="is_orderable"
+                    class="custom-control-input"
+                    v-model="data.is_orderable"
+                  />
+                  <label for="is_orderable" class="custom-control-label"
+                    >Saleable</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group switch-wrapper">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    id="is_active"
+                    class="custom-control-input"
+                    v-model="data.is_active"
+                  />
+                  <label for="is_active" class="custom-control-label"
+                    >Enable</label
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -230,7 +244,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group" id="trackStockWrapper">
+              <div class="form-group switch-wrapper">
                 <div class="custom-control custom-switch">
                   <input
                     type="checkbox"
@@ -391,6 +405,7 @@ export default {
         name: null,
         slug: null,
         description: null,
+        is_orderable: 1,
         is_active: 1,
         price: 1,
         special_price: null,
@@ -510,6 +525,7 @@ export default {
       this.data.slug = this.product.slug;
       this.data.category_id = this.product.category_id;
       this.data.description = this.product.description;
+      this.data.is_orderable = this.product.is_orderable;
       this.data.is_active = this.product.is_active;
       this.data.price = this.product.price;
       this.data.special_price = this.product.special_price;
@@ -546,7 +562,7 @@ export default {
   min-height: 200px;
 }
 
-#trackStockWrapper {
+.switch-wrapper{
   display: flex;
   height: 100%;
   align-items: center;

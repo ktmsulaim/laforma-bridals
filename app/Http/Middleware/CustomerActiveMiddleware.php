@@ -18,7 +18,7 @@ class CustomerActiveMiddleware
     {
         $customer = auth('customer')->user();
 
-        if($customer && $customer->status === 1) {
+        if($customer && $customer->isActive()) {
             return $next($request);
         }
 

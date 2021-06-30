@@ -4629,7 +4629,7 @@ body.modal-open .mm-slideout {
     display: inline-block !important;
   }
 }
-.grid_item ul li a {
+.grid_item ul li span {
   background-color: #fff;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -4644,13 +4644,13 @@ body.modal-open .mm-slideout {
   margin: 0;
   padding: 0;
 }
-.grid_item ul li a:hover {
+.grid_item ul li span:hover {
   background-color: #a21d23;
 }
-.grid_item ul li a:hover i {
+.grid_item ul li span:hover i {
   color: #fff;
 }
-.grid_item ul li a span {
+.grid_item ul li span span {
   display: none;
 }
 @media (max-width: 991px) {
@@ -4761,7 +4761,7 @@ body.modal-open .mm-slideout {
   opacity: 0.8;
 }
 
-.countdown {
+.countdown, .out-of-stock {
   color: #fff;
   font-weight: 600;
   width: 100px;

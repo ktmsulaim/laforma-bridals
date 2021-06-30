@@ -26,4 +26,9 @@ trait SluggableTrait {
     
         return $slug;
     }
+
+    public static function findBySlug($slug)
+    {
+        return self::where('slug', $slug)->first();
+    }
 }

@@ -2961,46 +2961,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var gridjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gridjs */ "./node_modules/gridjs/dist/gridjs.module.js");
+/* harmony import */ var gridjs_dist_theme_mermaid_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gridjs/dist/theme/mermaid.css */ "./node_modules/gridjs/dist/theme/mermaid.css");
+/* harmony import */ var gridjs_dist_theme_mermaid_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(gridjs_dist_theme_mermaid_css__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'ListCustomers',
-  mounted: function mounted() {
-    new Grid({
-      columns: [{
-        name: "#"
-      }, {
-        name: "Image",
-        formatter: function formatter(_, row) {
-          return html("<img src=\"".concat(row.cells[1].data, "\" width=\"80\">"));
-        }
-      }, {
-        name: "Name"
-      }, {
-        name: "Price"
-      }, {
-        name: "Status",
-        formatter: function formatter(_, row) {
-          return row.cells[4].data == 1 ? html("<span class=\"badge badge-success badge-pill\">Active</span>") : html("<span class=\"badge badge-danger badge-pill\">Inactive</span>");
-        }
-      }, {
-        name: "Created"
-      }, {
-        name: "Action",
-        formatter: function formatter(_, row) {
-          return html("<a href=\"".concat(row.cells[6].data, "\" class=\"btn btn-sm btn-info\"><span class=\"mdi mdi-pencil-box-outline\"></span> Edit</a>"));
-        }
-      }],
-      search: {
-        enabled: true
+  name: "ListCustomers",
+  data: function data() {
+    return {
+      data: {
+        filter: 0,
+        status: null,
+        verification: null
       },
-      server: {
-        url: route("admin.products.list"),
+      grid: null
+    };
+  },
+  computed: {
+    url: function url() {
+      return;
+    }
+  },
+  methods: {
+    handleServerData: function handleServerData(url) {
+      return {
+        url: url,
         then: function then(data) {
           return data.map(function (item, index) {
-            return [index + 1, item.image, item.name, item.price, item.is_active, item.created_at, item.edit];
+            return [index + 1, item.photo, item.name, item.phone, item.verified, item.status, item.created, item.view];
           });
         },
         handle: function handle(res) {
@@ -3008,13 +3036,57 @@ __webpack_require__.r(__webpack_exports__);
             data: []
           };
           if (res.ok) return res.json();
-          throw Error("Sorry! Unable to fetch products list.");
+          throw Error("Sorry! Unable to fetch customers list.");
         }
+      };
+    },
+    reload: function reload() {
+      if (this.data.filter == 1) {
+        this.grid.updateConfig({
+          server: this.handleServerData(route('admin.customers.list', this.data))
+        }).forceRender();
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.grid = new gridjs__WEBPACK_IMPORTED_MODULE_0__.Grid({
+      columns: [{
+        name: "#"
+      }, {
+        name: "Photo",
+        formatter: function formatter(_, row) {
+          return (0,gridjs__WEBPACK_IMPORTED_MODULE_0__.html)("<img src=\"".concat(row.cells[1].data, "\" width=\"50\">"));
+        }
+      }, {
+        name: "Name"
+      }, {
+        name: "Phone"
+      }, {
+        name: "Verified",
+        formatter: function formatter(_, row) {
+          return row.cells[4].data ? row.cells[4].data : (0,gridjs__WEBPACK_IMPORTED_MODULE_0__.html)("<span class=\"badge badge-danger badge-pill\">Not verified</span>");
+        }
+      }, {
+        name: "Status",
+        formatter: function formatter(_, row) {
+          return row.cells[5].data ? (0,gridjs__WEBPACK_IMPORTED_MODULE_0__.html)("<span class=\"badge badge-success badge-pill\">Active</span>") : (0,gridjs__WEBPACK_IMPORTED_MODULE_0__.html)("<span class=\"badge badge-danger badge-pill\">Inactive</span>");
+        }
+      }, {
+        name: "Created"
+      }, {
+        name: "Action",
+        formatter: function formatter(_, row) {
+          return (0,gridjs__WEBPACK_IMPORTED_MODULE_0__.html)("<a href=\"".concat(row.cells[7].data, "\" class=\"btn btn-sm btn-info\"><span class=\"mdi mdi-eye-outline\"></span> View</a>"));
+        }
+      }],
+      search: {
+        enabled: true
       },
+      server: this.handleServerData(route('admin.customers.list')),
       pagination: {
         enabled: true,
         limit: 10,
-        summary: false
+        summary: true
       }
     }).render(this.$refs.customersList);
   }
@@ -4081,6 +4153,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4118,6 +4204,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: null,
         slug: null,
         description: null,
+        is_orderable: 1,
         is_active: 1,
         price: 1,
         special_price: null,
@@ -4226,6 +4313,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.data.slug = this.product.slug;
       this.data.category_id = this.product.category_id;
       this.data.description = this.product.description;
+      this.data.is_orderable = this.product.is_orderable;
       this.data.is_active = this.product.is_active;
       this.data.price = this.product.price;
       this.data.special_price = this.product.special_price;
@@ -7954,7 +8042,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.mx-datepicker {\n  display: block;\n  width: 100%;\n}\n.ql-editor {\n  min-height: 200px;\n}\n#trackStockWrapper {\n  display: flex;\n  height: 100%;\n  align-items: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.mx-datepicker {\n  display: block;\n  width: 100%;\n}\n.ql-editor {\n  min-height: 200px;\n}\n.switch-wrapper{\n  display: flex;\n  height: 100%;\n  align-items: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -62507,9 +62595,185 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { ref: "customersList", staticClass: "list" })
+  return _c("div", [
+    _c("div", { staticClass: "mb-2" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-3" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.data.filter,
+                  expression: "data.filter"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "filter" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.data,
+                    "filter",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "1" } }, [_vm._v("Enable")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "0" } }, [_vm._v("Disable")])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _vm.data.filter == 1
+          ? _c("div", { staticClass: "col-md-3" }, [
+              _c("label", { attrs: { for: "filter" } }, [_vm._v("Status")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.status,
+                      expression: "data.status"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "filter" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.data,
+                        "status",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: null } }, [_vm._v("None")]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 1 } }, [_vm._v("Active")]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 0 } }, [_vm._v("Inactive")])
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.data.filter == 1
+          ? _c("div", { staticClass: "col-md-3" }, [
+              _c("label", { attrs: { for: "filter" } }, [
+                _vm._v("Verification")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.verification,
+                      expression: "data.verification"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "filter" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.data,
+                        "verification",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: null } }, [_vm._v("None")]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 1 } }, [
+                    _vm._v("Verified")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 0 } }, [
+                    _vm._v("Not verified")
+                  ])
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("label", { attrs: { for: "" } }, [_vm._v(" ")]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info",
+                attrs: { disabled: _vm.data.filter != 1 },
+                on: { click: _vm.reload }
+              },
+              [_vm._v("Go")]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { ref: "customersList", staticClass: "list" })
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "filter" } }, [
+      _c("span", { staticClass: "mdi mdi-filter" }),
+      _vm._v(" Filter")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -63370,12 +63634,70 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "row mt-2" }, [
                 _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "from-group" }, [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
+                  _c("div", { staticClass: "form-group switch-wrapper" }, [
+                    _c("div", { staticClass: "custom-control custom-switch" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.data.is_orderable,
+                            expression: "data.is_orderable"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: { type: "checkbox", id: "is_orderable" },
+                        domProps: {
+                          checked: Array.isArray(_vm.data.is_orderable)
+                            ? _vm._i(_vm.data.is_orderable, null) > -1
+                            : _vm.data.is_orderable
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.data.is_orderable,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.data,
+                                    "is_orderable",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.data,
+                                    "is_orderable",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.data, "is_orderable", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: "is_orderable" }
+                        },
+                        [_vm._v("Saleable")]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group switch-wrapper" }, [
+                    _c("div", { staticClass: "custom-control custom-switch" }, [
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
@@ -63384,38 +63706,52 @@ var render = function() {
                             expression: "data.is_active"
                           }
                         ],
-                        staticClass: "form-control",
-                        attrs: { name: "is_active", required: "" },
+                        staticClass: "custom-control-input",
+                        attrs: { type: "checkbox", id: "is_active" },
+                        domProps: {
+                          checked: Array.isArray(_vm.data.is_active)
+                            ? _vm._i(_vm.data.is_active, null) > -1
+                            : _vm.data.is_active
+                        },
                         on: {
                           change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.data,
-                              "is_active",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                            var $$a = _vm.data.is_active,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.data,
+                                    "is_active",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.data,
+                                    "is_active",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.data, "is_active", $$c)
+                            }
                           }
                         }
-                      },
-                      [
-                        _c("option", { attrs: { value: "1" } }, [
-                          _vm._v("Enabled")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "0" } }, [
-                          _vm._v("Disalbed")
-                        ])
-                      ]
-                    )
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: "is_active" }
+                        },
+                        [_vm._v("Enable")]
+                      )
+                    ])
                   ])
                 ])
               ])
@@ -63741,77 +64077,64 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "form-group",
-                      attrs: { id: "trackStockWrapper" }
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "custom-control custom-switch" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.data.track_stock,
-                                expression: "data.track_stock"
+                  _c("div", { staticClass: "form-group switch-wrapper" }, [
+                    _c("div", { staticClass: "custom-control custom-switch" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.data.track_stock,
+                            expression: "data.track_stock"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: { type: "checkbox", id: "track_stock" },
+                        domProps: {
+                          checked: Array.isArray(_vm.data.track_stock)
+                            ? _vm._i(_vm.data.track_stock, null) > -1
+                            : _vm.data.track_stock
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.data.track_stock,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.data,
+                                    "track_stock",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.data,
+                                    "track_stock",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
                               }
-                            ],
-                            staticClass: "custom-control-input",
-                            attrs: { type: "checkbox", id: "track_stock" },
-                            domProps: {
-                              checked: Array.isArray(_vm.data.track_stock)
-                                ? _vm._i(_vm.data.track_stock, null) > -1
-                                : _vm.data.track_stock
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.data.track_stock,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.data,
-                                        "track_stock",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.data,
-                                        "track_stock",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(_vm.data, "track_stock", $$c)
-                                }
-                              }
+                            } else {
+                              _vm.$set(_vm.data, "track_stock", $$c)
                             }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "custom-control-label",
-                              attrs: { for: "track_stock" }
-                            },
-                            [_vm._v("Track stock")]
-                          )
-                        ]
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: "track_stock" }
+                        },
+                        [_vm._v("Track stock")]
                       )
-                    ]
-                  )
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -63823,7 +64146,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _vm._m(5),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("date-picker", {
                         attrs: {
@@ -63848,7 +64171,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("date-picker", {
                         attrs: {
@@ -63997,7 +64320,7 @@ var render = function() {
               _c(
                 "div",
                 [
-                  _vm._m(7),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c("file-manager", {
                     attrs: {
@@ -64015,7 +64338,7 @@ var render = function() {
               _c(
                 "div",
                 [
-                  _vm._m(8),
+                  _vm._m(7),
                   _vm._v(" "),
                   _c("file-manager", {
                     attrs: {
@@ -64167,15 +64490,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "category_id" } }, [
       _vm._v("Category "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "is_active" } }, [
-      _vm._v("Status "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },

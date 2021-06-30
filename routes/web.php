@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\WebsiteResourceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,3 +19,14 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Routes for front resources
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('/products/featured', [WebsiteResourceController::class, 'featuredProducts'])->name('featuredProducts');
+Route::get('/products/{slug}/view', [WebsiteController::class, 'singleProduct'])->name('singleProduct');
+Route::get('/products/{product}', [WebsiteController::class, 'product'])->name('products.show');

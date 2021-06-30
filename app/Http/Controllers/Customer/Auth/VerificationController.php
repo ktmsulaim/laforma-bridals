@@ -83,7 +83,7 @@ class VerificationController extends Controller
 
         if ($request->user('customer')->markEmailAsVerified()) {
             $customer = Customer::find($request->user('customer')->id);
-            $customer->status = 1;
+            $customer->is_active = 1;
             $customer->save();
             
             event(new CustomerEmailVerified($request->user('customer')));

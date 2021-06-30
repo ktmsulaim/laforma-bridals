@@ -17,7 +17,7 @@ class RedirectIfCustomer
      */
     public function handle($request, Closure $next, $guard = 'customer')
     {
-        if (Auth::guard($guard)->check() && Auth::user()->status === 1) {
+        if (Auth::guard($guard)->check() && Auth::guard($guard)->user()->isActive()) {
             return redirect()->route('customer.dashboard');
         }
 
