@@ -5,7 +5,7 @@
       <div v-if="items && items.length">
         <ul>
           <li v-for="(item, index) in items" :key="index">
-            <a href="product-detail-1.html">
+            <a :href="item.url">
               <figure>
                 <img
                   :src="item.image"
@@ -26,7 +26,7 @@
         </ul>
         <div class="total_drop">
           <div class="clearfix"><strong>Total</strong><span>{{ total }}</span></div>
-          <a href="cart.html" class="btn_1 outline">View Cart</a
+          <a :href="cartUrl" class="btn_1 outline">View Cart</a
           ><a href="checkout.html" class="btn_1">Checkout</a>
         </div>
       </div>
@@ -38,21 +38,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import CartMixin from '../mixins/CartMixin'
 export default {
   name: "Cart",
+  mixins: [CartMixin],
   computed: {
-    ...mapGetters({
-        'total': 'getTotal'
-    }),
-    items() {
-        return this.$store.state.Cart.items;
+    cartUrl() {
+      return route('cart')
     }
-  },
-  methods: {
-      removeFromCart(item) {
-          this.$store.commit('removeFromCart', item)
-      }
   },
   created() {
       const cartItems = localStorage.getItem('cartItems')

@@ -24,4 +24,14 @@ class WebsiteController extends Controller
     {
         return new ProductResource($product);
     }
+
+    public function cart()
+    {
+        return view('website.cart.index');
+    }
+
+    public function checkout()
+    {
+        
+    }
 }

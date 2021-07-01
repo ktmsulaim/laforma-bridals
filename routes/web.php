@@ -30,3 +30,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/products/featured', [WebsiteResourceController::class, 'featuredProducts'])->name('featuredProducts');
 Route::get('/products/{slug}/view', [WebsiteController::class, 'singleProduct'])->name('singleProduct');
 Route::get('/products/{product}', [WebsiteController::class, 'product'])->name('products.show');
+Route::get('/cart', [WebsiteController::class, 'cart'])->name('cart');
+Route::get('/checkout', [WebsiteController::class, 'checkout'])->name('checkout');

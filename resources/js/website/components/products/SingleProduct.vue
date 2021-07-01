@@ -289,7 +289,6 @@ export default {
       return {
           loading: true,
           product: null,
-          quantity: 1,
       }
   },
   methods: {
@@ -306,13 +305,6 @@ export default {
               .finally(() => this.loading = false)
           }
       },
-      updateQuantity(type) {
-          if(type == 'increase' && this.quantity < this.product.qty) {
-              this.quantity++;
-          } else if(type == 'decrease' && this.quantity > 1) {
-              this.quantity--;
-          }
-      }
   },
   created() {
       this.getProduct()

@@ -13,6 +13,21 @@ Vue.use(VueToast)
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('start-rating', StarRating);
 
+Vue.mixin({
+    methods: {
+        formatMoney(value) {
+            if(value) {
+                const formatter = new Intl.NumberFormat('en-Us', {
+                    style: 'currency',
+                    currency: 'INR'
+                })
+    
+                return formatter.format(value);
+            }
+        }
+    }
+})
+
 /**
  * ----------------------------------------------------
  * Components
@@ -23,6 +38,7 @@ import FeaturedProducts from './components/home/FeaturedProducts'
 import NoData from './components/NoData'
 import SingleProduct from './components/products/SingleProduct'
 import Cart from './components/Cart'
+import CartIndex from './components/cart/Index'
 
 Vue.component('no-data', NoData)
 
@@ -33,7 +49,8 @@ const app = new Vue({
         Auth,
         FeaturedProducts,
         SingleProduct,
-        Cart
+        Cart,
+        CartIndex
     },
     store
 });

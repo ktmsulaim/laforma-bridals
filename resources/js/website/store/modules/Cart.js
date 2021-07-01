@@ -37,10 +37,12 @@ const mutations = {
         localStorage.setItem('cartItems', JSON.stringify(state.items));
     },
     updateCart(state, item) {
-       state.items = [
-           ...state.items.filter(cartItem => cartItem.product_id !== item.product_id),
-           item
-       ];
+        const cartItem = state.items.find(ci => ci.product_id === item.product_id)
+        const index = state.items.indexOf(cartItem)
+
+        if(index != -1) {
+            state.items.splice(index, 1, item)
+        }
 
         localStorage.setItem('cartItems', JSON.stringify(state.items));
     },
@@ -56,7 +58,7 @@ const mutations = {
     clearCart(state) {
         localStorage.removeItem('cartItems')
         state.items = []
-    }
+    },
 };
 
 const actions = {
