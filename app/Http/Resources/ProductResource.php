@@ -34,15 +34,20 @@ class ProductResource extends JsonResource
             ],
             'special_price' => [
                 'has_special_price' => $this->hasSpecialPrice(),
-                'original' => $this->special_price(false),
-                'formatted' => $this->special_price(),
+                'original' => $this->specialPrice(false),
+                'formatted' => $this->specialPrice(),
                 'expires' => $this->special_price_end(),
                 'percentage' => $this->getSpecialPricePercentage()
             ],
             'is_new' => $this->is_new(),
             'url' => route('singleProduct', $this->slug),
             'in_stock' => $this->inStock(),
-            'qty' => $this->qty
+            'qty' => $this->qty,
+            'is_orderable' => $this->is_orderable,
+            'options' => [
+                'has_options' => $this->hasOptions(),
+                'items' => OptionResource::collection($this->options)
+            ]
         ];
     }
 }

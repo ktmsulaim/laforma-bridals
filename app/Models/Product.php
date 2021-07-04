@@ -17,7 +17,7 @@ class Product extends Model
 
     public function scopeAvailable($query)
     {
-        return $query->where(['is_active' => 1, 'is_orderable' => 1]);
+        return $query->where(['is_active' => 1]);
     }
 
     public function price()
@@ -27,7 +27,7 @@ class Product extends Model
         }
     }
 
-    public function special_price($format = true)
+    public function specialPrice($format = true)
     {
         if($this->special_price) {
             if($this->special_price_type == 'fixed') {
@@ -45,6 +45,22 @@ class Product extends Model
         }
 
         return 0;
+    }
+
+    public function specialPriceAmount()
+    {
+        if($this->hasSpecialPrice()) {
+            if($this->special_price_type == 'fixed') {
+                $price = $this->price - $this->special_price;
+            } elseif($this->special_price_type == 'percentage') {
+                $percentage = ($this->price * $this->special_price) / 100;
+                $price = $percentage;
+            }
+
+            return $price;
+        } else {
+            return 0;
+        }
     }
 
     public function hasSpecialPrice()
@@ -126,6 +142,26 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
+
+    public function hasOptions()
+    {
+        if($this->options()->exists()) {
+            foreach($this->options as $option) {
+                if(!$option->values()->exists()) {
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

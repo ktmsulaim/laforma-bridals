@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Option;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class ProductController extends Controller
             'qty' => 'required|numeric'
         ]);
 
-        $data = $request->except(['base_image', 'additional_images', 'tags']);
+        $data = $request->except(['base_image', 'additional_images', 'tags', 'options']);
 
         // 1. Make slug
         $data['slug'] = $request->get('slug') ?: str_slug($request->name);
@@ -75,10 +76,10 @@ class ProductController extends Controller
         // 2. Create product
         $product = Product::create($data);
 
-        // attach images
+        // 3. attach images
         $this->saveImages($request, $product);
 
-        // 5. Attach tags if any
+        // 4. Attach tags if any
         if($request->has('tags')) {
             $tags = $request->get('tags');
 
@@ -89,18 +90,14 @@ class ProductController extends Controller
             }
         }
 
-        return response()->json($product);
-    }
+        // 5. create options if any
+        if($request->has('options')) {
+            $options = $request->options;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
+            $this->addOptions($options, $product);
+        }
+
+        return response()->json($product);
     }
 
     /**
@@ -114,6 +111,7 @@ class ProductController extends Controller
         $product->{'base_image'} = $product->images()->wherePivot('type', '=', 'base_image')->first();
         $product->{'additional_images'} = $product->images()->wherePivot('type', '=', 'additional_images')->get();
         $product->{'tags'} = $product->tags;
+        $product->{'options'} = $product->options;
 
         return view('admin.products.edit', ['product' => $product]);
     }
@@ -134,14 +132,14 @@ class ProductController extends Controller
             'qty' => 'required|numeric'
         ]);
 
-        $data = $request->except(['base_image', 'additional_images', 'tags']);
+        $data = $request->except(['base_image', 'additional_images', 'tags', 'options']);
 
         // if title is changed change slug
         if($data['name'] != $product->name) {
             $data['slug'] = str_slug($data['name']);
         }
 
-        // 5. Attach tags if any
+        // Attach tags if any
         if($request->has('tags')) {
             $tags = $request->get('tags');
 
@@ -150,12 +148,47 @@ class ProductController extends Controller
             }
         }
 
+        // Update options 
+        if($request->has('options')) {
+            if($product->options()->exists()) {
+                $product->options()->delete();
+            }
+
+            $options = $request->options;
+            
+            $this->addOptions($options, $product);
+        }
+
         $product->update($data);
 
         $this->saveImages($request, $product);
 
         return response()->json($product);
     }
+
+    private function addOptions($options, Product $product) {
+        if($options && is_array($options) && count($options)) {
+            foreach($options as $option) {
+                $productOption = $product->options()->create([
+                    'name' => $option['name'],
+                    'type' => $option['type'],
+                    'is_required' => $option['is_required'],
+                    'position' => $option['position']
+                ]);
+
+                if($option['values'] && is_array($option['values']) && count($option['values'])) {
+                    foreach($option['values'] as $value) {
+                        $productOption->values()->create([
+                            'label' => $value['label'],
+                            'price' => $value['price'],
+                            'price_type' => $value['price_type'],
+                            'position' => $value['position']
+                        ]);
+                    }
+                }
+            }
+        }
+    }   
 
     /**
      * Remove the specified resource from storage.

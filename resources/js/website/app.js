@@ -6,9 +6,11 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 import VueSkeletonLoader from 'skeleton-loader-vue';
 import StarRating from 'vue-star-rating'
 import store from './store'
+import vmodal from 'vue-js-modal'
 
 window.Vue = Vue;
 Vue.use(VueToast)
+Vue.use(vmodal)
 
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('start-rating', StarRating);
@@ -25,7 +27,7 @@ Vue.mixin({
                 return formatter.format(value);
             }
         }
-    }
+    },
 })
 
 /**

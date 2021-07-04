@@ -1,20 +1,38 @@
 <template>
   <tr>
     <td>
-      <div class="thumb_cart">
-        <img
-          src="/img/470x290.png"
-          :data-src="item.image"
-          class="lazy"
-          alt="Image"
-        />
+      <div class="d-flex">
+        <div class="thumb_cart">
+          <img
+            src="/img/470x290.png"
+            :data-src="item.image"
+            class="lazy"
+            alt="Image"
+          />
+        </div>
+        <div class="d-flex justify-content-center flex-column">
+          <a :href="item.url">
+            <span class="item_cart">{{ item.name }}</span>
+          </a>
+          <div class="mt-1 ml-2 product-options">
+            <span v-for="(option, optionIndex) in options" :key="optionIndex">
+              <b>{{ option[0] }}: </b>
+              <span v-if="option[0] == 'Color'">
+                <span class="color" :style="{backgroundColor: option[1]}"></span>
+              </span>
+              <span v-else>{{ option[1] }}</span>
+            </span>
+          </div>
+        </div>
       </div>
-      <a :href="item.url">
-        <span class="item_cart">{{ item.name }}</span>
-      </a>
     </td>
     <td>
-      <strong>{{ item.price }}</strong>
+      <div class="price_box">
+            <span class="new_price">
+                <span>{{ item.price }}</span>
+            </span>
+            <span v-if="item.special_price" class="old_price">{{ formatMoney(item.net_price) }}</span>
+        </div>
     </td>
     <td>
       <div class="quantity">
@@ -59,6 +77,9 @@ export default {
         return 0;
       }
     },
+    options() {
+      return !_.isEmpty(this.item.options) ? Object.entries(this.item.options) : null
+    }
   },
   methods: {
     increaseQuantity() {
@@ -93,4 +114,31 @@ export default {
 </script>
 
 <style>
+.thumb_cart, .item_cart {
+  float: none;
+}
+.product-options b {
+    color: #444;
+    font-size: 14px;
+}
+.product-options span {
+    margin-right: 8px;
+    font-size: 13px;
+}
+
+.product-options {
+    color: #666;
+    font-size: 14px;
+}
+
+.product-options .color {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-left: 5px;
+}
 </style>

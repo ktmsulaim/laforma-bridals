@@ -25,6 +25,19 @@
         </li>
         <li class="nav-item">
           <a
+            href="#options"
+            data-toggle="tab"
+            aria-expanded="false"
+            class="nav-link"
+          >
+            <span class="d-block d-sm-none"
+              ><i class="far fa-envelope"></i
+            ></span>
+            <span class="d-none d-sm-block">Options</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
             href="#other"
             data-toggle="tab"
             aria-expanded="false"
@@ -201,6 +214,12 @@
             </div>
           </div>
         </div>
+        <div role="tabpanel" class="tab-pane fade" id="options">
+          <options
+            :oldOptions="data.options"
+            @update="data.options = $event"
+          ></options>
+        </div>
         <div role="tabpanel" class="tab-pane fade" id="other">
           <div class="row">
             <div class="col-md-6">
@@ -372,6 +391,7 @@ import { mapGetters } from "vuex";
 
 import FileManager from "../FileManager.vue";
 import Tags from "./Tags.vue";
+import Options from "./Options.vue";
 
 import ErrorsMixin from "../../mixins/errorsMixin";
 import slugMixin from "../../mixins/slugMixin";
@@ -383,6 +403,7 @@ export default {
     Select2,
     FileManager,
     Tags,
+    Options,
   },
   mixins: [ErrorsMixin, slugMixin],
   props: {
@@ -423,6 +444,7 @@ export default {
         meta_description: null,
         base_image: null,
         additional_images: [],
+        options: [],
       },
       editorOption: {
         theme: "snow",
@@ -479,7 +501,7 @@ export default {
     },
     updateTags(val) {
       this.data.tags = val;
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -545,8 +567,19 @@ export default {
       this.data.base_image = this.product.base_image
         ? this.product.base_image.id
         : null;
+
       this.data.additional_images = this.product.additional_images
         ? this.product.additional_images.map((image) => image.id)
+        : null;
+
+      this.data.options = this.product.options
+        ? this.product.options.map((option) => ({
+            name: option.name,
+            type: option.type,
+            is_required: option.is_required,
+            position: option.position,
+            values: option.values,
+          }))
         : null;
     }
   },
@@ -562,7 +595,7 @@ export default {
   min-height: 200px;
 }
 
-.switch-wrapper{
+.switch-wrapper {
   display: flex;
   height: 100%;
   align-items: center;

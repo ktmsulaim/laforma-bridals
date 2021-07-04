@@ -937,6 +937,14 @@ header ul.top_tools > li .dropdown-access .dropdown-menu.authenticated ul {
   white-space: nowrap;
 }
 
+.options_modal {
+  padding: 25px;
+}
+
+.text-danger {
+  color: #ff5b5b;
+}
+
 /*============================================================================================*/
 
 /* CART PAGE */

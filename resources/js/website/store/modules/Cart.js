@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 const state = {
     items: [],
 };
@@ -5,6 +7,15 @@ const state = {
 const getters = {
     getCartItems(state) {
         return state.items;
+    },
+    getSubTotal() {
+        if(state.items && state.items.length) {
+            let price = 0;
+            state.items.forEach(item => {
+                price += item.net_price * item.quantity;
+            })
+            return price;
+        }
     },
     getTotal(state) {
         if(state.items && state.items.length) {
@@ -17,12 +28,7 @@ const getters = {
                 }
             })
 
-            const formatter = new Intl.NumberFormat('en-Us', {
-                style: 'currency',
-                currency: 'INR'
-            })
-
-            return formatter.format(price);
+            return price;
         }
     }
 };
@@ -37,7 +43,14 @@ const mutations = {
         localStorage.setItem('cartItems', JSON.stringify(state.items));
     },
     updateCart(state, item) {
-        const cartItem = state.items.find(ci => ci.product_id === item.product_id)
+        let cartItem;
+
+        if(_.isEmpty(item.options)) {
+            cartItem = state.items.find(ci => ci.product_id === item.product_id)
+        } else {
+            cartItem = state.items.find(ci => ci.product_id === item.product_id && _.isEqual(ci.options, item.options))
+        }
+
         const index = state.items.indexOf(cartItem)
 
         if(index != -1) {
@@ -47,8 +60,7 @@ const mutations = {
         localStorage.setItem('cartItems', JSON.stringify(state.items));
     },
     removeFromCart(state, item) {
-        const cartItem = state.items.find(ci => ci.product_id === item.product_id)
-        const index = state.items.indexOf(cartItem);
+        const index = state.items.indexOf(item);
 
         if(index != -1) {
             state.items.splice(index, 1)

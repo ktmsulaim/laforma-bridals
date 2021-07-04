@@ -21,6 +21,7 @@
           <div class="col-xl-4 col-lg-4 col-md-6">
             <ul>
               <li><span>Subtotal</span> {{ subTotal }}</li>
+              <li><span>Discount</span> {{discount}}</li>
               <li><span>Shipping</span> ₹0.00</li>
               <li><span>Total</span> {{ total }}</li>
             </ul>
@@ -101,17 +102,14 @@
 <script>
 import CartMixin from '../../mixins/CartMixin'
 import CartItem from './CartItem.vue'
+import {mapGetters} from 'vuex'
+
 export default {
   name: "CartIndex",
   mixins: [CartMixin],
   components: {
     CartItem
   },
-   computed: {
-     subTotal() {
-       return this.total;
-     }
-   }
 };
 </script>
 

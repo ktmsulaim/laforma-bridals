@@ -26,19 +26,18 @@
                 <span v-else>{{ product.price.formatted }}</span>
             </span>
         </div>
-        <ul>
-            <li><span class="tooltip-1" data-toggle="tooltip" data-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></span></li>
-            <li v-if="product.in_stock" @click="addToCart(product)"><span class="tooltip-1" data-toggle="tooltip" data-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></span></li>
-        </ul>
+        <product-actions :product="product"></product-actions>
     </div>
 </template>
 
 <script>
-import CartMixin from '../mixins/CartMixin'
+import ProductActions from './products/ProductActions.vue'
 export default {
     name: 'Product',
     props: ['product'],
-    mixins: [CartMixin],
+    components: {
+        ProductActions
+    },
     mounted() {
         this.$nextTick(() => {
             $('[data-countdown]').each(function() {
