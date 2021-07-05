@@ -25,6 +25,9 @@ export default {
             } else {
                 return diff;
             }
+        },
+        checkoutUrl() {
+            return route('checkout');
         }
         
     },

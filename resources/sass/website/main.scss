@@ -1,6 +1,9 @@
 @import 'variables';
 @import 'auth';
-@import 'dashboard';
 @import 'navigation';
 @import 'products';
 @import 'cart';
+@import 'checkout';
+
+@import 'customer/dashboard';
+@import 'customer/address';

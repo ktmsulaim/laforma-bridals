@@ -86,4 +86,9 @@ class Customer extends Authenticatable implements MustVerifyEmail
             return asset('img/customer.svg');
         }
     }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

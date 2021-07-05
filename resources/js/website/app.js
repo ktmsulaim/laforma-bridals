@@ -7,10 +7,14 @@ import VueSkeletonLoader from 'skeleton-loader-vue';
 import StarRating from 'vue-star-rating'
 import store from './store'
 import vmodal from 'vue-js-modal'
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 window.Vue = Vue;
 Vue.use(VueToast)
 Vue.use(vmodal)
+Vue.use(VueSweetalert2)
+
 
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('start-rating', StarRating);
@@ -41,6 +45,9 @@ import NoData from './components/NoData'
 import SingleProduct from './components/products/SingleProduct'
 import Cart from './components/Cart'
 import CartIndex from './components/cart/Index'
+import CheckoutIndex from './components/checkout/Index'
+
+import CustomerAddress from './components/Customer/addresses/CustomerAddress'
 
 Vue.component('no-data', NoData)
 
@@ -52,7 +59,9 @@ const app = new Vue({
         FeaturedProducts,
         SingleProduct,
         Cart,
-        CartIndex
+        CartIndex,
+        CheckoutIndex,
+        CustomerAddress
     },
     store
 });

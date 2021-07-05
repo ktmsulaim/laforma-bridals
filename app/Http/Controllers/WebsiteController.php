@@ -32,6 +32,6 @@ class WebsiteController extends Controller
 
     public function checkout()
     {
-        
+        return view('website.checkout.index');
     }
 }

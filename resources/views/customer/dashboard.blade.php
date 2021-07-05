@@ -18,7 +18,7 @@
     
     <div class="row">
         <div class="col-md-6">
-            <a class="box_topic_2" href="#0">
+            <a class="box_topic_2" href="{{ route('customer.address.index') }}">
             <i class="mdi mdi-map-marker-outline"></i>
             <h3>Addresses</h3>
             <p>Manage your addresses which can be used while placing orders</p>

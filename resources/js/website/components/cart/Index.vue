@@ -25,7 +25,7 @@
               <li><span>Shipping</span> ₹0.00</li>
               <li><span>Total</span> {{ total }}</li>
             </ul>
-            <a href="cart-2.html" class="btn_1 full-width cart"
+            <a :href="checkoutUrl" class="btn_1 full-width cart"
               >Proceed to Checkout</a
             >
           </div>
@@ -109,7 +109,7 @@ export default {
   mixins: [CartMixin],
   components: {
     CartItem
-  },
+  }
 };
 </script>
 

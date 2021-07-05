@@ -39,4 +39,8 @@ Route::get('inactive', [LoginController::class, 'inactive'])->name('inactive');
  */
 Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->group(function(){
     Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
+
+    Route::resources([
+        'address' => AddressController::class,
+    ]);
 });
