@@ -9,4 +9,11 @@ class Money {
             return '₹' . number_format($val, 2);
         }
     }
+
+    public static function toRazorPay($val)
+    {
+        if($val) {
+            return $val * 100;
+        }
+    }
 }

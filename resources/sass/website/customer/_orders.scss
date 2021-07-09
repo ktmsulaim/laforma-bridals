@@ -1,0 +1,39 @@
+h4.heading {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+#show-order {
+    .single-address {
+        border-radius: 0;
+    }
+
+    .order-summary-wrapper {
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+
+        .order-summary {
+            width: 300px;
+
+            ul {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    font-size: 16px;
+                }
+            }
+
+            .total {
+                padding-top: 1rem;
+                border-top: 1px solid #e1e1e1;
+                font-size: 20px;
+            }
+        }
+    }
+}

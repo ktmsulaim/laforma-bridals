@@ -182,7 +182,8 @@ class ProductController extends Controller
                             'label' => $value['label'],
                             'price' => $value['price'],
                             'price_type' => $value['price_type'],
-                            'position' => $value['position']
+                            'position' => $value['position'],
+                            'in_stock' => $value['in_stock'],
                         ]);
                     }
                 }

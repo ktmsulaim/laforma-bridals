@@ -11,4 +11,29 @@ class CustomerController extends Controller
     {
         return view('customer.dashboard');
     }
+
+    public function orders()
+    {
+        return view('customer.orders.index');
+    }
+
+    public function appointments()
+    {
+        
+    }
+    
+    public function account()
+    {
+        
+    }
+   
+    public function wishlist()
+    {
+        
+    }
+    
+    public function reviews()
+    {
+        
+    }
 }

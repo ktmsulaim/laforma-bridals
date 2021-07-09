@@ -287,3 +287,31 @@
     -webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
     animation: checkmark-circle 0.6s ease-in-out backwards;
   }
+
+  ul.cart-items-list {
+    padding: 0;
+    list-style-type: none;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+
+        .new_price, .old_price {
+          font-size: 14px;
+        }
+
+        .new_price {
+          color: #222;
+          font-weight: bold;
+        }
+    }
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: $primary-color;
+}

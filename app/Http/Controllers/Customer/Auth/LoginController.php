@@ -64,6 +64,10 @@ class LoginController extends Controller
         return 'username';
     }
 
+    public function authenticated(Request $request, $user) {
+        return response()->json($user);
+    }
+
     /**
      * Show inactive message 
      */

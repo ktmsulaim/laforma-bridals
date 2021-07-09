@@ -6,17 +6,17 @@
         </div>
         <div v-if="option.type === 'dropdown'">
             <select class="form-control" v-model="selected[option.name]" @change="updatePrice(option.values.find(value => value.label == selected[option.name]), option)">
-                <option :value="value.label" v-for="(value, i) in option.values" :key="i">{{ value.label }}</option>
+                <option :value="value.label" v-for="(value, i) in option.values" :key="i" :disabled="!value.in_stock">{{ value.label }}</option>
             </select>
         </div>
         <div v-else-if="option.type === 'radiobutton'">
             <label v-for="(value,i) in option.values" :for="`value-${value.label}`" :key="i" class="container_radio">
-                <input type="radio" v-model="selected[option.name]" :value="value.label" @change="updatePrice(value, option)" :id="`value-${value.label}`" :name="option.name"> {{ value.label }}
+                <input type="radio" v-model="selected[option.name]" :value="value.label" @change="updatePrice(value, option)" :disabled="!value.in_stock" :id="`value-${value.label}`" :name="option.name"> {{ value.label }}
                 <span class="checkmark"></span>
             </label>
         </div>
         <div v-else-if="option.type === 'color'">
-            <v-swatches v-model="selected[option.name]" @input="getPriceOfColor(option, $event)" :swatches="option.values.map(color => color.label)" inline></v-swatches>
+            <v-swatches v-model="selected[option.name]" @input="getPriceOfColor(option, $event)" :swatches="option.values.filter(color => color.in_stock).map(color => color.label)" inline></v-swatches>
         </div>
     </div>
   </div>

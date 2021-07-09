@@ -131,6 +131,7 @@
                                 class="qty2"
                                 name="quantity_1"
                                 :max="product.qty"
+                                @input="checkQuantity(prodcutQuantity)"
                               />
                               <div
                                 @click="updateQuantity('increase')"
@@ -165,7 +166,7 @@
                           <div class="col-lg-5 col-md-6">
                             <div class="btn_add_to_cart">
                               <button
-                                :disabled="!product.in_stock || addToCartLoading"
+                                :disabled="!product.in_stock"
                                 @click="addToCart(product, quantity)"
                                 class="btn_1 text-uppercase w-100"
                               >

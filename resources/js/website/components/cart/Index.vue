@@ -102,7 +102,6 @@
 <script>
 import CartMixin from '../../mixins/CartMixin'
 import CartItem from './CartItem.vue'
-import {mapGetters} from 'vuex'
 
 export default {
   name: "CartIndex",

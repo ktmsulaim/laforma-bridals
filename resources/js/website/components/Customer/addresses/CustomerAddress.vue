@@ -6,7 +6,7 @@
             <button @click="openModal('create')" class="button-text"><span class="mdi mdi-plus"></span> Add new</button>    
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" v-for="address in addresses" :key="address.id">
-            <single-address @editAddress="editAddress" @deleted="deleteAddress" :address="address"></single-address>
+            <single-address :readonly="false" @editAddress="editAddress" @deleted="deleteAddress" :address="address"></single-address>
         </div>
     </div>
     <div class="text-center" v-else>
@@ -20,7 +20,8 @@
 <script>
 import Loading from "../../Loading.vue";
 import AddressForm from './AddressForm.vue'
-import SingleAddress from './Address.vue'
+import SingleAddress from './SingleAddress.vue'
+
 export default {
   name: "CustomerAddress",
   components: {

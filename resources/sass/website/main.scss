@@ -1,4 +1,8 @@
 @import 'variables';
+
+@import './components/badge';
+@import './components/table';
+
 @import 'auth';
 @import 'navigation';
 @import 'products';
@@ -7,3 +11,5 @@
 
 @import 'customer/dashboard';
 @import 'customer/address';
+@import 'customer/navigation';
+@import 'customer/orders';

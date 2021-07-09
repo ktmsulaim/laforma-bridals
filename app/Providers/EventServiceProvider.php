@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Events\CustomerEmailVerified;
+use App\Events\NewOrderPlaced;
 use App\Listeners\SendCustomerWelcomeMail;
 use App\Listeners\SendNewCustomerAdminNotification;
+use App\Listeners\SendNewOrderNotification;
+use App\Listeners\SendOrderSummaryToCustomer;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,6 +27,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         CustomerEmailVerified::class => [
             SendCustomerWelcomeMail::class
+        ],
+        NewOrderPlaced::class => [
+            SendOrderSummaryToCustomer::class,
+            SendNewOrderNotification::class,
         ]
     ];
 

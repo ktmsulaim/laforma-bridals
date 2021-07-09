@@ -15,7 +15,6 @@ Vue.use(VueToast)
 Vue.use(vmodal)
 Vue.use(VueSweetalert2)
 
-
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('start-rating', StarRating);
 
@@ -40,15 +39,22 @@ Vue.mixin({
  * ----------------------------------------------------
  */
 import Auth from './components/Auth'
+import AccountBar from './components/auth/AccountBar'
 import FeaturedProducts from './components/home/FeaturedProducts'
 import NoData from './components/NoData'
 import SingleProduct from './components/products/SingleProduct'
+
 import Cart from './components/Cart'
+import CartItemOptions from './components/cart/CartItemOptions'
 import CartIndex from './components/cart/Index'
 import CheckoutIndex from './components/checkout/Index'
 
-import CustomerAddress from './components/Customer/addresses/CustomerAddress'
+import CustomerAddress from './components/customer/addresses/CustomerAddress'
+import SingleAddress from './components/customer/addresses/SingleAddress'
+import ListOrders from './components/customer/orders/ListOrders'
 
+Vue.component('single-address', SingleAddress)
+Vue.component('cart-item-options', CartItemOptions)
 Vue.component('no-data', NoData)
 
 
@@ -56,12 +62,14 @@ const app = new Vue({
     el: '#app',
     components: {
         Auth,
+        AccountBar,
         FeaturedProducts,
         SingleProduct,
         Cart,
         CartIndex,
         CheckoutIndex,
-        CustomerAddress
+        CustomerAddress,
+        ListOrders,
     },
     store
 });

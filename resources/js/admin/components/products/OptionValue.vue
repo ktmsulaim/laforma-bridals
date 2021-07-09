@@ -8,6 +8,7 @@
             <th>Label</th>
             <th>Price</th>
             <th>Type</th>
+            <th>In stock</th>
             <th></th>
           </tr>
         </thead>
@@ -24,7 +25,11 @@
               <div class="mdi mdi-drag-variant dragger"></div>
             </td>
             <td>
-              <v-swatches v-model="values[index].label" v-if="type === 'color'" swatches='text-advanced'></v-swatches>
+              <v-swatches
+                v-model="values[index].label"
+                v-if="type === 'color'"
+                swatches="text-advanced"
+              ></v-swatches>
               <input
                 v-else
                 type="text"
@@ -47,6 +52,19 @@
                 <option value="percentage">Percentage</option>
               </select>
             </td>
+            <td>
+              <div class="custom-control custom-switch">
+                <input
+                    type="checkbox"
+                    :id="`in_stock-${optionName}-${index}`"
+                    class="custom-control-input"
+                    v-model="values[index].in_stock"
+                />
+                <label :for="`in_stock-${optionName}-${index}`" class="custom-control-label"
+                    ></label
+                >
+                </div>
+            </td>
             <td class="text-center icon">
               <span @click="removeValue(index)" class="mdi mdi-delete"></span>
             </td>
@@ -68,15 +86,15 @@
 
 <script>
 import draggable from "vuedraggable";
-import VSwatches from 'vue-swatches'
-import 'vue-swatches/dist/vue-swatches.css'
+import VSwatches from "vue-swatches";
+import "vue-swatches/dist/vue-swatches.css";
 export default {
   name: "OptionValue",
   components: {
     draggable,
-    VSwatches
+    VSwatches,
   },
-  props: ['type', 'option'],
+  props: ["type", "option"],
   data() {
     return {
       values: [],
@@ -90,6 +108,9 @@ export default {
         return 1;
       }
     },
+    optionName() {
+      return _.kebabCase(this.option.name);
+    }
   },
   methods: {
     addValue() {
@@ -98,6 +119,7 @@ export default {
         label: null,
         price: 0,
         price_type: "fixed",
+        in_stock: 1,
       });
     },
     removeValue(index) {
@@ -107,13 +129,13 @@ export default {
       this.$emit("updateValues", this.values);
     },
     sortValues() {
-      this.values.forEach((item, index) => item.position = index + 1 );
+      this.values.forEach((item, index) => (item.position = index + 1));
     },
     checkPrice(index) {
-      if(this.values[index].price < 0) {
+      if (this.values[index].price < 0) {
         this.values[index].price = 0;
       }
-    }
+    },
   },
   watch: {
     values(oldValue, newValue) {
@@ -121,10 +143,16 @@ export default {
     },
   },
   created() {
-    if(this.option && this.option.values && this.option.values.length) {
-      this.values = this.option.values.map(value => ({label: value.label, price: value.price, price_type: value.price_type, position: value.position}))
+    if (this.option && this.option.values && this.option.values.length) {
+      this.values = this.option.values.map((value) => ({
+        label: value.label,
+        price: value.price,
+        price_type: value.price_type,
+        position: value.position,
+        in_stock: value.in_stock,
+      }));
     }
-  }
+  },
 };
 </script>
 

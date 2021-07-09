@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RazorpayController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -39,6 +41,21 @@ Route::get('inactive', [LoginController::class, 'inactive'])->name('inactive');
  */
 Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->group(function(){
     Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
+
+    Route::post('placeorder', [OrderController::class, 'placeorder'])->name('placeorder');
+    Route::post('payment/getOrder', [RazorpayController::class, 'getOrderId'])->name('payment.razorpay.getOrder');
+    Route::post('payment/makePayment', [RazorpayController::class, 'makePayment'])->name('payment.razorpay.makePayment');
+
+    Route::get('orders', [CustomerController::class, 'orders'])->name('orders');
+    Route::get('orders/list', [OrderController::class, 'listOrders'])->name('orders.list');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    
+    Route::get('appointments', [CustomerController::class, 'appointments'])->name('appointments');
+    Route::get('account', [CustomerController::class, 'account'])->name('account');
+    Route::get('wishlist', [CustomerController::class, 'wishlist'])->name('wishlist');
+    Route::get('reviews', [CustomerController::class, 'reviews'])->name('reviews');
+
+    Route::post('products/getMaxQuantity', [OrderController::class, 'getMaxQuantity'])->name('max.quantity');
 
     Route::resources([
         'address' => AddressController::class,

@@ -10,7 +10,7 @@
         <p>{{ address.phone }}</p>
         <p>{{ address.landmark }}</p>
       </div>
-      <div class="footer">
+      <div v-if="!readonly" class="footer">
         <div class="part-1">
           <div class="default" v-if="address.is_default">
             <span class="label label-info">Default</span>
@@ -33,7 +33,7 @@
 <script>
 export default {
   name: 'SingleAddress',
-  props: ['address'],
+  props: ['address', 'readonly'],
   methods: {
     edit() {
       this.$emit('editAddress', this.address);

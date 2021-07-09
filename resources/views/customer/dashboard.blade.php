@@ -15,7 +15,7 @@
         <h2>Account overview</h2>
         <p>Navigate to your desired location</p>
     </div>
-    
+
     <div class="row">
         <div class="col-md-6">
             <a class="box_topic_2" href="{{ route('customer.address.index') }}">
@@ -25,7 +25,7 @@
         </a>
         </div>
         <div class="col-md-6">
-            <a class="box_topic_2" href="#0">
+            <a class="box_topic_2" href="{{ route('customer.account') }}">
             <i class="ti-user"></i>
             <h3>Account</h3>
             <p>Manage your personal info. You can update your registered mobile number and email address here</p>
@@ -36,14 +36,14 @@
     
     <div class="row">
         <div class="col-md-6">
-            <a class="box_topic_2" href="#0">
+            <a class="box_topic_2" href="{{ route('customer.orders') }}">
             <i class="ti-package"></i>
             <h3>Orders</h3>
             <p>Manage your orders. You can view and make changes to your orders here</p>
         </a>
         </div>
         <div class="col-md-6">
-            <a class="box_topic_2" href="#0">
+            <a class="box_topic_2" href="{{ route('customer.appointments') }}">
             <i class="mdi mdi-calendar-check"></i>
             <h3>Bookings</h3>
             <p>Manage your service bookings here. Know the status, cancel booking, change the date.etc</p>
@@ -54,14 +54,14 @@
     
     <div class="row">
         <div class="col-md-6">
-            <a class="box_topic_2" href="#0">
+            <a class="box_topic_2" href="{{ route('customer.wishlist') }}">
             <i class="mdi mdi-heart-circle-outline"></i>
             <h3>Wishlist</h3>
             <p>Manage your wished products. You can order it any time you want easily</p>
         </a>
         </div>
         <div class="col-md-6">
-            <a class="box_topic_2" href="#0">
+            <a class="box_topic_2" href="{{ route('customer.reviews') }}">
             <i class="ti-comments"></i>
             <h3>Reviews</h3>
             <p>Manage your reviews. You can edit or delete the reviews here</p>

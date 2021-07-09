@@ -1,0 +1,33 @@
+ul.customer-account-navigation {
+    padding: 10px;
+    list-style: none;
+    border: 2px solid #e1e1e1;
+
+    li {
+        a {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #444;
+            height: 54px;
+
+            &:hover, &.active {
+                color: $primary-color;
+            }
+
+            &.active {
+                border-top-right-radius: 35px;
+                border-bottom-right-radius: 35px;
+            }
+
+            span {
+                margin-right: 15px;
+                font-size: 22px;
+                display: block;
+                width: 20px;
+            }
+        }
+    }
+}

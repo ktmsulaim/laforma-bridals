@@ -112,7 +112,7 @@ export default {
     },
     price() {
       return this.product.special_price.has_special_price ? this.product.special_price.formatted : this.product.price.formatted;
-    }
+    },
   },
   methods: {
     showOptions() {

@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "mailjet/laravel-mailjet": "^3.0",
+        "razorpay/razorpay": "^2.7",
         "tightenco/ziggy": "^1.2"
     },
     "require-dev": {

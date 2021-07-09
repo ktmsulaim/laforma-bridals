@@ -43,7 +43,7 @@ class ProductResource extends JsonResource
             'url' => route('singleProduct', $this->slug),
             'in_stock' => $this->inStock(),
             'qty' => $this->qty,
-            'is_orderable' => $this->is_orderable,
+            'is_orderable' => $this->category->is_orderable && $this->is_orderable ? 1 : 0,
             'options' => [
                 'has_options' => $this->hasOptions(),
                 'items' => OptionResource::collection($this->options)

@@ -19,6 +19,7 @@ class CreateOptionValuesTable extends Migration
             $table->string('label');
             $table->float('price');
             $table->string('price_type');
+            $table->integer('in_stock')->default(1);
             $table->integer('position')->nullable();
             $table->timestamps();
 

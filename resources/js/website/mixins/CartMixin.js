@@ -2,13 +2,16 @@ import _ from "lodash";
 import { mapGetters } from "vuex";
 export default {
     data() {
-        return { addToCartLoading: false, quantity: 1};
+        return { 
+            addToCartLoading: false,
+            quantity: 1,
+        };
     },
     computed: {
         ...mapGetters({
             getTotal: "getTotal",
             getSubTotal: "getSubTotal",
-            items: 'getCartItems'
+            items: 'getCartItems',
         }),
         total() {
             return this.formatMoney(this.getTotal)
@@ -19,32 +22,30 @@ export default {
             }
         },
         discount() {
+            if(this.discountNetPrice) {
+                return this.formatMoney(this.discountNetPrice)
+            } else {
+                return '₹0.00';
+            }
+        },
+        discountNetPrice() {
             const diff = this.getTotal - this.getSubTotal;
             if(diff) {
-                return this.formatMoney(diff)
-            } else {
                 return diff;
+            } else {
+                return 0;
             }
         },
         checkoutUrl() {
             return route('checkout');
+        },
+        productQuantity() {
+            return this.product.qty;
         }
-        
     },
     methods: {
         addToCart(product, quantity = 1) {
             if (product) {
-                if (quantity > product.qty) {
-                    this.$toast.open({
-                        message: "Maximum count of quantity reached",
-                        type: "warning"
-                    });
-
-                    this.quantity = 1;
-
-                    return;
-                }
-
                 if (product.options.has_options) {
                     let validOptions = true;
                     product.options.items.forEach(option => {
@@ -65,7 +66,18 @@ export default {
                         });
 
                         return;
-                    }
+                    } 
+                }
+
+                if (quantity > product.qty) {
+                    this.$toast.open({
+                        message: "Maximum count of quantity reached",
+                        type: "warning"
+                    });
+
+                    this.quantity = 1;
+
+                    return;
                 }
 
                 let cartItemData = {
@@ -144,12 +156,18 @@ export default {
                     });
                 }
             }
+
+            this.quantity = 1;
         },
         removeFromCart(item) {
             this.$store.commit("removeFromCart", item);
         },
         updateQuantity(type) {
-            if (type == "increase" && this.quantity < this.product.qty) {
+            let qty = this.product.qty;
+
+            this.checkQuantity(qty);
+
+            if (type == "increase" && this.quantity < qty) {
                 this.quantity++;
             } else if (type == "decrease" && this.quantity > 1) {
                 this.quantity--;

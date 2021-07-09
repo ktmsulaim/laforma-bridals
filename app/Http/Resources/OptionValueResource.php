@@ -22,7 +22,8 @@ class OptionValueResource extends JsonResource
                 'formatted' => $this->price(true),
             ],
             'price_type' => $this->price_type,
-            'position' => $this->position
+            'position' => $this->position,
+            'in_stock' => $this->in_stock
         ];
     }
 }

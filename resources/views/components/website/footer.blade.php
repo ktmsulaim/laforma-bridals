@@ -99,12 +99,15 @@
 
 <!-- COMMON SCRIPTS -->
 <script src="{{ asset('assets/website/js/common_scripts.min.js') }}"></script>
+<script src="{{ asset('assets/app/libs/ntc/ntc.js') }}"></script>
 <script src="{{ asset('assets/website/js/website.js') }}"></script>
 <script src="{{ asset('assets/website/js/main.js') }}"></script>
 
 <!-- SPECIFIC SCRIPTS -->
 <script src="{{ asset('assets/website/js/carousel-home.js') }}"></script>
 <script src="{{ asset('assets/website/js/jquery.cookiebar.js') }}"></script>
+
+@stack('js_libs')
 <script>
     $(document).ready(function() {
         'use strict';

@@ -182,34 +182,10 @@
 								<cart></cart>
 							</li>
 							<li>
-								<a href="#0" class="wishlist"><span>Wishlist</span></a>
+								<a href="{{ route('customer.wishlist') }}" class="wishlist"><span>Wishlist</span></a>
 							</li>
 							<li>
-								<div class="dropdown dropdown-access">
-									<a href="javascript:void(0)" class="access_link"><span>Account</span></a>
-									<div class="dropdown-menu @auth('customer') authenticated @endauth">
-										@auth('customer')	
-											<ul>
-												<li>
-													<a href="track-order.html"><i class="mdi mdi-calendar-check"></i>My bookings</a>
-												</li>
-												<li>
-													<a href="account.html"><i class="ti-package"></i>My Orders</a>
-												</li>
-												<li>
-													<a href="account.html"><i class="ti-user"></i>My Profile</a>
-												</li>
-												<li>
-													<a href="{{ route('customer.logout') }}"><i class="mdi mdi-logout"></i>Sign out</a>
-												</li>
-											</ul>
-										@endauth
-										@guest('customer')
-											<a href="{{ route("customer.login") }}" class="btn_1">Sign In or Sign Up</a>
-										@endguest
-									</div>
-								</div>
-								<!-- /dropdown-access-->
+								<account-bar :user='@json(auth("customer")->user())'></account-bar>
 							</li>
 							<li>
 								<a href="javascript:void(0);" class="btn_search_mob"><span>Search</span></a>

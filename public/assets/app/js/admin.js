@@ -3860,6 +3860,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3869,7 +3887,7 @@ __webpack_require__.r(__webpack_exports__);
     draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_0___default()),
     VSwatches: (vue_swatches__WEBPACK_IMPORTED_MODULE_1___default())
   },
-  props: ['type', 'option'],
+  props: ["type", "option"],
   data: function data() {
     return {
       values: []
@@ -3882,6 +3900,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return 1;
       }
+    },
+    optionName: function optionName() {
+      return _.kebabCase(this.option.name);
     }
   },
   methods: {
@@ -3890,7 +3911,8 @@ __webpack_require__.r(__webpack_exports__);
         position: this.position,
         label: null,
         price: 0,
-        price_type: "fixed"
+        price_type: "fixed",
+        in_stock: 1
       });
     },
     removeValue: function removeValue(index) {
@@ -3922,7 +3944,8 @@ __webpack_require__.r(__webpack_exports__);
           label: value.label,
           price: value.price,
           price_type: value.price_type,
-          position: value.position
+          position: value.position,
+          in_stock: value.in_stock
         };
       });
     }
@@ -67935,6 +67958,72 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        { staticClass: "custom-control custom-switch" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.values[index].in_stock,
+                                expression: "values[index].in_stock"
+                              }
+                            ],
+                            staticClass: "custom-control-input",
+                            attrs: {
+                              type: "checkbox",
+                              id: "in_stock-" + _vm.optionName + "-" + index
+                            },
+                            domProps: {
+                              checked: Array.isArray(_vm.values[index].in_stock)
+                                ? _vm._i(_vm.values[index].in_stock, null) > -1
+                                : _vm.values[index].in_stock
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$a = _vm.values[index].in_stock,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      _vm.$set(
+                                        _vm.values[index],
+                                        "in_stock",
+                                        $$a.concat([$$v])
+                                      )
+                                  } else {
+                                    $$i > -1 &&
+                                      _vm.$set(
+                                        _vm.values[index],
+                                        "in_stock",
+                                        $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1))
+                                      )
+                                  }
+                                } else {
+                                  _vm.$set(_vm.values[index], "in_stock", $$c)
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "custom-control-label",
+                            attrs: {
+                              for: "in_stock-" + _vm.optionName + "-" + index
+                            }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c("td", { staticClass: "text-center icon" }, [
                       _c("span", {
                         staticClass: "mdi mdi-delete",
@@ -67986,6 +68075,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("In stock")]),
         _vm._v(" "),
         _c("th")
       ])

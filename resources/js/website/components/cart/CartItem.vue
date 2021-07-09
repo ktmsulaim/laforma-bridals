@@ -15,13 +15,7 @@
             <span class="item_cart">{{ item.name }}</span>
           </a>
           <div class="mt-1 ml-2 product-options">
-            <span v-for="(option, optionIndex) in options" :key="optionIndex">
-              <b>{{ option[0] }}: </b>
-              <span v-if="option[0] == 'Color'">
-                <span class="color" :style="{backgroundColor: option[1]}"></span>
-              </span>
-              <span v-else>{{ option[1] }}</span>
-            </span>
+            <cart-item-options v-if="item.options && Object.keys(item.options).length" :data="item.options"></cart-item-options>
           </div>
         </div>
       </div>
@@ -53,16 +47,21 @@
 </template>
 
 <script>
+
+import {mapGetters} from 'vuex'
+
 export default {
   name: "CartItem",
   props: ["item", "qty"],
   data() {
     return {
       itemQuantity: 1,
-      test: null,
     };
   },
   computed: {
+    ...mapGetters({
+      productQuantity: 'getProductMaxQuantity'
+    }),
     subTotal() {
       if (this.itemQuantity > 0) {
         let price;
@@ -77,9 +76,6 @@ export default {
         return 0;
       }
     },
-    options() {
-      return !_.isEmpty(this.item.options) ? Object.entries(this.item.options) : null
-    }
   },
   methods: {
     increaseQuantity() {
@@ -89,8 +85,8 @@ export default {
     decreaseQuantity() {
       if(this.itemQuantity > 1) {
         this.itemQuantity--;
+        this.updateCart()
       }
-      this.updateCart()
     },
     updateCart() {
       if(this.itemQuantity < 1) {
@@ -116,29 +112,5 @@ export default {
 <style>
 .thumb_cart, .item_cart {
   float: none;
-}
-.product-options b {
-    color: #444;
-    font-size: 14px;
-}
-.product-options span {
-    margin-right: 8px;
-    font-size: 13px;
-}
-
-.product-options {
-    color: #666;
-    font-size: 14px;
-}
-
-.product-options .color {
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
-  display: inline-block;
-  width: 13px;
-  height: 13px;
-  margin-left: 5px;
 }
 </style>

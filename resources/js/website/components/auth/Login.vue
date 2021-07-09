@@ -66,6 +66,7 @@ import Validation from '../../mixins/validation'
 export default {
   name: "Login",
   mixins: [Validation],
+  props: ['redirect'],
   data() {
       return {
           loading: false,
@@ -91,7 +92,12 @@ export default {
               type: 'success'
             })
 
-            window.location = route('customer.dashboard')
+            if(this.redirect) {
+              window.location = route('customer.dashboard')
+            } else {
+              this.$store.commit('authenticate', resp.data)
+            }
+
           })
           .catch(err => {
             this.$toast.open({
