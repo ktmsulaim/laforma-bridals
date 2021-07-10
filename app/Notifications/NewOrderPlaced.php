@@ -43,6 +43,7 @@ class NewOrderPlaced extends Notification
     public function toDatabase($notifiable)
     {
         return [
+            'order_id' => $this->order->id,
             'customer' => $this->order->customer->name,
             'total' => $this->order->total,
             'products' => $this->order->products()->count()

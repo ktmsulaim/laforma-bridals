@@ -11,16 +11,16 @@ class NewOrderSummaryMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $customer;
+    protected $order;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($customer)
+    public function __construct($order)
     {
-        $this->customer = $customer;
+        $this->order = $order;
     }
 
     /**
@@ -30,8 +30,8 @@ class NewOrderSummaryMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.summary', ['customer' => $this->customer])
+        return $this->markdown('mail.summary', ['order' => $this->order])
                 ->subject('Order has been placed!')
-                ->to($this->customer->email);
+                ->to($this->order->customer->email);
     }
 }

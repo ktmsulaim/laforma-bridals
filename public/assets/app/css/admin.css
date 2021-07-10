@@ -109,4 +109,52 @@
   align-items: center;
 }
 
+/*
+* Badge custom
+*
+*/
+
+.badge.badge-xl {
+  padding: 7.5px 12px;
+}
+
+@media screen and (min-width: 992px) {
+  div#order-meta .card {
+    max-height: 251px;
+    overflow-y: scroll;
+  }
+}
+
+.order-summary-wrapper {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.order-summary-wrapper .order-summary {
+  width: 300px;
+}
+
+.order-summary-wrapper .order-summary ul {
+  list-style: none;
+  padding: 0;
+}
+
+.order-summary-wrapper .order-summary ul li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.order-summary-wrapper .order-summary .total {
+  padding-top: 1rem;
+  border-top: 1px solid #e1e1e1;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: #a21d23;
+}
+
 

@@ -27,6 +27,6 @@ class SendOrderSummaryToCustomer
      */
     public function handle($event)
     {
-        Mail::send(new NewOrderSummaryMail($event->order->customer));
+        Mail::send(new NewOrderSummaryMail($event->order));
     }
 }

@@ -48,6 +48,7 @@ class NewCustomerRegistered extends Notification
     public function toDatabase($notifiable)
     {
         return [
+            'id' => $this->customer->id,
             'name' => $this->customer->name,
             'email' => $this->customer->email,
         ];

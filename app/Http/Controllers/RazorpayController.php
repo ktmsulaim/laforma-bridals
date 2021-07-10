@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewOrderPlaced;
 use App\Helpers\Money;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -39,6 +40,8 @@ class RazorpayController extends Controller
     {
        $orderId = $request->get('order_id');
        $order = Order::findOrFail($orderId);
+
+       event(new NewOrderPlaced($order));
 
        if(!$orderId || !$order) {
            return response()->json(['error' => 'Unable to find the order'], 404);

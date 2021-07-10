@@ -99,7 +99,11 @@ class OrderController extends Controller
             }
         }
 
-        event(new NewOrderPlaced($order));
+        if($paymentMethod == 'cod') {
+            event(new NewOrderPlaced($order));
+        }
+
+
 
         return response()->json($order);
     }

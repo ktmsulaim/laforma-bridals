@@ -237,9 +237,14 @@
                             </li>
                             <li>
                                 <a href="javascript:void(0)">
-                                    <i class="mdi mdi-format-list-checks"></i>
-                                    <span> Orders </span>
+                                    <i class="mdi mdi-currency-inr"></i>
+                                    <span> Sales </span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="{{ route('admin.orders.index') }}">Orders</a></li>
+                                    <li><a href="#">Transactions</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="{{ route('admin.services.index') }}">
@@ -367,6 +372,8 @@
         <script src="{{ asset('assets/app/libs/toastr/toastr.min.js') }}"></script>
         
         <script src="{{ asset('assets/app/libs/custombox/custombox.min.js') }}"></script>
+
+        <script src="{{ asset('assets/app/libs/ntc/ntc.js') }}"></script>
         
         <script src="{{ mix('assets/app/js/admin.js') }}"></script>
 

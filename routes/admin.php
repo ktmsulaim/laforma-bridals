@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Admin\AdminCustomersController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
@@ -12,7 +14,7 @@ use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\JobController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ManageOrders;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -64,6 +66,18 @@ Route::middleware('auth')->group(function(){
     Route::resource('products', ProductController::class);
     
     /**
+     * -------------------------------------------------------------------
+     * Orders
+     * -------------------------------------------------------------------
+     */
+    Route::get('/orders', [ManageOrders::class, 'index'])->name('orders.index');
+    Route::get('/orders/list', [ManageOrders::class, 'listOrders'])->name('orders.list');
+    Route::post('/orders/{order}/status', [ManageOrders::class, 'status'])->name('orders.status');
+    Route::get('/orders/{order}/print', [ManageOrders::class, 'print'])->name('orders.print');
+    Route::get('/orders/{order}', [ManageOrders::class, 'show'])->name('orders.show');
+    
+    
+     /**
      * -------------------------------------------------------------------
      * Services
      * -------------------------------------------------------------------

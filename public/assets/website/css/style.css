@@ -4554,6 +4554,7 @@ body.modal-open .mm-slideout {
   text-align: center;
   position: relative;
   cursor: pointer;
+  border: 1px solid #e1e1e1;
 }
 .grid_item:hover ul li {
   display: block;

@@ -6,7 +6,12 @@ class Money {
     public static function format($val)
     {
         if($val) {
-            return '₹' . number_format($val, 2);
+            if($val < 0) {
+                $val = str_replace('-', '', $val);
+                return '-₹' . number_format($val, 2); 
+            } else {
+                return '₹' . number_format($val, 2);
+            }
         }
     }
 

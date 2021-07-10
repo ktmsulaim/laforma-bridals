@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\WebsiteResourceController;
+use App\Mail\NewOrderSummaryMail;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +34,8 @@ Route::get('/products/{slug}/view', [WebsiteController::class, 'singleProduct'])
 Route::get('/products/{product}', [WebsiteController::class, 'product'])->name('products.show');
 Route::get('/cart', [WebsiteController::class, 'cart'])->name('cart');
 Route::get('/checkout', [WebsiteController::class, 'checkout'])->name('checkout');
+
+Route::get('/test', function() {
+    $order = Order::find(4);
+    return new NewOrderSummaryMail($order);
+});

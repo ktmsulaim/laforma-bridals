@@ -21,6 +21,8 @@ import VueSlugify from 'vue-slugify'
 import Select2 from 'v-select2-component'
 import VueSweetalert2 from 'vue-sweetalert2';
 import JwPagination from 'jw-vue-pagination';
+import VueHtmlToPaper from 'vue-html-to-paper';
+
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -41,6 +43,7 @@ Vue.use(VueQuillEditor)
 Vue.use(VueSlugify)
 Vue.use(Select2)
 Vue.use(VueSweetalert2)
+Vue.use(VueHtmlToPaper);
 
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('jw-pagination', JwPagination)
@@ -53,6 +56,14 @@ Vue.mixin({
                 .replace(/&/g, '-and-') // Replace & with 'and'
                 .replace(/[^\w\-]+/g, '') // Remove all non-word chars
                 .replace(/--+/g, '-'); // Replace multiple - with single -
+        },
+        formatMoney(value) {
+            const formatter = new Intl.NumberFormat('en-Us', {
+                style: 'currency',
+                currency: 'INR'
+            })
+
+            return formatter.format(value);
         }
     }
 })
@@ -77,9 +88,14 @@ import ListJobs from './components/jobs/ListJobs'
 import JobForm from './components/jobs/JobForm'
 import ListMedia from './components/media/ListMedia'
 import ListCustomers from './components/customers/ListCustomers'
+import ListOrders from './components/orders/ListOrders'
+import CartItemOptions from '../website/components/cart/CartItemOptions'
+import PrintInvoice from './components/orders/PrintInvoice'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
+Vue.component('cart-item-options', CartItemOptions)
+Vue.component('print-invoice', PrintInvoice)
 
 const app = new Vue({
     el: '#app',
@@ -94,7 +110,8 @@ const app = new Vue({
         ListJobs,
         JobForm,
         ListMedia,
-        ListCustomers
+        ListCustomers,
+        ListOrders
     },
     store
 })

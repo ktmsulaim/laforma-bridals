@@ -116,3 +116,54 @@
         }
     }
 }
+
+
+/*
+* Badge custom
+*
+*/
+.badge {
+    &.badge-xl {
+        padding: 7.5px 12px; 
+    }
+}
+
+@media screen and (min-width: 992px) {
+    div#order-meta .card {
+        max-height: 251px;
+        overflow-y: scroll;
+    }
+}
+
+// Order summay
+.order-summary-wrapper {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+
+    .order-summary {
+        width: 300px;
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+        }
+
+        .total {
+            padding-top: 1rem;
+            border-top: 1px solid #e1e1e1;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #a21d23;
+        }
+    }
+}
