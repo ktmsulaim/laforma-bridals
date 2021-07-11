@@ -3246,7 +3246,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               confirmButtonColor: '#a21d23'
             }).then(function (result) {
               if (result.isConfirmed) {
-                _this2.loading = false;
                 window.location = route('customer.orders.show', {
                   order: order.id
                 });

@@ -263,7 +263,6 @@ export default {
                         })
                         .then(result => {
                             if(result.isConfirmed) {
-                                this.loading = false;
                                 window.location = route('customer.orders.show', {order: order.id})
                             }
                         })
@@ -337,6 +336,7 @@ export default {
                     message: 'Your cart is empty',
                     type: 'warning'
                 })
+                
                 window.location = route('cart')
             }
         },

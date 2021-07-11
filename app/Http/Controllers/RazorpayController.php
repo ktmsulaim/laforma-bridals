@@ -47,12 +47,16 @@ class RazorpayController extends Controller
            return response()->json(['error' => 'Unable to find the order'], 404);
        }
 
+       $signature = $request->get('signature');
+       $payment_id = $request->get('transaction_id');
+       $razorpay_order_id = $request->get('razorpay_order_id');
+
        if(!$order->transaction()->exists()) {
            $order->transaction()->create([
-                'transaction_id' => $request->get('transaction_id'),
+                'transaction_id' => $payment_id,
                 'order_id' => $request->get('order_id'),
-                'razorpay_order_id' => $request->get('razorpay_order_id'),
-                'signature' => $request->get('signature'),
+                'razorpay_order_id' => $razorpay_order_id,
+                'signature' => $signature,
                 'payment_method' => $request->get('payment_method'),
                 'status' => $request->get('status')
            ]);
@@ -61,12 +65,33 @@ class RazorpayController extends Controller
        $payment = $this->api->payment->fetch($request->get('transaction_id'));
 
        if($payment) {
-           $payment->capture(['amount' => Money::toRazorPay($order->total), 'currency' => "INR"]);
+           if($this->verifySignature($signature, $payment_id, $razorpay_order_id)) {
+               $payment->capture(['amount' => Money::toRazorPay($order->total), 'currency' => "INR"]);
+               
+               $order->status = 'confirmed';
+               $order->save();
+               
+               return response()->json([], 200);
+           }
        }
 
-       $order->status = 'confirmed';
-       $order->save();
+       return response()->json(['error' => "Unable to process the payment"], 500);
 
-       return response()->json([], 200);
+    }
+
+    private function verifySignature($signature, $payment_id, $order_id) {
+        if($signature && $payment_id && $order_id) {
+            try {
+                $this->api->utility->verifyPaymentSignature([
+                    'razorpay_signature' => $signature,
+                    'razorpay_payment_id' => $payment_id,
+                    'razorpay_order_id' => $order_id
+                ]);
+            } catch (\Throwable $th) {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

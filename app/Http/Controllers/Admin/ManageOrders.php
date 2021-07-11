@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\OrderStatusChanged;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -40,7 +41,19 @@ class ManageOrders extends Controller
 
     public function status(Request $request, Order $order)
     {
-        # code...
+        $status = $request->get('status');
+
+        if(!$request->has('status') || !$status) {
+            return response()->json(['error' => "Status is missing"], 422);
+        }
+
+        $order->status = $status;
+        $order->save();
+
+        event(new OrderStatusChanged($order));
+
+        $order = $order->fresh();
+        return response()->json($order->status());
     }
 
     public function print(Request $request, Order $order)

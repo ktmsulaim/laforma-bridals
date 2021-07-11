@@ -91,11 +91,13 @@ import ListCustomers from './components/customers/ListCustomers'
 import ListOrders from './components/orders/ListOrders'
 import CartItemOptions from '../website/components/cart/CartItemOptions'
 import PrintInvoice from './components/orders/PrintInvoice'
+import OrderStatus from './components/orders/OrderStatus'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
 Vue.component('cart-item-options', CartItemOptions)
 Vue.component('print-invoice', PrintInvoice)
+Vue.component('order-status', OrderStatus)
 
 const app = new Vue({
     el: '#app',

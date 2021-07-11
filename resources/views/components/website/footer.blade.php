@@ -9,7 +9,7 @@
                         <li><a href="contacts.html">Products</a></li>
                         <li><a href="contacts.html">Services</a></li>
                         <li><a href="contacts.html">Collections</a></li>
-                        <li><a href="help.html">Faq</a></li>
+                        <li><a href="help.html">Jobs</a></li>
                     </ul>
                 </div>
             </div>

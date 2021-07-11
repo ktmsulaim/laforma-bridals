@@ -81,6 +81,9 @@
 									<a href="javascript:void(0)">Services</a>
 								</li>
 								<li>
+									<a href="javascript:void(0)">Jobs</a>
+								</li>
+								<li>
 									<a href="javascript:void(0)">Collections</a>
 								</li>
 							</ul>

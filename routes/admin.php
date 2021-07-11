@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\ManageOrders;
+use App\Http\Controllers\Admin\TransactionsController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -76,7 +77,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/orders/{order}/print', [ManageOrders::class, 'print'])->name('orders.print');
     Route::get('/orders/{order}', [ManageOrders::class, 'show'])->name('orders.show');
     
-    
+    /**
+     * -------------------------------------------------------------------
+     * Transactions
+     * -------------------------------------------------------------------
+     */
+    Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/list', [TransactionsController::class, 'list'])->name('transactions.list');
+
      /**
      * -------------------------------------------------------------------
      * Services

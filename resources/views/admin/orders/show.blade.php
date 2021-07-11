@@ -19,8 +19,10 @@
                                    <td>{{ $order->created_at->format('F d, Y') }}</td>
                                </tr>
                                <tr>
-                                   <th width="150">Order status</th>
-                                   <td>{{ $order->status() }}</td>
+                                   <th width="150" style="vertical-align: middle">Order status</th>
+                                   <td>
+                                       <order-status :old-status='@json(['data' => $order->status, 'text' => $order->status()])' order-id="{{ $order->id }}"></order-status>
+                                   </td>
                                </tr>
                                <tr>
                                    <th width="150">Payment method</th>
