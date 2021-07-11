@@ -28,6 +28,7 @@
         "contrast": "^1.0.1",
         "gridjs": "^5.0.1",
         "jw-vue-pagination": "^1.0.3",
+        "moment": "^2.29.1",
         "skeleton-loader-vue": "^1.0.10",
         "sweetalert2": "^11.0.17",
         "v-select2-component": "^0.4.7",

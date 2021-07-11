@@ -2,6 +2,8 @@ window._ = require('lodash')
 
 window.axios = require('axios');
 
+window.moment = require('moment')
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.token = $('meta[name="csrf-token"]').attr('content')
 
@@ -92,6 +94,7 @@ import ListOrders from './components/orders/ListOrders'
 import CartItemOptions from '../website/components/cart/CartItemOptions'
 import PrintInvoice from './components/orders/PrintInvoice'
 import OrderStatus from './components/orders/OrderStatus'
+import ListTransactions from './components/transactions/ListTransactions'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
@@ -113,7 +116,8 @@ const app = new Vue({
         JobForm,
         ListMedia,
         ListCustomers,
-        ListOrders
+        ListOrders,
+        ListTransactions
     },
     store
 })

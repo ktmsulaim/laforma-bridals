@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Events\OrderStatusChanged;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ManageOrders extends Controller
@@ -16,7 +17,48 @@ class ManageOrders extends Controller
 
     public function listOrders(Request $request)
     {
-        $orders = Order::orderBy('id', 'desc')->get();
+        
+        if($request->has('filter')) {
+            $start = $request->has('date_range') ? $request->get('date_range')[0] : null;
+            $end = $request->has('date_range') ? $request->get('date_range')[1] : null;
+            $status = $request->get('status');
+
+            if($start && $end && $status) {
+                $orders = Order::where('created_at', '>=', Carbon::parse($start))->where('created_at', '<=', Carbon::parse($end))->where('status', $status)->get();
+            } elseif($start && $end) {
+                $orders = Order::where('created_at', '>=', Carbon::parse($start))->where('created_at', '<=', Carbon::parse($end))->get();
+            } elseif($status) {
+                $orders = Order::where('status', $status)->get();
+            } else {
+                $orders = Order::orderBy('id', 'desc')->get();
+            }
+
+            $count = count($orders);
+        } else {
+            $orders = Order::orderBy('id', 'desc');
+            $count = Order::count();
+
+            if($request->has('search')) {
+                $search = $request->get('search');
+                $orders = Order::whereHas('customer', function($query) use($search){
+                    $query->where('name', 'like', "%$search%");
+                    $query->orWhere('phone', '=', $search);
+                })->with(['customer' => function($query) use($search){
+                    $query->where('name', 'like', "%$search%");
+                    $query->orWhere('phone', '=', $search);
+                }]);
+    
+                $count = $orders->count();
+            } 
+            
+            if($request->has('limit') && $request->has('offset')) {
+               $orders = $orders->limit($request->get('limit'))->offset($request->get('offset'))->get();
+            } else {
+                $orders = $orders->get();
+            }
+        }
+        
+
         $orders = $orders->transform(function ($order) {
             return [
                 'id' => $order->id,
@@ -31,7 +73,12 @@ class ManageOrders extends Controller
             ];
         });
 
-        return response()->json($orders);
+        $data = [
+            'data' => $orders,
+            'count' => $count
+        ];
+
+        return response()->json($data);
     }
 
     public function show(Request $request, Order $order)

@@ -243,7 +243,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href="{{ route('admin.orders.index') }}">Orders</a></li>
-                                    <li><a href="#">Transactions</a></li>
+                                    <li><a href="{{ route('admin.transactions.index') }}">Transactions</a></li>
                                 </ul>
                             </li>
                             <li>
