@@ -5,22 +5,6 @@
 
     <div class="col-xl-3 col-md-6">
         <div class="card-box">
-            <div class="dropdown float-right">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="mdi mdi-dots-vertical"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Something else</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Separated link</a>
-                </div>
-            </div>
-
             <h4 class="header-title mt-0 mb-4">Total products</h4>
 
             <div class="widget-chart-1">
@@ -39,21 +23,6 @@
 
     <div class="col-xl-3 col-md-6">
         <div class="card-box">
-            <div class="dropdown float-right">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="mdi mdi-dots-vertical"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Something else</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Separated link</a>
-                </div>
-            </div>
 
             <h4 class="header-title mt-0 mb-3">Orders Analytics</h4>
 
@@ -75,23 +44,8 @@
 
     <div class="col-xl-3 col-md-6">
         <div class="card-box">
-            <div class="dropdown float-right">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="mdi mdi-dots-vertical"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Something else</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Separated link</a>
-                </div>
-            </div>
 
-            <h4 class="header-title mt-0 mb-4">Total Services</h4>
+            <h4 class="header-title mt-0 mb-4">Total Packages</h4>
 
             <div class="widget-chart-1">
                 <div class="widget-chart-box-1 float-left" dir="ltr">
@@ -124,7 +78,7 @@
                 </div>
             </div>
 
-            <h4 class="header-title mt-0 mb-3">Total appointments</h4>
+            <h4 class="header-title mt-0 mb-3">Total bookings</h4>
 
             <div class="widget-box-2">
                 <div class="widget-detail-2 text-right">
@@ -233,7 +187,7 @@
                 </div>
             </div>
 
-            <h4 class="header-title mt-0 mb-3">Latest Appointments</h4>
+            <h4 class="header-title mt-0 mb-3">Latest Bookings</h4>
 
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -241,7 +195,7 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Service</th>
+                        <th>Package</th>
                         <th>Booking date</th>
                         <th>Time</th>
                         <th>Status</th>

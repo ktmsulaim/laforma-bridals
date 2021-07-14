@@ -247,15 +247,15 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ route('admin.services.index') }}">
-                                    <i class="mdi mdi-handshake"></i>
-                                    <span> Services </span>
+                                <a href="{{ route('admin.packages.index') }}">
+                                    <i class="mdi mdi-package-variant-closed"></i>
+                                    <span> Packages </span>
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)">
                                     <i class="mdi mdi-calendar-month"></i>
-                                    <span> Appointments </span>
+                                    <span> Bookings </span>
                                 </a>
                             </li>
                             <li>

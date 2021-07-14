@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\ManageOrders;
 use App\Http\Controllers\Admin\TransactionsController;
@@ -87,10 +87,10 @@ Route::middleware('auth')->group(function(){
 
      /**
      * -------------------------------------------------------------------
-     * Services
+     * Packages
      * -------------------------------------------------------------------
      */
-    Route::resource('services', ServiceController::class);
+    Route::resource('packages', PackageController::class);
     
     
     /**

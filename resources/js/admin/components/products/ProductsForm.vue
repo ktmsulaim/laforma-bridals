@@ -201,6 +201,7 @@
                   value-type="format"
                   input-class="form-control"
                   v-model="data.special_price_start"
+                  :disabled-date="disabledDates"
                 ></date-picker>
               </div>
               <div class="col-md-6">
@@ -209,6 +210,7 @@
                   value-type="format"
                   input-class="form-control"
                   v-model="data.special_price_end"
+                  :disabled-date="disabledDates"
                 ></date-picker>
               </div>
             </div>
@@ -289,6 +291,7 @@
                   value-type="format"
                   input-class="form-control"
                   v-model="data.new_from"
+                  :disabled-date="disabledDates"
                 ></date-picker>
               </div>
             </div>
@@ -301,6 +304,7 @@
                   value-type="format"
                   input-class="form-control"
                   v-model="data.new_to"
+                  :disabled-date="disabledDates"
                 ></date-picker>
               </div>
             </div>
@@ -502,6 +506,12 @@ export default {
     updateTags(val) {
       this.data.tags = val;
     },
+     disabledDates(date) {
+      const today = moment().startOf('day')
+      date = moment(date).startOf('day')
+
+      return date === today || date < today
+    }
   },
   computed: {
     ...mapGetters({

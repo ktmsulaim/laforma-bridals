@@ -78,7 +78,7 @@
 									<a href="javascript:void(0)">Products</a>
 								</li>
 								<li>
-									<a href="javascript:void(0)">Services</a>
+									<a href="javascript:void(0)">Packages</a>
 								</li>
 								<li>
 									<a href="javascript:void(0)">Jobs</a>

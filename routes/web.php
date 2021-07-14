@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\WebsitePackageController;
 use App\Http\Controllers\WebsiteResourceController;
 use App\Mail\NewOrderSummaryMail;
 use App\Models\Order;
@@ -24,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 /*
 |--------------------------------------------------------------------------
-| Routes for front resources
+| Products
 |--------------------------------------------------------------------------
 |
 */
@@ -35,7 +36,12 @@ Route::get('/products/{product}', [WebsiteController::class, 'product'])->name('
 Route::get('/cart', [WebsiteController::class, 'cart'])->name('cart');
 Route::get('/checkout', [WebsiteController::class, 'checkout'])->name('checkout');
 
-Route::get('/test', function() {
-    $order = Order::find(4);
-    return new NewOrderSummaryMail($order);
-});
+/*
+|--------------------------------------------------------------------------
+| Packages
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('/packages', [WebsitePackageController::class, 'index'])->name('packages.index');
+Route::get('/packages/list', [WebsitePackageController::class, 'list'])->name('packages.list');
+Route::get('/packages/{slug}', [WebsitePackageController::class, 'show'])->name('packages.show');

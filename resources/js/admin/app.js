@@ -84,8 +84,8 @@ import Errors from './components/Errors'
 import ListProducts from './components/products/ListProducts'
 import ListCategories from './components/categories/ListCategories'
 import ListTags from './components/tags/ListTags'
-import ListServices from './components/services/ListServices'
-import ServicesForm from './components/services/ServicesForm'
+import ListPackages from './components/packages/ListPackages'
+import PackagesForm from './components/packages/PackagesForm'
 import ListJobs from './components/jobs/ListJobs'
 import JobForm from './components/jobs/JobForm'
 import ListMedia from './components/media/ListMedia'
@@ -110,8 +110,8 @@ const app = new Vue({
         ListProducts,
         ListCategories,
         ListTags,
-        ListServices,
-        ServicesForm,
+        ListPackages,
+        PackagesForm,
         ListJobs,
         JobForm,
         ListMedia,

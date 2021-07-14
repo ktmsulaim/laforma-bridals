@@ -3,10 +3,10 @@
 namespace App\Traits;
 
 trait SluggableTrait {
-    public function setSlugAttribute($value) {
 
-        if (static::whereSlug($slug = str_slug($value))->exists()) {
-    
+    public function setSlugAttribute($value) {
+        if (static::whereSlug($slug = str_slug($value))->where('id', '!=', $this->id)->exists()) {
+
             $slug = $this->incrementSlug($slug);
         }
     

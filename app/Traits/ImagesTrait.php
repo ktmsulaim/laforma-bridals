@@ -6,7 +6,7 @@ use App\Models\Image;
 trait ImagesTrait {
     public function images()
     {
-        return $this->morphToMany(Image::class, 'imageable')->withPivot('type');
+        return $this->morphToMany(Image::class, 'imageable')->withPivot('type')->orderBy('type', 'desc');
     }
 
     public function baseImage()
@@ -27,5 +27,16 @@ trait ImagesTrait {
         if($this->images()->exists()) {
             return $this->images()->wherePivot('type', '=', 'additional_images')->get();
         }
+    }
+
+    public function imagesForSlider()
+    {
+        $data = [];
+
+        foreach($this->images as $image) {
+            array_push($data, $image->path);
+        }
+
+        return $data;
     }
 }

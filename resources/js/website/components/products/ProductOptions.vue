@@ -102,6 +102,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    .option {
+        margin-bottom: 10px;
+    }
 </style>

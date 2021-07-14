@@ -40,7 +40,12 @@ Vue.mixin({
  */
 import Auth from './components/Auth'
 import AccountBar from './components/auth/AccountBar'
+
 import FeaturedProducts from './components/home/FeaturedProducts'
+import Packages from './components/home/Packages'
+import BookPackage from './components/packages/BookPackage'
+import ShowFeatures from './components/packages/ShowFeatures'
+
 import NoData from './components/NoData'
 import SingleProduct from './components/products/SingleProduct'
 
@@ -53,6 +58,7 @@ import CustomerAddress from './components/customer/addresses/CustomerAddress'
 import SingleAddress from './components/customer/addresses/SingleAddress'
 import ListOrders from './components/customer/orders/ListOrders'
 
+
 Vue.component('single-address', SingleAddress)
 Vue.component('cart-item-options', CartItemOptions)
 Vue.component('no-data', NoData)
@@ -64,12 +70,15 @@ const app = new Vue({
         Auth,
         AccountBar,
         FeaturedProducts,
+        Packages,
         SingleProduct,
         Cart,
         CartIndex,
         CheckoutIndex,
         CustomerAddress,
         ListOrders,
+        BookPackage,
+        ShowFeatures,
     },
     store
 });

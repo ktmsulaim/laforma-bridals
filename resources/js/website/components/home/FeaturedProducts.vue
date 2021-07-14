@@ -14,7 +14,7 @@
       <product :product="product"></product>
     </div>
   </div>
-  <no-data type="product" size="100" v-else></no-data>
+  <no-data type="products" size="100" v-else></no-data>
 </template>
 
 <script>
