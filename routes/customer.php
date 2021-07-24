@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Customer\Auth\LoginController;
+use App\Http\Controllers\Customer\BookingController;
 use App\Http\Controllers\Customer\CustomerController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\RazorpayController;
+use App\Http\Controllers\WebsitePackageController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -43,14 +45,21 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
     Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
 
     Route::post('placeorder', [OrderController::class, 'placeorder'])->name('placeorder');
-    Route::post('payment/getOrder', [RazorpayController::class, 'getOrderId'])->name('payment.razorpay.getOrder');
+    Route::post('payment/getOrder/{type}', [RazorpayController::class, 'getOrderId'])->name('payment.razorpay.getOrder');
     Route::post('payment/makePayment', [RazorpayController::class, 'makePayment'])->name('payment.razorpay.makePayment');
+
+    Route::post('book', [WebsitePackageController::class, 'book'])->name('book');
+    Route::post('book/payment', [RazorpayController::class, 'makeBookingPayment'])->name('book.payment');
 
     Route::get('orders', [CustomerController::class, 'orders'])->name('orders');
     Route::get('orders/list', [OrderController::class, 'listOrders'])->name('orders.list');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     
-    Route::get('appointments', [CustomerController::class, 'appointments'])->name('appointments');
+    Route::get('bookings', [CustomerController::class, 'bookings'])->name('bookings');
+    Route::get('bookings/list', [BookingController::class, 'list'])->name('bookings.list');
+    Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+
+
     Route::get('account', [CustomerController::class, 'account'])->name('account');
     Route::get('wishlist', [CustomerController::class, 'wishlist'])->name('wishlist');
     Route::get('reviews', [CustomerController::class, 'reviews'])->name('reviews');

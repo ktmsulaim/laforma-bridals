@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Events\NewOrderPlaced;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Models\Product;
 use App\Models\Order;
@@ -126,6 +127,10 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+        if(request()->user('customer')->id !== $order->customer_id) {
+            return redirect()->route('customer.orders');
+        }
+
         return view('customer.orders.show', ['order' => $order]);
     }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\ManageOrders;
 use App\Http\Controllers\Admin\TransactionsController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -113,4 +114,12 @@ Route::middleware('auth')->group(function(){
     Route::get('images', [ImageController::class, 'index'])->name('images.index');
     Route::post('images', [ImageController::class, 'store'])->name('images.store');
     Route::delete('images', [ImageController::class, 'destroy'])->name('images.destroy');
+
+    /**
+     * -------------------------------------------------------------------
+     * Settings
+     * -------------------------------------------------------------------
+     */
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('settings/save', [SettingController::class, 'save'])->name('settings.save');
 });

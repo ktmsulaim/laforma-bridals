@@ -45,3 +45,6 @@ Route::get('/checkout', [WebsiteController::class, 'checkout'])->name('checkout'
 Route::get('/packages', [WebsitePackageController::class, 'index'])->name('packages.index');
 Route::get('/packages/list', [WebsitePackageController::class, 'list'])->name('packages.list');
 Route::get('/packages/{slug}', [WebsitePackageController::class, 'show'])->name('packages.show');
+Route::get('/packages/get/{package}', [WebsitePackageController::class, 'get'])->name('packages.get');
+
+Route::post('/packages/{package}/check/availability', [WebsitePackageController::class, 'checkAvailability'])->name('packages.check.availability');

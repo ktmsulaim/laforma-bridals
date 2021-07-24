@@ -1,7 +1,6 @@
 <template>
 <div>
-    <div ref="ordersList">
-    </div>
+    <div ref="ordersList"></div>
 </div>
 </template>
 

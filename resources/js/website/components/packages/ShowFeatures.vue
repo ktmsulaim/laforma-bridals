@@ -1,7 +1,8 @@
 <template>
   <div>
       <span @click="openFeaturesModal" class="show-features-trigger">
-        <span class="mdi mdi-star-circle-outline mr-1"></span>  Show features
+        <!-- <span class="mdi mdi-star-circle-outline mr-1"></span>   -->
+        Show features
         </span>
       <modal name="packageFeatures" :adaptive="true" height="auto" :scrollable="true" transition="fade" width="300px">
           <div class="p-4">
@@ -62,8 +63,9 @@ export default {
         color: #666;
         font-size: 16px;
         border-bottom: 1px solid #e1e1e1;
-
+        justify-content: space-between;
     }
+
     .list li:last-child {
         border-bottom: none;
     }

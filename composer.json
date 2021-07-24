@@ -17,6 +17,7 @@
         "laravel/ui": "^3.3",
         "mailjet/laravel-mailjet": "^3.0",
         "razorpay/razorpay": "^2.7",
+        "spatie/opening-hours": "^2.10",
         "tightenco/ziggy": "^1.2"
     },
     "require-dev": {

@@ -20,7 +20,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('customer.appointments') }}" class="{{ Route::currentRouteName() === 'customer.appointments' ? 'active' : '' }}">
+        <a href="{{ route('customer.bookings') }}" class="{{ Route::currentRouteName() === 'customer.bookings' ? 'active' : '' }}">
             <span class="mdi mdi-calendar-check"></span> Bookings
         </a>
     </li>

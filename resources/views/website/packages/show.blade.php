@@ -53,17 +53,76 @@
             <div class="description">
                 {!! $package->description !!}
             </div>
-            <div class="my-2">
-                <show-features :features='@json($package->features)'></show-features>
+            <div class="info-list-wrapper">
+                <ul class="package-info-list">
+                    <li>
+                        <span class="icon">
+                            <i class="mdi mdi-currency-inr"></i>
+                        </span>
+                        <span class="item-name">
+                            Package Amount
+                        </span>
+                        <span class="item-value">
+                            <span class="inline-price">
+                                @if ($package->hasSpecialPrice())
+                                    <span class="new-price">{{ $package->specialPrice() }}</span>
+                                    <span class="old-price">{{ $package->price() }}</span>
+                                @else                                    
+                                    <span class="new-price">{{ $package->price() }}</span>
+                                @endif
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon">
+                            <i class="mdi mdi-currency-inr"></i>
+                        </span>
+                        <span class="item-name">
+                            Booking charge
+                        </span>
+                        <span class="item-value">
+                            {{ $package->bookingPrice(true) }}
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon">
+                            <i class="mdi mdi-clock-outline"></i>
+                        </span>
+                        <span class="item-name">
+                            Duration
+                        </span>
+                        <span class="item-value">
+                            {{ $package->hours }} hour{{ $package->hours > 1 ? 's' : '' }}
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon">
+                            <i class="mdi mdi-star-circle-outline"></i>
+                        </span>
+                        <span class="item-name">
+                            Features
+                        </span>
+                        <span class="item-value">
+                            <show-features :features='@json($package->features)'></show-features>
+                        </span>
+                    </li>
+                </ul>
             </div>
+
             <div>
-                <book-package :package_id="{{ $package->id }}"></book-package>
+                @if (setting('enable_razorpay') === 'enable')
+                    <book-package :razorpay_key_id='@json(setting("razorpay_key", env("RAZOR_KEY")))'
+                        :package_id="{{ $package->id }}"></book-package>
+                @else
+                    <p>Sorry! Booking service is temporarily unavailable!</p>
+                @endif
             </div>
         </div>
     </div>
 @endsection
 
 @push('js_libs')
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var changeSlide = 4; // mobile -1, desktop + 1
         // Resize and refresh page. slider-two slideBy bug remove

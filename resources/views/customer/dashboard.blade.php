@@ -11,10 +11,10 @@
             'label' => 'Dashboard'
         ]
     ]]) --}}
-    <div class="main_title">
+    {{-- <div class="main_title">
         <h2>Account overview</h2>
         <p>Navigate to your desired location</p>
-    </div>
+    </div> --}}
 
     <div class="row">
         <div class="col-md-6">
@@ -43,7 +43,7 @@
         </a>
         </div>
         <div class="col-md-6">
-            <a class="box_topic_2" href="{{ route('customer.appointments') }}">
+            <a class="box_topic_2" href="{{ route('customer.bookings') }}">
             <i class="mdi mdi-calendar-check"></i>
             <h3>Bookings</h3>
             <p>Manage your service bookings here. Know the status, cancel booking, change the date.etc</p>

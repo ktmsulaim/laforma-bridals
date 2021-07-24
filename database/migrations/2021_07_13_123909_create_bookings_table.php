@@ -18,7 +18,7 @@ class CreateBookingsTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('package_id');
             $table->date('date');
-            $table->time('time');
+            $table->string('time');
             $table->string('progress')->default("not_started"); // Not started | In progress | Completed 
             $table->string('status'); // Pending | Booking Charge Pending | Full amount pending | Cancelled | On hold | Completed
             $table->timestamps();

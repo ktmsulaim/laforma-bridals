@@ -30,11 +30,9 @@
                     <h3 data-target="#collapse_3">Contacts</h3>
                 <div class="collapse dont-collapse-sm contacts" id="collapse_3">
                     <ul>
-                        <li><i class="ti-home"></i>Ring Road Tirur, Japan square building
-                            <br>1st floor Kotak Mahindra Bank Tirur
-                            <br>676101</li>
-                        <li><i class="ti-headphone-alt"></i>+91 9846374743</li>
-                        <li><i class="ti-email"></i><a href="mailto:laformabridals@gmail.com">laformabridals@gmail.com</a></li>
+                        <li><i class="ti-home"></i>{!! setting('address', 'Ring Road Tirur, Japan square building<br>1st floor Kotak Mahindra Bank Tirur<br>676101') !!}</li>
+                        <li><i class="ti-headphone-alt"></i><a href="tel:{{ str_replace(' ', '', setting('primary_contact_number')) }}">{{ setting('primary_contact_number', '+91 9846 374 743') }}</a></li>
+                        <li><i class="ti-email"></i><a href="mailto:{{ setting('email', 'laformabridals@gmail.com') }}">{{ setting('email', 'laformabridals@gmail.com') }}</a></li>
                     </ul>
                 </div>
             </div>

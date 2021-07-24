@@ -301,7 +301,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="apps-chat.html">
+                                <a href="{{ route('admin.settings.index') }}">
                                     <i class="mdi mdi-cog"></i>
                                     <span> Settings </span>
                                 </a>
@@ -384,13 +384,17 @@
 
 
         <script>
-            // $(function(){
-            //     $('.select2').select2({
-            //         allowClear: true,
-            //         width: '100%',
-            //         placeholder: 'Select a tag'
-            //     })
-            // })
+            $(function(){
+                $('.custom-control-input').on('change', function(){
+                    let hiddenInput = $(this).prev()
+
+                    if($(this).prop('checked') == true) {
+                        hiddenInput.val('enable')
+                    } else {
+                        hiddenInput.val('disable')
+                    }
+                })
+            })
         </script>
 
         {!! Toastr::message() !!}

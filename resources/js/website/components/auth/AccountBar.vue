@@ -54,7 +54,7 @@ export default {
             return route('customer.account');
         },
         appointmentsUrl() {
-            return route('customer.appointments');
+            return route('customer.bookings');
         },
         signInUrl() {
             return route("customer.login");

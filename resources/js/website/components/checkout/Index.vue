@@ -18,21 +18,24 @@
             <h3>Payment method</h3>
           </div>
           <div class="card">
-              <div class="card-body">
-                  <div class="form-group">
+              <div class="card-body" v-if="hasPaymentMethods">
+                  <div v-if="hasCashOnDelivery" class="form-group">
                       <label for="cod" class="container_radio">
                         <input type="radio" v-model="data.payment_method" value="cod" id="cod" name="payment_method"> Cash On Delivery
                         <span class="checkmark"></span>
                     </label>
                     <p>Pay with cash upon delivery.</p>
                   </div>
-                  <div class="form-group">
+                  <div v-if="hasRazorpay" class="form-group">
                       <label for="razorpay" class="container_radio">
                         <input type="radio" v-model="data.payment_method" value="razorpay" id="razorpay" name="payment_method"> Razorpay
                         <span class="checkmark"></span>
                     </label>
                     <p>Pay securely by Credit or Debit card or Internet Banking through Razorpay.</p>
                   </div>
+              </div>
+              <div v-else class="card-body">
+                  <p>No payment method was configured</p>
               </div>
           </div>
       </div>
@@ -168,6 +171,7 @@ export default {
                         .catch(error => {
                             console.error(error);
                             this.$swal('Sorry! Unable to place the order. Try again later', '', 'error')
+                            this.loading = false;
                         })
                         this.$store.commit('clearCart');
                     })
@@ -176,6 +180,7 @@ export default {
                             message: 'Unable to complete payment',
                             type: 'error'
                         })
+                        this.loading = false;
                     })
                     
                 },
@@ -202,6 +207,15 @@ export default {
         }),
         totalInPaise() {
             return this.getTotal * 100;
+        },
+        hasCashOnDelivery() {
+            return Settings.enable_cash_on_delivery === 'enable';
+        },
+        hasRazorpay() {
+            return Settings.enable_razorpay === 'enable';
+        },
+        hasPaymentMethods() {
+            return this.hasRazorpay || this.hasCashOnDelivery;
         }
     },
     methods: {
@@ -274,7 +288,7 @@ export default {
                         // Clear cart
                         this.$store.commit('clearCart');
                     } else {
-                        return axios.post(route('customer.payment.razorpay.getOrder'), {order_id: order.id});
+                        return axios.post(route('customer.payment.razorpay.getOrder', {type: 'product'}), {order_id: order.id});
                     }
     
                 })
@@ -320,6 +334,8 @@ export default {
                     } else {
                         message = 'Unable to place order. Try again later.'
                     }
+
+                    this.loading = false;
     
                     this.$toast.open({
                         message,

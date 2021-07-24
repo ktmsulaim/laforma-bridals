@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Events\NewOrderPlaced;
 use App\Helpers\Money;
+use App\Models\Booking;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 
@@ -17,21 +19,34 @@ class RazorpayController extends Controller
     }
 
 
-    public function getOrderId(Request $request)
+    public function getOrderId(Request $request, $type)
     {
-        $orderId = $request->get('order_id');
 
-        $order = Order::findOrFail($orderId);
+        if($type == 'product') {
 
-        if(!$orderId || !$order) {
-            return response()->json(['error' => 'Unable to fetch order data'], 422);
+            $orderId = $request->get('order_id');
+    
+            $order = Order::findOrFail($orderId);
+    
+            if(!$orderId || !$order) {
+                return response()->json(['error' => 'Unable to fetch order data'], 422);
+            }
+            
+            $rzpOrder = $this->api->order->create([
+                'receipt' => "order_{$order->id}",
+                'amount' => $order->total * 100,
+                'currency' => 'INR'
+            ]);
+        } elseif($type == 'package') {
+            $package_id = Booking::nextID();
+            $amount = $request->get('amount');
+
+            $rzpOrder = $this->api->order->create([
+                'receipt' => "package_{$package_id}",
+                'amount' => $amount * 100,
+                'currency' => 'INR'
+            ]);
         }
-        
-        $rzpOrder = $this->api->order->create([
-            'receipt' => "order_{$order->id}",
-            'amount' => $order->total * 100,
-            'currency' => 'INR'
-        ]);
 
         return response()->json(collect($rzpOrder)->toArray());
     }
@@ -77,6 +92,43 @@ class RazorpayController extends Controller
 
        return response()->json(['error' => "Unable to process the payment"], 500);
 
+    }
+
+    public function makeBookingPayment(Request $request)
+    {
+        $booking = Booking::findOrFail($request->get('booking_id'));
+        $bookingDateFormatted = Carbon::parse($booking->date)->format('d F, Y');
+
+        if(!$request->has('booking_id') || !$request->get('booking_id') || !$booking) {
+            return response()->json(['error' => 'Unable to find the booking!'], 404);
+        }
+
+        $razorpayPaymentId = $request->get('razorpay_payment_id');
+        $razorpayOrderId = $request->get('razorpay_order_id');
+        $signature = $request->get('signature');
+
+        $payment = $booking->payments()->create([
+            'razorpay_payment_id' => $razorpayPaymentId,
+            'razorpay_order_id' => $razorpayOrderId,
+            'signature' => $signature,
+            'type' => $request->get('type'),
+            'status' => $request->get('status'),
+        ]);
+
+        $razorpayPayment = $this->api->payment->fetch($request->get('razorpay_payment_id'));
+
+        if($razorpayPayment) {
+            if($this->verifySignature($signature, $razorpayPaymentId, $razorpayOrderId)) {
+                $razorpayPayment->capture(['amount' => Money::toRazorPay($booking->package->bookingPrice()), 'currency' => "INR"]);
+                
+                $booking->status = 'full_amount_pending';
+                $booking->save();
+                
+                return response()->json(['data' => "Your booking summary: {$booking->summary()}"]);
+            }
+        }
+
+        return response()->json(['error' => 'Unable to process booking charge'], 500);
     }
 
     private function verifySignature($signature, $payment_id, $order_id) {

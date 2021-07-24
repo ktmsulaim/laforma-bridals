@@ -58,15 +58,68 @@
 }
 
 span.brand {
-    background: #444;
-    color: #ffc107;
-    padding: 5px 10px;
-    font-size: 13px;
+    color: $primary-color;
+    font-size: 12px;
     border-radius: 5px;
     font-style: italic;
-    margin-left: 10px;
+    display: block;
+    
+    &.inline {
+        display: inline-block;
+        background: #444;
+        padding: 5px 10px;
+        margin-left: 10px;
+    }
 }
 
 .mx-datepicker {
     width: 100% !important;
+}
+
+
+/*
+* ------------------------------------------------------
+* Single package
+* ------------------------------------------------------
+*/
+ul.package-info-list {
+    padding: 10px;
+    list-style: none;
+    background: #fff;
+    border-radius: 8px;
+    border: 2px solid #e1e1e1;
+
+    li {
+        padding: 5px;
+        border-bottom: 1px solid #efefef;
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+            border: none;
+        }
+
+        .icon {
+            font-size: 18px;
+            color: #777;
+            margin-right: 8px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .show-features-trigger {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.inline-price {
+    .old-price {
+        margin-left: 5px;
+        color: #888;
+        text-decoration: line-through;
+    }
 }

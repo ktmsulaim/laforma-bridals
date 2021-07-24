@@ -8,7 +8,7 @@
         ]
     ]])
 
-    <checkout-index :razorpay_key_id='@json(env('RAZOR_KEY'))'></checkout-index>
+    <checkout-index razorpay_key_id="{{ setting('razorpay_key', env('RAZOR_KEY')) }}"></checkout-index>
 @endsection
 
 @push('js_libs')

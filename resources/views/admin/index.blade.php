@@ -190,76 +190,37 @@
             <h4 class="header-title mt-0 mb-3">Latest Bookings</h4>
 
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Package</th>
-                        <th>Booking date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                @if ($bookings && count($bookings))    
+                    <table class="table table-hover mb-0">
+                        <thead>
                         <tr>
-                            <td>1</td>
-                            <td>Customer 1</td>
-                            <td>Service 1</td>
-                            <td>21/06/2021</td>
-                            <td>8:15AM</td>
-                            <td><span class="badge badge-success">Approved</span></td>
-                            <td><i class="mdi mdi-eye"></i></td>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Package</th>
+                            <th>Booking date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Customer 2</td>
-                            <td>Service 2</td>
-                            <td>21/06/2021</td>
-                            <td>10:30AM</td>
-                            <td><span class="badge badge-success">Approved</span></td>
-                            <td><i class="mdi mdi-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Customer 3</td>
-                            <td>Service 2</td>
-                            <td>21/06/2021</td>
-                            <td>12:30PM</td>
-                            <td><span class="badge badge-warning">Pending</span></td>
-                            <td><i class="mdi mdi-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Customer 4</td>
-                            <td>Service 2</td>
-                            <td>22/06/2021</td>
-                            <td>2:45PM</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
-                            <td><i class="mdi mdi-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Customer 4</td>
-                            <td>Service 2</td>
-                            <td>22/06/2021</td>
-                            <td>2:45PM</td>
-                            <td><span class="badge badge-warning">Pending</span></td>
-                            <td><i class="mdi mdi-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Customer 5</td>
-                            <td>Service 3</td>
-                            <td>25/06/2021</td>
-                            <td>8:45AM</td>
-                            <td><span class="badge badge-success">Approved</span></td>
-                            <td><i class="mdi mdi-eye"></i></td>
-                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($bookings as $booking)    
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $booking->customer->name }}</td>
+                                    <td>{{ $booking->package->name }}</td>
+                                    <td>{{ $booking->date() }}</td>
+                                    <td>{{ $booking->time }}</td>
+                                    <td><span class="badge badge-success">Approved</span></td>
+                                    <td><i class="mdi mdi-eye"></i></td>
+                                </tr>
+                            @endforeach
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                @else
+                    <p>No recent bookings found!</p>
+                @endif
             </div>
         </div>
     </div><!-- end col -->

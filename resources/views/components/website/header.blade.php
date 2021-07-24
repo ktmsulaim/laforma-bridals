@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Ansonika">
-    <title>{{ $title }} | La'forma Bridals - {{ date('Y') }}</title>
+    <title>{{ $title }} | {{ setting('store_name', "La'forma Bridals") }} - {{ date('Y') }}</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/x-icon">
@@ -39,6 +39,10 @@
 	@stack('meta')
 
 	@routes
+
+	<script>
+		window.Settings = Object.assign({}, @json(App\Models\Setting::serialize()))
+	</script>
 
 </head>
 
@@ -91,7 +95,7 @@
 						<!--/main-menu -->
 					</nav>
 					<div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-right">
-						<a class="phone_top" href="tel:+919846374743"><strong><span>Need Help?</span>+91 9846 374 743</strong></a>
+						<a class="phone_top" href="tel:+919846374743"><strong><span>Need Help?</span>{{ setting('primary_contact_number', '+91 9846 374 743') }}</strong></a>
 					</div>
 				</div>
 				<!-- /row -->

@@ -48,6 +48,7 @@ import ShowFeatures from './components/packages/ShowFeatures'
 
 import NoData from './components/NoData'
 import SingleProduct from './components/products/SingleProduct'
+import Price from './components/Price'
 
 import Cart from './components/Cart'
 import CartItemOptions from './components/cart/CartItemOptions'
@@ -57,6 +58,7 @@ import CheckoutIndex from './components/checkout/Index'
 import CustomerAddress from './components/customer/addresses/CustomerAddress'
 import SingleAddress from './components/customer/addresses/SingleAddress'
 import ListOrders from './components/customer/orders/ListOrders'
+import ListBookings from './components/customer/bookings/ListBookings'
 
 
 Vue.component('single-address', SingleAddress)
@@ -72,6 +74,7 @@ const app = new Vue({
         FeaturedProducts,
         Packages,
         SingleProduct,
+        Price,
         Cart,
         CartIndex,
         CheckoutIndex,
@@ -79,6 +82,9 @@ const app = new Vue({
         ListOrders,
         BookPackage,
         ShowFeatures,
+        ListBookings,
     },
-    store
+    store,
 });
+
+window.$app = app

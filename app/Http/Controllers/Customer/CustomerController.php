@@ -17,9 +17,9 @@ class CustomerController extends Controller
         return view('customer.orders.index');
     }
 
-    public function appointments()
+    public function bookings()
     {
-        
+        return view('customer.bookings.index');
     }
     
     public function account()
