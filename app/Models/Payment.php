@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Payment extends Model
 {
@@ -24,5 +25,10 @@ class Payment extends Model
     public function scopePackageAmount($query)
     {
         return $query->where('type', 'package_amount');
+    }
+
+    public function status()
+    {
+        return Str::of($this->status)->snake()->replace('_', ' ')->title();
     }
 }

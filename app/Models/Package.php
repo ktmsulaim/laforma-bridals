@@ -114,62 +114,36 @@ class Package extends Model
             $opening = Carbon::parse(setting('opening_hour', '8:00 AM'));
             $closing = Carbon::parse(setting('closing_hour', '8:00 PM'));
 
+            $hours = new CarbonPeriod(
+                $opening,
+                $this->duration() . ' minutes',
+                $closing->subMinutes($this->duration())
+            );
+
+            $hours->addFilter(function($date) {
+                $toSkip = [];
+                $today = Carbon::now();
+
+                if($today->format('d-m-Y') === $date->format('d-m-Y')) {
+                    if($date->hour === $today->hour && $date->addMinutes($this->duration() > $today->hour)) {
+                        array_push($toSkip, $date);
+                    } elseif($date->hour < $today->hour) {
+                        array_push($toSkip, $date);
+                    }
+                }
+
+                return !in_array($date, $toSkip);
+            });
+            
             if (Booking::where('date', $date)->count()) {
                 $totalBookedHours = Booking::totalBookedHoursOn($date);
                 $timeLeft = setting('working_hours', 12) - $totalBookedHours;
 
                 if ($timeLeft >= $this->hours) {
                     $booked = Booking::where('date', $date)->get();
-                    // $openingHours = OpeningHours::create([
-                    //     'monday'     => Shop::getOpeningClosingHours(),
-                    //     'tuesday'    => Shop::getOpeningClosingHours(),
-                    //     'wednesday'  => Shop::getOpeningClosingHours(),
-                    //     'thursday'   => Shop::getOpeningClosingHours(),
-                    //     'friday'     => Shop::getOpeningClosingHours(),
-                    //     'saturday'   => Shop::getOpeningClosingHours(),
-                    //     'sunday'     => Shop::getOpeningClosingHours(),
-                    //     'exceptions' => [
-                    //         function($date) {
-                    //             $holidays = setting('holidays');
-
-                    //             if($holidays) {
-                    //                 $disabled = explode(',', $holidays);
-
-                    //                 if(in_array($date->format('Y-m-d'), $disabled)) {
-                    //                     return [];
-                    //                 }
-                    //             }
-                    //         },
-                    //         function($date) use($booked){
-                    //             $disabled = [];
-                    //             $enabled = [];
-
-                    //             foreach($booked as $bookedItem) {
-                    //                 $bookingTime = Carbon::parse($bookedItem->time);
-                    //                 $completingTime = $bookingTime->clone()->addMinutes($bookedItem->package->duration());
-
-                    //                 // if($bookedItem->status !== 'cancelled') {
-                    //                 //     array_push($disabled, "{$bookingTime->format('H:i')}-{$completingTime->format('H:i')}");
-                    //                 // }
-                    //                 if($bookedItem->status !== 'cancelled' && !Carbon::parse($date)->isBetween($bookingTime, $completingTime)) {
-                    //                     array_push($enabled, "{$date->format('H:i')}-{$date->format('H:i')}");
-                    //                 }
-                    //             }
-
-                    //             return $enabled;
-                    //         }
-                    //     ]
-                    // ]);
-
-                    // return $openingHours->forDate(new DateTime($date));
-                    $hours = new CarbonPeriod(
-                        $opening,
-                        $this->duration() . ' minutes',
-                        $closing->subMinutes($this->duration())
-                    );
                     
 
-                    $hours->prependFilter(function ($date) use ($booked) {
+                    $hours->addFilter(function ($date) use ($booked) {
                         $toSkip = [];
                         foreach ($booked as $bookedItem) {
                             $bookingTime = Carbon::parse($bookedItem->time);
@@ -180,34 +154,18 @@ class Package extends Model
                             }
                         }
 
-                        $today = Carbon::now();
-
-                        if($today->format('d-m-Y') === $date->format('d-m-Y')) {
-                            if($date->hour === $today->hour && $date->addMinutes($this->duration() > $today->hour)) {
-                                array_push($toSkip, $date);
-                            } elseif($date->hour < $today->hour) {
-                                array_push($toSkip, $date);
-                            }
-                        }
-
-
                         return !in_array($date, $toSkip);
-                    }, 'booked');
-
-                    if ($hours->count()) {
-                        foreach ($hours as $hour) {
-                            array_push($availableSlots, $hour->format('h:i A'));
-                        }
-                    }
+                    });
                 }
-            } else {
-                while ($opening->hour < $closing->hour) :
-                    array_push($availableSlots, $opening->format('h:i A'));
-
-                    $opening->addMinutes($this->duration('minutes'));
-                endwhile;
+            }
+            
+            if ($hours->count()) {
+                foreach ($hours as $hour) {
+                    array_push($availableSlots, $hour->format('h:i A'));
+                }
             }
         }
+
 
         return $availableSlots;
     }

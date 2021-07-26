@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewBookingMade;
 use App\Http\Resources\PackageResource;
 use App\Models\Booking;
 use App\Models\Package;
@@ -63,6 +64,8 @@ class WebsitePackageController extends Controller
         ]);
 
         $booking = Booking::create($request->all());
+
+        event(new NewBookingMade($booking));
 
         return response()->json($booking);
     }

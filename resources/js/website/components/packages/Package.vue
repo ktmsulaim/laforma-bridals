@@ -2,7 +2,13 @@
   <div class="package">
       <div class="package-header">
           <span class="package-subtitle">{{ packages.name }}</span>
-          <span class="package-title">{{ packages.price.formatted }}</span>
+          <span class="package-title">
+              <span v-if="packages.special_price.has_special_price" class="price-box">
+                  <span class="new-price">{{ packages.special_price.formatted }}</span>
+                  <span class="old-price">{{ packages.price.formatted }}</span>
+              </span>
+              <span v-else class="new-price">{{ packages.price.formatted }}</span>
+          </span>
       </div>
       <div class="package-body">
           <ul class="features">

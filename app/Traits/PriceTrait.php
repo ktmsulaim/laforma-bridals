@@ -60,17 +60,22 @@ trait PriceTrait {
                 return false;
             }
 
-            if($today->gte($special_price_start)) {
+            if($special_price_start && $special_price_end && $today->isBetween($special_price_start, $special_price_end)) {
                 return true;
-            } elseif($special_price_end && $today->lte($special_price_end)) {
+            } elseif($special_price_end && $today->format('Y-m-d') === $special_price_end->format('Y-m-d')) {
                 return true;
-            } else {
-                return false;
-            }
+            } 
+            // if($today->gte($special_price_start)) {
+            //     return true;
+            // } elseif($special_price_end && $today->lte($special_price_end)) {
+            //     return true;
+            // } else {
+            //     return false;
+            // }
 
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
     public function getSpecialPricePercentage()

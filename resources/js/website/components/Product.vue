@@ -41,8 +41,15 @@ export default {
     mounted() {
         this.$nextTick(() => {
             $('[data-countdown]').each(function() {
-                var $this = $(this), finalDate = $(this).data('countdown');
-                $this.countdown(finalDate, function(event) {
+                var $this = $(this), expiryDate = $(this).data('countdown'), finalDate = moment(expiryDate, 'YYYY/MM/DD');
+                
+                finalDate.set({
+                    "hour": 23,
+                    "minute": 59,
+                    "second": 59
+                })
+
+                $this.countdown(finalDate.format('YYYY/MM/DD HH:mm:ss'), function(event) {
                     $this.html(event.strftime('%DD %H:%M:%S'));
                 });
             });

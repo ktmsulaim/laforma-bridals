@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home-packages">
       <div class="row" v-if="loading">
           <div v-for="(item, index) in 4" :key="index" class="col-6 col-md-4 col-xl-3 mt-2">
             <vue-skeleton-loader
@@ -12,28 +12,53 @@
             />
         </div>
       </div>
-      <div class="row" v-else-if="allPackages && Object.keys(allPackages).length">
-          <div v-for="packages in allPackages" :key="packages.id" class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <package :packages="packages"></package>
-          </div>
+      <div v-else-if="allPackages && Object.keys(allPackages).length">
+          <carousel :items="4" :margin="15" :stagePadding="15" :responsive="responsive">
+            <div v-for="packages in allPackages" :key="packages.id">
+                <package :packages="packages"></package>
+            </div>
+          </carousel>
       </div>
     <no-data type="packages" :size="100" v-else></no-data>
   </div>
 </template>
 
 <script>
+import carousel from 'vue-owl-carousel'
+
 import NoData from '../NoData.vue'
 import Package from '../packages/Package.vue'
+
 export default {
     name: 'Packages',
     components: {
         NoData,
         Package,
+        carousel,
     },
     data() {
         return {
             loading: false,
             allPackages: []
+        }
+    },
+    computed: {
+        responsive() {
+            return {
+                0: {
+                    items: 1,
+                    nav: false,
+                    dots: false,
+                },
+                768: {
+                    items: 2, 
+                    nav: false,
+                    dots: true,
+                },
+                992: {
+                    items: 4
+                }
+            }
         }
     },
     methods: {
@@ -57,6 +82,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    .owl-carousel .owl-stage {
+        padding-bottom: 15px;
+    }
 </style>

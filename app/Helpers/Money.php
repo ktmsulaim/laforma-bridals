@@ -8,10 +8,14 @@ class Money {
         if($val) {
             if($val < 0) {
                 $val = str_replace('-', '', $val);
-                return '-₹' . number_format($val, 2); 
+                $price = '-₹' . number_format($val, 2); 
             } else {
-                return '₹' . number_format($val, 2);
+                $price = '₹' . number_format($val, 2);
             }
+
+            str_replace('.00', '', $price);
+
+            return $price;
         }
     }
 

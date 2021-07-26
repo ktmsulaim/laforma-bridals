@@ -69,9 +69,9 @@ class Booking extends Model
         return $this->time . '@' . $formattedDate;
     }
 
-    public function date()
+    public function date($format = 'd/m/Y')
     {
-        return $this->date ? Carbon::parse($this->date)->format('d/m/Y') : null;
+        return $this->date ? Carbon::parse($this->date)->format($format) : null;
     }
 
     public function status()

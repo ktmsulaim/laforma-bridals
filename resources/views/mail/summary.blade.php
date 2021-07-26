@@ -18,7 +18,7 @@
 
 <div>
     <h4>Hello, {{ $order->customer->name }}</h4>
-    <p style="font-size: 13px">Thank you for your order. We’ll send a confirmation when your order ships. Your estimated delivery date is indicated below. If you would like to view the status of your order or make any changes to it, please visit Your Orders on La'forma bridals.</p>
+    <p style="font-size: 13px">Thank you for your order. We’ll send a confirmation when your order ships. If you would like to view the status of your order or make any changes to it, please visit Your Orders on La'forma bridals.</p>
 </div>
 <hr>
 <h4>Order Summary</h4>
