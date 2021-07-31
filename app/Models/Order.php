@@ -38,6 +38,17 @@ class Order extends Model
         return Str::of($this->status)->snake()->replace('_', ' ')->title();
     }
 
+    public static function nextID()
+    {
+        if(static::count()) {
+            $last = self::orderBy('id', 'desc')->first();
+
+            return $last->id + 1;
+        } else {
+            return 1;
+        }
+    }
+
     public function paymentMethod()
     {
         if($this->payment_method == 'cod') {

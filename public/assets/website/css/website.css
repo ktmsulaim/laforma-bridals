@@ -1919,6 +1919,25 @@ span.brand.inline {
   margin-left: 10px;
 }
 
+.brands-inline {
+  overflow-x: scroll;
+}
+
+.brands-inline span.brand {
+  display: inline-block;
+  margin-right: 5px;
+  font-style: normal;
+}
+
+.brands-inline span.brand::after {
+  content: "|";
+  margin-left: 5px;
+}
+
+.brands-inline span.brand:last-child::after {
+  content: none;
+}
+
 .mx-datepicker {
   width: 100% !important;
 }

@@ -29,6 +29,7 @@
                   <option  value="on_hold">On hold</option>
                   <option  value="confirmed">Confirmed</option>
                   <option  value="processing">Processing</option>
+                  <option  value="completed">Completed</option>
                   <option  value="cancelled">Cancelled</option>
                   <option  value="refunded">Refunded</option>
               </select>

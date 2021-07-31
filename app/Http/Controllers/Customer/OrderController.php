@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function getNextOrderId()
+    {
+        return response()->json(Order::nextID());
+    }
+
     public function placeorder(Request $request)
     {
         $paymentMethod = $request->get('payment_method');
@@ -119,9 +124,16 @@ class OrderController extends Controller
         $product->save();
     }
 
-    public function listOrders()
+    public function listOrders(Request $request)
     {
-        $orders = request()->user('customer')->orders()->orderBy('created_at', 'desc')->get();
+        $filter = $request->get('filter');
+
+        if($filter) {
+            $orders = request()->user('customer')->orders()->where('status', $filter)->orderBy('created_at', 'desc')->get();
+        } else {
+            $orders = request()->user('customer')->orders()->orderBy('created_at', 'desc')->get();
+        }
+
         return OrderResource::collection($orders);
     }
 

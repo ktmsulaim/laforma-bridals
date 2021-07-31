@@ -32,7 +32,7 @@
                             @endif
                             <tr>
                                 <th>Status</th>
-                                <td>{{ Str::of($order->status)->title() }}</td>
+                                <td>{{ $order->status() }}</td>
                             </tr>
                             <tr>
                                 <th width="150">Note:</th>

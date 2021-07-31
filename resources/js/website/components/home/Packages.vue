@@ -13,7 +13,7 @@
         </div>
       </div>
       <div v-else-if="allPackages && Object.keys(allPackages).length">
-          <carousel :items="4" :margin="15" :stagePadding="15" :responsive="responsive">
+          <carousel :items="4" :margin="15" :responsive="responsive">
             <div v-for="packages in allPackages" :key="packages.id">
                 <package :packages="packages"></package>
             </div>
@@ -56,7 +56,8 @@ export default {
                     dots: true,
                 },
                 992: {
-                    items: 4
+                    items: 4,
+                    nav: false,
                 }
             }
         }

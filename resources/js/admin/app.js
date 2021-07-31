@@ -24,7 +24,7 @@ import Select2 from 'v-select2-component'
 import VueSweetalert2 from 'vue-sweetalert2';
 import JwPagination from 'jw-vue-pagination';
 import VueHtmlToPaper from 'vue-html-to-paper';
-
+import InputTag from 'vue-input-tag'
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -49,6 +49,7 @@ Vue.use(VueHtmlToPaper);
 
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('jw-pagination', JwPagination)
+Vue.component('input-tag', InputTag)
 
 Vue.mixin({
     methods: {
@@ -95,6 +96,7 @@ import CartItemOptions from '../website/components/cart/CartItemOptions'
 import PrintInvoice from './components/orders/PrintInvoice'
 import OrderStatus from './components/orders/OrderStatus'
 import ListTransactions from './components/transactions/ListTransactions'
+import ListBookings from './components/bookings/ListBookings'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
@@ -117,7 +119,8 @@ const app = new Vue({
         ListMedia,
         ListCustomers,
         ListOrders,
-        ListTransactions
+        ListTransactions,
+        ListBookings,
     },
     store
 })

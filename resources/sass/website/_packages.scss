@@ -83,6 +83,26 @@ span.brand {
     }
 }
 
+.brands-inline{
+    overflow-x: scroll;
+
+
+    span.brand {
+        display: inline-block;
+        margin-right: 5px;
+        font-style: normal;
+
+        &::after {
+            content: "|";
+            margin-left: 5px;
+        }
+
+        &:last-child::after {
+            content: none;
+        }
+    }
+}
+
 .mx-datepicker {
     width: 100% !important;
 }

@@ -8,9 +8,11 @@
           <div class="p-4">
               <h4 class="modal-title">Features</h4>
               <ul class="list" v-if="hasFeatures">
-                  <li class="list-item" v-for="feature in sortedFeatures" :key="feature.id">
+                  <li class="list-item" v-for="(feature, ind) in sortedFeatures" :key="ind">
                       <span class="value">{{ feature.value }}</span>
-                      <span class="brand" v-if="feature.brand">{{ feature.brand }}</span>
+                      <div class="brands-inline" v-if="feature.brand && feature.brand.length">
+                        <span class="brand" v-for="(brand, index) in feature.brand" :key="index">{{ brand }}</span>
+                      </div>
                   </li>
               </ul>
           </div>
@@ -58,12 +60,12 @@ export default {
         padding: 0;
     }
     .list li {
+        display: block;
         padding: 12px;
         text-align: center;
         color: #666;
         font-size: 16px;
         border-bottom: 1px solid #e1e1e1;
-        justify-content: space-between;
     }
 
     .list li:last-child {

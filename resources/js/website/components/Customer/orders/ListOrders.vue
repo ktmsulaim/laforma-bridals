@@ -1,5 +1,6 @@
 <template>
 <div>
+    <filters for="orders" @change="updateList"></filters>
     <div ref="ordersList"></div>
 </div>
 </template>
@@ -7,6 +8,8 @@
 <script>
 import { Grid, html } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
+
+import Filters from '../common/Filters.vue'
 
 export default {
   name: "ListOrders",
@@ -16,6 +19,54 @@ export default {
       filter: null,
       grid: null,
     };
+  },
+  components:{
+    Filters,
+  },
+  methods: {
+    updateList(filter) {
+      if(!_.isEmpty(filter)) {
+        this.filter = filter;
+      } else {
+        this.filter = null
+      }
+
+      this.refreshList();
+    },
+    refreshList() {
+      if(this.grid) {
+        this.grid
+          .updateConfig({
+            server: this.setServer(route("customer.orders.list", { filter: this.filter })),
+          })
+          .forceRender();
+      }
+    },
+    setServer(url) {
+      return {
+        url,
+        then: (data) => {
+          this.orders = data.data;
+          return this.orders.map((item, index) => [
+            index + 1,
+            item.id,
+            item.total,
+            item.status,
+            item.created_at,
+            item.url.view,
+          ])
+        },
+        handle: (res) => {
+          if (res.status == 400) return { data: [] };
+          if (res.ok) return res.json();
+          this.$toast.open({
+            message: 'Unable to fetch the orders',
+            type: 'error'
+          })
+          // throw Error("Sorry! Unable to fetch the orders.");
+        },
+      };
+    }
   },
   mounted() {
     this.grid = new Grid({
@@ -71,29 +122,7 @@ export default {
       search: {
         enabled: true,
       },
-      server: {
-        url: route("customer.orders.list"),
-        then: (data) => {
-          this.orders = data.data;
-          return this.orders.map((item, index) => [
-            index + 1,
-            item.id,
-            item.total,
-            item.status,
-            item.created_at,
-            item.url.view,
-          ])
-        },
-        handle: (res) => {
-          if (res.status == 400) return { data: [] };
-          if (res.ok) return res.json();
-          this.$toast.open({
-            message: 'Unable to fetch the orders',
-            type: 'error'
-          })
-          // throw Error("Sorry! Unable to fetch the orders.");
-        },
-      },
+      server: this.setServer(route('customer.orders.list', { filter: this.filter })),
       pagination: {
         enabled: true,
         limit: 10,

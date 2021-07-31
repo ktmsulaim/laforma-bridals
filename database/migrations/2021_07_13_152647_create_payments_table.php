@@ -16,6 +16,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
+            $table->float('amount');
             $table->string('razorpay_payment_id');
             $table->string('razorpay_order_id');
             $table->string('signature');

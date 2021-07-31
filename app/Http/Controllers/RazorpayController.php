@@ -25,16 +25,18 @@ class RazorpayController extends Controller
         if($type == 'product') {
 
             $orderId = $request->get('order_id');
+            $amount = $request->get('amount');
     
-            $order = Order::findOrFail($orderId);
     
-            if(!$orderId || !$order) {
-                return response()->json(['error' => 'Unable to fetch order data'], 422);
+            if(!$orderId) {
+                return response()->json(['error' => 'Unable to find order data'], 422);
+            } elseif(!$amount) {
+                return response()->json(['error' => 'Unable to find amount data'], 422); 
             }
             
             $rzpOrder = $this->api->order->create([
-                'receipt' => "order_{$order->id}",
-                'amount' => $order->total * 100,
+                'receipt' => "order_{$orderId}",
+                'amount' => Money::toRazorPay($amount),
                 'currency' => 'INR'
             ]);
         } elseif($type == 'package') {
@@ -43,7 +45,7 @@ class RazorpayController extends Controller
 
             $rzpOrder = $this->api->order->create([
                 'receipt' => "package_{$package_id}",
-                'amount' => $amount * 100,
+                'amount' => Money::toRazorPay($amount),
                 'currency' => 'INR'
             ]);
         }

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\JobController;
+use App\Http\Controllers\Admin\ManageBookings;
 use App\Http\Controllers\Admin\ManageOrders;
 use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\SettingController;
@@ -92,6 +93,15 @@ Route::middleware('auth')->group(function(){
      * -------------------------------------------------------------------
      */
     Route::resource('packages', PackageController::class);
+
+    /**
+     * -------------------------------------------------------------------
+     * Bookings
+     * -------------------------------------------------------------------
+     */
+    Route::get('bookings', [ManageBookings::class, 'index'])->name('bookings.index');
+    Route::get('bookings/list', [ManageBookings::class, 'list'])->name('bookings.list');
+    Route::get('bookings/{booking}', [ManageBookings::class, 'show'])->name('bookings.show');
     
     
     /**

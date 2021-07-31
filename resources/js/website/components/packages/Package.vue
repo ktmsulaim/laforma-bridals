@@ -12,9 +12,13 @@
       </div>
       <div class="package-body">
           <ul class="features">
-              <li v-for="feature in features" :key="feature.id">
+              <li v-for="(feature, ind) in features" :key="ind">
                   <span>{{ feature.value }}</span>
-                  <span v-if="feature.brand" class="brand">{{ feature.brand }}</span>
+                  <div class="brands-inline" v-if="feature.brand && feature.brand.length">
+                    <span v-for="(brand, index) in feature.brand" :key="index" class="brand">
+                        {{ brand }}
+                    </span>
+                  </div>
               </li>
           </ul>
       </div>

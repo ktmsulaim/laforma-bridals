@@ -45,6 +45,7 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
     Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
 
     Route::post('placeorder', [OrderController::class, 'placeorder'])->name('placeorder');
+    Route::post('placeorder/nextid', [OrderController::class, 'getNextOrderId'])->name('placeorder.nextid');
     Route::post('payment/getOrder/{type}', [RazorpayController::class, 'getOrderId'])->name('payment.razorpay.getOrder');
     Route::post('payment/makePayment', [RazorpayController::class, 'makePayment'])->name('payment.razorpay.makePayment');
 

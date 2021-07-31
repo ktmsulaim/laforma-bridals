@@ -8,7 +8,7 @@
       </div>
       <div v-if="features && features.length">
           <draggable v-model="features" @end="sortList" handle=".card-header">
-            <div v-for="(feature, index) in features" :key="feature.id" class="card">
+            <div v-for="(feature, index) in features" :key="index" class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="card-title m-0">{{ feature.value ? feature.value : `Untitled-${index + 1}` }}</h4>
                     <span @click="removeFeature(index)" class="mdi mdi-close"></span>
@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-md-6">
                             <label :for="`brand-${index}`">Brand</label>
-                            <input type="text" class="form-control" v-model="features[index].brand" :id="`brand-${index}`">
+                            <input-tag class="form-control" v-model="features[index].brand"></input-tag>
                         </div>
                     </div>
                 </div>

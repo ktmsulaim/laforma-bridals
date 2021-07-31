@@ -1,6 +1,6 @@
 <template>
   <div>
-    <filters @change="updateList"></filters>
+    <filters for="bookings" @change="updateList"></filters>
     <div ref="bookingsList"></div>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import { Grid, html } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
 
-import Filters from "./Filters.vue";
+import Filters from "../common/Filters.vue";
 
 export default {
   name: "ListBookings",

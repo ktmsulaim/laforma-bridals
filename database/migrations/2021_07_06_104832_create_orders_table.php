@@ -23,6 +23,10 @@ class CreateOrdersTable extends Migration
             $table->decimal('total');
             $table->string('payment_method');
             $table->string('status')->default('pending');
+            $table->tinyInteger('cancelled')->default(0);
+            $table->string('cancelled_by')->nullable();
+            $table->unsignedBigInteger('cancelled_by_id')->nullable();
+            $table->dateTime('cancelled_at')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
 

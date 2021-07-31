@@ -121,7 +121,7 @@
                             </a>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <a href="{{ route('admin.settings.index') }}" class="dropdown-item notify-item">
                                 <i class="fe-settings"></i>
                                 <span>Settings</span>
                             </a>
@@ -191,7 +191,7 @@
                         <p class="text-muted"><span>@</span>{{ auth()->user()->username }}</p>
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                <a href="javascript:void(0)" class="text-muted">
+                                <a href="{{ route('admin.settings.index') }}" class="text-muted">
                                     <i class="mdi mdi-cog"></i>
                                 </a>
                             </li>
@@ -253,7 +253,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('admin.bookings.index') }}">
                                     <i class="mdi mdi-calendar-month"></i>
                                     <span> Bookings </span>
                                 </a>
@@ -372,7 +372,8 @@
         <script src="{{ asset('assets/app/libs/toastr/toastr.min.js') }}"></script>
         
         <script src="{{ asset('assets/app/libs/custombox/custombox.min.js') }}"></script>
-
+        
+        
         <script src="{{ asset('assets/app/libs/ntc/ntc.js') }}"></script>
         
         <script src="{{ mix('assets/app/js/admin.js') }}"></script>

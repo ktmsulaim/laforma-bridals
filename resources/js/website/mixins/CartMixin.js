@@ -89,9 +89,9 @@ export default {
                     net_price: this.productOriginalPrice
                         ? this.productOriginalPrice
                         : product.price.original,
-                    special_price: this.productPrice
+                    special_price: product.special_price.has_special_price && this.productPrice
                         ? this.productPrice
-                        : product.special_price.original,
+                        : (product.special_price.has_special_price ? product.special_price.original : 0),
                     price: product.special_price.has_special_price
                         ? this.productPriceFormatted
                         : this.productOriginalPriceFormatted,
