@@ -150,9 +150,9 @@ class ProductController extends Controller
 
         // Update options 
         if($request->has('options')) {
-            if($product->options()->exists()) {
-                $product->options()->delete();
-            }
+            // if($product->options()->exists()) {
+            //     $product->options()->delete();
+            // }
 
             $options = $request->options;
             
@@ -169,22 +169,55 @@ class ProductController extends Controller
     private function addOptions($options, Product $product) {
         if($options && is_array($options) && count($options)) {
             foreach($options as $option) {
-                $productOption = $product->options()->create([
-                    'name' => $option['name'],
-                    'type' => $option['type'],
-                    'is_required' => $option['is_required'],
-                    'position' => $option['position']
-                ]);
+                $productOption = null;
+
+                if($option['id']) {
+                    $productOption = $product->options()->where('id', $option['id'])->first();
+                }
+
+                if($productOption) {
+                    $productOption->update([
+                        'name' => $option['name'],
+                        'type' => $option['type'],
+                        'is_required' => $option['is_required'],
+                        'position' => $option['position']
+                    ]);
+                } else {
+                    $productOption = $product->options()->create([
+                        'name' => $option['name'],
+                        'type' => $option['type'],
+                        'is_required' => $option['is_required'],
+                        'position' => $option['position']
+                    ]);
+                }
+
 
                 if($option['values'] && is_array($option['values']) && count($option['values'])) {
                     foreach($option['values'] as $value) {
-                        $productOption->values()->create([
-                            'label' => $value['label'],
-                            'price' => $value['price'],
-                            'price_type' => $value['price_type'],
-                            'position' => $value['position'],
-                            'in_stock' => $value['in_stock'],
-                        ]);
+                        $productOptionValue = null;
+
+                        if($value['id']) {
+                            $productOptionValue = $productOption->values()->where('id', $value['id'])->first();
+                        }
+
+                        if($productOptionValue) {
+                            $productOptionValue->update([
+                                'label' => $value['label'],
+                                'price' => $value['price'],
+                                'price_type' => $value['price_type'],
+                                'position' => $value['position'],
+                                'in_stock' => $value['in_stock'],
+                            ]);
+                        } else {
+                            $productOptionValue = $productOption->values()->create([
+                                'label' => $value['label'],
+                                'price' => $value['price'],
+                                'price_type' => $value['price_type'],
+                                'position' => $value['position'],
+                                'in_stock' => $value['in_stock'],
+                            ]);
+                        }
+
                     }
                 }
             }

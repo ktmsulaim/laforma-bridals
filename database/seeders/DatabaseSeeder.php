@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AdminUsersTableSeeder::class,
             CategoryTableSeeder::class,
             PackagesTableSeeder::class,
+            SettingsTableSeeder::class,
         ]);
     }
 }

@@ -21,7 +21,9 @@
                             @php
                                 $data = [];
                                 foreach($orderProduct->options as $cartProductOption) {
-                                    $data[$cartProductOption->option->name] = $cartProductOption->optionValue->label;
+                                    if($cartProductOption->option()->exists()) {
+                                        $data[$cartProductOption->option->name] = $cartProductOption->optionValue->label;
+                                    }
                                 }
                             @endphp
                             <cart-item-options :data='@json($data)'></cart-item-options>

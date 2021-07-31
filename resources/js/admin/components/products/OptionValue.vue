@@ -115,6 +115,7 @@ export default {
   methods: {
     addValue() {
       this.values.push({
+        id: null,
         position: this.position,
         label: null,
         price: 0,
@@ -145,6 +146,7 @@ export default {
   created() {
     if (this.option && this.option.values && this.option.values.length) {
       this.values = this.option.values.map((value) => ({
+        id: value.id,
         label: value.label,
         price: value.price,
         price_type: value.price_type,

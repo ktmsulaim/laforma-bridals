@@ -584,6 +584,7 @@ export default {
 
       this.data.options = this.product.options
         ? this.product.options.map((option) => ({
+            id: option.id,
             name: option.name,
             type: option.type,
             is_required: option.is_required,

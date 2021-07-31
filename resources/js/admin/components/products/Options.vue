@@ -89,6 +89,7 @@ export default {
     methods: {
         addNewOption() {
             this.options.push({
+                id: null,
                 name: null,
                 type: 'radiobutton',
                 is_required: true,

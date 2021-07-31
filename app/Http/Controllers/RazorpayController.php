@@ -15,7 +15,7 @@ class RazorpayController extends Controller
     protected $api;
 
     public function __construct() {
-        $this->api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+        $this->api = new Api(setting('razorpay_key', env('RAZOR_KEY')), setting('razorpay_secret', env('RAZOR_SECRET')));
     }
 
 
@@ -99,20 +99,22 @@ class RazorpayController extends Controller
     public function makeBookingPayment(Request $request)
     {
         $booking = Booking::findOrFail($request->get('booking_id'));
-        $bookingDateFormatted = Carbon::parse($booking->date)->format('d F, Y');
-
+        
         if(!$request->has('booking_id') || !$request->get('booking_id') || !$booking) {
             return response()->json(['error' => 'Unable to find the booking!'], 404);
         }
+        
+        $bookingAmount = $booking->package->bookingPrice();
 
         $razorpayPaymentId = $request->get('razorpay_payment_id');
         $razorpayOrderId = $request->get('razorpay_order_id');
         $signature = $request->get('signature');
 
-        $payment = $booking->payments()->create([
+        $booking->payments()->create([
             'razorpay_payment_id' => $razorpayPaymentId,
             'razorpay_order_id' => $razorpayOrderId,
             'signature' => $signature,
+            'amount' => $bookingAmount,
             'type' => $request->get('type'),
             'status' => $request->get('status'),
         ]);
@@ -121,7 +123,7 @@ class RazorpayController extends Controller
 
         if($razorpayPayment) {
             if($this->verifySignature($signature, $razorpayPaymentId, $razorpayOrderId)) {
-                $razorpayPayment->capture(['amount' => Money::toRazorPay($booking->package->bookingPrice()), 'currency' => "INR"]);
+                $razorpayPayment->capture(['amount' => Money::toRazorPay($bookingAmount), 'currency' => "INR"]);
                 
                 $booking->status = 'full_amount_pending';
                 $booking->save();
