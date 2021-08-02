@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Money;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -76,11 +77,59 @@ class Booking extends Model
 
     public function status()
     {
-        return Str::of($this->status)->snake()->replace('_', ' ')->title();
+        if($this->status === 'full_amount_pending') {
+            return 'Booked';
+        } else {
+            return Str::of($this->status)->snake()->replace('_', ' ')->title();
+        }
     }
     
     public function progress()
     {
+        // date()
         return Str::of($this->progress)->snake()->replace('_', ' ')->title();
+    }
+
+    public function subTotal($format = true)
+    {
+        $bookingCharge = $this->package->bookingPrice();
+        $packageAmount = $this->package->hasSpecialPrice() ? $this->package->specialPrice(false) : $this->package->price;
+        $total = $bookingCharge + $packageAmount;
+
+        if($format) {
+            return Money::format($total);
+        } else {
+            return $total;
+        }
+    }
+
+    public function amountPaid($format = true)
+    {
+        if($this->payments()->exists()) {
+            $sum = $this->payments()->sum('amount');
+
+            if($format) {
+                return Money::format($sum);
+            } else {
+                return $sum;
+            }
+        }
+
+        return 0;
+    }
+
+    public function total($format = true)
+    {
+        $amountToPay = $this->subTotal(false) - $this->amountPaid(false);
+
+        if($amountToPay) {
+            if($format) {
+                return Money::format($amountToPay);
+            } else {
+                return $amountToPay;
+            }
+        } 
+
+        return 0;
     }
 }

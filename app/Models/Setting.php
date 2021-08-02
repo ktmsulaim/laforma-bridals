@@ -67,6 +67,7 @@ class Setting extends Model
             'opening_hour' => setting('opening_hour'),
             'closing_hour' => setting('closing_hour'),
             'working_hours' => setting('working_hours'),
+            'holidays' => setting('holidays'),
             'enable_cash_on_delivery' => setting('enable_cash_on_delivery'), 
             'enable_razorpay' => setting('enable_razorpay'), 
             'razorpay_key' => setting('razorpay_key'), 

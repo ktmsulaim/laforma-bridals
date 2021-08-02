@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\BookingProgressChanged;
+use App\Events\BookingStatusChanged;
 use App\Http\Controllers\Controller;
+use App\Mail\CustomerBookingStatusMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -101,11 +104,52 @@ class ManageBookings extends Controller
 
     public function show(Booking $booking)
     {
-        
+        return view('admin.bookings.show', ['booking' => $booking]);
     }
 
-    public function invoice($type)
+    public function print(Booking $booking)
     {
-        
+        return view('admin.bookings.print', ['booking' => $booking]);
     }
+
+    public function status(Request $request, Booking $booking)
+    {
+        $status = $request->get('status');
+
+        if(!$status) {
+            return response()->json(['error' => 'Status couldn\'t be found'], 422);
+        }
+
+        $booking->status = $status;
+        $booking->save();
+
+        // event
+        event(new BookingStatusChanged($booking));
+
+        $booking = $booking->fresh();
+        return response()->json($booking->status());
+    }
+
+    public function progress(Request $request, Booking $booking)
+    {
+        $progress = $request->get('progress');
+
+        if(!$progress) {
+            return response()->json(['error' => 'Progress can\'t be empty'], 422);
+        }
+
+        $booking->progress = $progress;
+        $booking->save();
+
+        // event
+        event(new BookingProgressChanged($booking));
+
+        $booking = $booking->fresh();
+        return response()->json($booking->progress());
+    }
+
+    // public function test()
+    // {
+    //     return new CustomerBookingStatusMail(Booking::first());
+    // }
 }

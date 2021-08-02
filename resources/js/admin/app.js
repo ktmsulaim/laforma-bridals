@@ -97,6 +97,8 @@ import PrintInvoice from './components/orders/PrintInvoice'
 import OrderStatus from './components/orders/OrderStatus'
 import ListTransactions from './components/transactions/ListTransactions'
 import ListBookings from './components/bookings/ListBookings'
+import BookingStatus from './components/bookings/BookingStatus'
+import BookingProgress from './components/bookings/BookingProgress'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
@@ -121,6 +123,8 @@ const app = new Vue({
         ListOrders,
         ListTransactions,
         ListBookings,
+        BookingStatus,
+        BookingProgress
     },
     store
 })

@@ -26,7 +26,7 @@ trait PriceTrait {
             if($format) {
                 return Money::format($price);
             } else {
-                return (float)number_format($price, 2);
+                return $price;
             }
         }
 

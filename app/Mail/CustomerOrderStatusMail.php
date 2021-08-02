@@ -48,7 +48,7 @@ class CustomerOrderStatusMail extends Mailable
 
         return $this->to($this->order->customer->email)
                     ->subject('Order ' . $this->order->status())
-                    ->markdown('mail.orderStatus', [
+                    ->markdown('mail.order_status', [
                         'order' => $this->order,
                         'message' => $message
                     ]);

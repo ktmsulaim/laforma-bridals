@@ -3,20 +3,15 @@
     <div class="d-flex justify-content-between align-items-center">
       <span>{{ getStatus }}</span>
       <span v-if="loading" class="mdi mdi-loading mdi-spin"></span>
-    <a
+    <span
         v-else
-      href="#order-status-modal"
-      class="waves-effect"
-      data-animation="fadein"
-      data-plugin="custommodal"
-      data-overlayColor="#36404a"
-    >
+        @click="openModal">
       <span class="mdi mdi-pencil-circle-outline icon"></span>
-    </a>
+    </span>
     </div>
 
     <div id="order-status-modal" class="modal-demo">
-      <button type="button" class="close" onclick="Custombox.modal.close();">
+      <button type="button" class="close" @click="closeModal">
         <span>&times;</span><span class="sr-only">Close</span>
       </button>
       <h4 class="custom-modal-title">Change order status</h4>
@@ -88,11 +83,26 @@ export default {
         axios.post(route('admin.orders.status', {order: this.orderId}), {status: this.status.selected})
         .then(resp => {
             this.status.new = resp.data
-            Custombox.modal.close()
+            Custombox.modal.close('order-status')
             toastr.success('Order status updated', 'Success')
         })
         .catch(err => toastr.error('Unable to save the order status', 'Failed'))
         .finally(() => this.loading = false)
+    },
+    openModal() {
+        let modal = new Custombox.modal({
+          content: {
+              effect: 'fadein',
+              target: '#order-status-modal',
+              id: 'order-status',
+              close: true,
+          }
+      })
+
+      modal.open();
+    },
+    closeModal() {
+        Custombox.modal.close('order-status')
     }
   },
   mounted() {

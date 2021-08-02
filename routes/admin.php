@@ -101,7 +101,15 @@ Route::middleware('auth')->group(function(){
      */
     Route::get('bookings', [ManageBookings::class, 'index'])->name('bookings.index');
     Route::get('bookings/list', [ManageBookings::class, 'list'])->name('bookings.list');
+    Route::get('bookings/{booking}/print', [ManageBookings::class, 'print'])->name('bookings.print');
+    
+    Route::post('booking/{booking}/status', [ManageBookings::class, 'status'])->name('bookings.status');
+    Route::post('booking/{booking}/progress', [ManageBookings::class, 'progress'])->name('bookings.progress');
+    
     Route::get('bookings/{booking}', [ManageBookings::class, 'show'])->name('bookings.show');
+
+    Route::get('booking/test', [ManageBookings::class, 'test']);
+
     
     
     /**
