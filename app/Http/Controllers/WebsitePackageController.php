@@ -65,7 +65,10 @@ class WebsitePackageController extends Controller
 
         $booking = Booking::create($request->all());
 
-        event(new NewBookingMade($booking));
+        if(setting('email_notification') === 'enable' && setting('booking_confirmation_mail') === 'enable') {
+            event(new NewBookingMade($booking));
+        }
+
 
         return response()->json($booking);
     }

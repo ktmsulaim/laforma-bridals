@@ -120,11 +120,22 @@ class ManageBookings extends Controller
             return response()->json(['error' => 'Status couldn\'t be found'], 422);
         }
 
+        if($status === 'cancelled') {
+            $booking->cancelled = 1;
+            $booking->cancelled_by = 'admin';
+            $booking->cancelled_by_id = auth()->id();
+            $booking->cancelled_at = Carbon::now();
+        } else {
+            $booking->cancelled = 0;
+        }
+
         $booking->status = $status;
         $booking->save();
 
         // event
-        event(new BookingStatusChanged($booking));
+        if(setting('email_notification') === 'enable' && setting('booking_status_mail') === 'enable') {
+            event(new BookingStatusChanged($booking));
+        }
 
         $booking = $booking->fresh();
         return response()->json($booking->status());
@@ -142,8 +153,10 @@ class ManageBookings extends Controller
         $booking->save();
 
         // event
-        event(new BookingProgressChanged($booking));
-
+        if(setting('email_notification') === 'enable' && setting('booking_progress_mail') === 'enable') {
+            event(new BookingProgressChanged($booking));
+        }
+        
         $booking = $booking->fresh();
         return response()->json($booking->progress());
     }

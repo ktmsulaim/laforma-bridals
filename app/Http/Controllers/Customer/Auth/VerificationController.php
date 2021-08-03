@@ -85,8 +85,10 @@ class VerificationController extends Controller
             $customer = Customer::find($request->user('customer')->id);
             $customer->is_active = 1;
             $customer->save();
-            
-            event(new CustomerEmailVerified($request->user('customer')));
+
+            if(setting('email_notification') === 'enable' && setting('welcome_mail') === 'enable') {
+                event(new CustomerEmailVerified($request->user('customer')));
+            }
         }
 
         return redirect($this->redirectPath())->with('verified', true);

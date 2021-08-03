@@ -97,7 +97,9 @@ class ManageOrders extends Controller
         $order->status = $status;
         $order->save();
 
-        event(new OrderStatusChanged($order));
+        if(setting('email_notification') === 'enable' && setting('order_status_mail') === 'enable') {
+            event(new OrderStatusChanged($order));
+        }
 
         $order = $order->fresh();
         return response()->json($order->status());

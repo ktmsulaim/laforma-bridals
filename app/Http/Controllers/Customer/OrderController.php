@@ -106,7 +106,9 @@ class OrderController extends Controller
         }
 
         if($paymentMethod == 'cod') {
-            event(new NewOrderPlaced($order));
+            if(setting('email_notification') === 'enable' && setting('order_summary_mail') === 'enable') {
+                event(new NewOrderPlaced($order));
+            }
         }
 
 

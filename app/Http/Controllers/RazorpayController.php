@@ -58,7 +58,10 @@ class RazorpayController extends Controller
        $orderId = $request->get('order_id');
        $order = Order::findOrFail($orderId);
 
-       event(new NewOrderPlaced($order));
+       if(setting('email_notification') === 'enable' && setting('order_summary_mail') === 'enable') {
+           event(new NewOrderPlaced($order));
+       }
+
 
        if(!$orderId || !$order) {
            return response()->json(['error' => 'Unable to find the order'], 404);

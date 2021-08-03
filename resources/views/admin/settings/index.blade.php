@@ -70,6 +70,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#system" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                <span class="d-block d-sm-none"><i class="fa fa-circle"></i></span>
+                                <span class="d-none d-sm-block">System</span> 
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#home-page" data-toggle="tab" aria-expanded="true" class="nav-link">
                                 <span class="d-block d-sm-none"><i class="fa fa-circle"></i></span>
                                 <span class="d-none d-sm-block">Home page</span> 
@@ -191,6 +197,21 @@
                                         <div class="col-lg-6 col-md-6 col-sm-12"></div>
                                     </div>
                                 </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="system">
+                                <p class="mb-0">
+                                    @include('components.admin.settings.switch', ['name' => 'email_notification', 'text' => 'Email notification'])
+                                    
+                                    <h4>Notifications</h4>
+
+                                    @include('components.admin.settings.switch', ['name' => 'welcome_mail', 'text' => 'Send welcome mail to new customers'])
+                                    @include('components.admin.settings.switch', ['name' => 'order_summary_mail', 'text' => 'Send order summary to the customers'])
+                                    @include('components.admin.settings.switch', ['name' => 'order_status_mail', 'text' => 'Send order status notification when changed'])
+                                    @include('components.admin.settings.switch', ['name' => 'booking_confirmation_mail', 'text' => 'Send booking confirmation to the customers'])
+                                    @include('components.admin.settings.switch', ['name' => 'booking_status_mail', 'text' => 'Send booking status notification when changed'])
+                                    @include('components.admin.settings.switch', ['name' => 'booking_progress_mail', 'text' => 'Send booking progress notification when changed'])
+                                    
+                                </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="home-page">
                                 <p class="mb-0">
