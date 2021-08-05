@@ -93,6 +93,17 @@ class Package extends Model
                 $date = $dt->format('Y-m-d');
             }
 
+            $holidays = setting('holidays');
+
+            if ($holidays) {
+                $holiDates = explode(',', $holidays);
+                $dateFormatted = !$date instanceof Carbon ? Carbon::parse($date)->format('d/m/Y') : $date->format('d/m/Y');
+
+                if (in_array($dateFormatted, $holiDates)) {
+                    return false;
+                }
+            }
+
             $totalBookedHours = Booking::totalBookedHoursOn($date);
 
             $totalWorkingHours = setting('working_hours', 12);
@@ -120,45 +131,51 @@ class Package extends Model
                 $closing->subMinutes($this->duration())
             );
 
-            $hours->addFilter(function($date) {
-                $toSkip = [];
-                $today = Carbon::now();
 
-                if($today->format('d-m-Y') === $date->format('d-m-Y')) {
-                    if($date->hour === $today->hour && $date->addMinutes($this->duration() > $today->hour)) {
-                        array_push($toSkip, $date);
-                    } elseif($date->hour < $today->hour) {
+
+            if (!$date instanceof Carbon) {
+                $dt = Carbon::parse($date);
+            }
+
+            if ($dt->isToday()) {
+                $hours->addFilter(function ($date) {
+                    $toSkip = [];
+
+                    $today = Carbon::now();
+
+                    if ($date->hour <= $today->hour) {
                         array_push($toSkip, $date);
                     }
-                }
 
-                return !in_array($date, $toSkip);
-            });
-            
-            if (Booking::where('date', $date)->count()) {
-                $totalBookedHours = Booking::totalBookedHoursOn($date);
-                $timeLeft = setting('working_hours', 12) - $totalBookedHours;
-
-                if ($timeLeft >= $this->hours) {
-                    $booked = Booking::where('date', $date)->get();
-                    
-
-                    $hours->addFilter(function ($date) use ($booked) {
-                        $toSkip = [];
-                        foreach ($booked as $bookedItem) {
-                            $bookingTime = Carbon::parse($bookedItem->time);
-                            $completingTime = Carbon::parse($bookedItem->time)->addMinutes($bookedItem->package->duration());
-
-                            if ($bookedItem->status !== 'cancelled' && $date->isBetween($bookingTime, $completingTime)) {
-                                array_push($toSkip, $date);
-                            }
-                        }
-
-                        return !in_array($date, $toSkip);
-                    });
-                }
+                    return !in_array($date, $toSkip);
+                });
             }
-            
+
+
+            if (Booking::where('date', $date)->count()) {
+
+                
+                $hours->addFilter(function ($filterDate) use($date) {
+                    $toSkip = [];
+                    $booked = Booking::where('date', $date)->get();
+
+                    foreach ($booked as $bookedItem) {
+                        $bookingTime = Carbon::createFromTimeString($bookedItem->time);
+                        $completingTime = Carbon::createFromTimeString($bookedItem->time)->addMinutes($bookedItem->package->duration());
+
+                        if ($bookedItem->status !== 'cancelled') {
+                            if($filterDate->eq($bookingTime)) {
+                                array_push($toSkip, $filterDate);
+                            } elseif($filterDate->between($bookingTime, $completingTime, false)) {
+                                array_push($toSkip, $filterDate);
+                            }
+                        } 
+                    }
+
+                    return !in_array($filterDate, $toSkip);
+                });
+            }
+
             if ($hours->count()) {
                 foreach ($hours as $hour) {
                     array_push($availableSlots, $hour->format('h:i A'));
@@ -169,5 +186,4 @@ class Package extends Model
 
         return $availableSlots;
     }
-
 }

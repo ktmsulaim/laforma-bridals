@@ -27,3 +27,8 @@
 	color: $color-yellow;
 	background: #fff9ef;
 }
+
+.badge-primary {
+	color: $primary-color;
+	background: lighten($color: $primary-color, $amount: 55%);
+}

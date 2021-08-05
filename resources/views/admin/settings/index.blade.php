@@ -70,9 +70,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#system" data-toggle="tab" aria-expanded="true" class="nav-link">
+                            <a href="#notifications" data-toggle="tab" aria-expanded="true" class="nav-link">
                                 <span class="d-block d-sm-none"><i class="fa fa-circle"></i></span>
-                                <span class="d-none d-sm-block">System</span> 
+                                <span class="d-none d-sm-block">Notifications</span> 
                             </a>
                         </li>
                         <li class="nav-item">
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane fade" id="system">
+                            <div role="tabpanel" class="tab-pane fade" id="notifications">
                                 <p class="mb-0">
                                     @include('components.admin.settings.switch', ['name' => 'email_notification', 'text' => 'Email notification'])
                                     

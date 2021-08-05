@@ -9,6 +9,7 @@
           :range="true"
           format="DD-MM-YYYY"
           v-model="filter.date_range"
+          @change="filter.filter_enabled = false"
           @clear="clearDateRanges"
         ></date-picker>
       </div>
@@ -17,6 +18,7 @@
         <select
           class="form-control"
           v-model="filter.status"
+          @change="filter.filter_enabled = false"
           id="status-options"
         >
           <option value="pending">Pending</option>
@@ -32,6 +34,7 @@
         <select
           class="form-control"
           v-model="filter.progress"
+          @change="filter.filter_enabled = false"
           id="progress-options"
         >
           <option value="not_started">Not started</option>
@@ -40,7 +43,7 @@
         </select>
       </div>
       <div class="col-lg-3">
-        <package-list @set="filter.package = $event" ref="packageListComponent"></package-list>
+        <package-list @set="selectPackage" ref="packageListComponent"></package-list>
       </div>
       <div class="col-lg-1">
         <label>&nbsp;</label>
@@ -187,6 +190,13 @@ export default {
 
       this.grid.updateConfig(config).forceRender();
     },
+    selectPackage(value) {
+      this.filter.package = value;
+
+      if(this.filter.filter_enabled) {
+        this.filter.filter_enabled = false;
+      }
+    }
   },
   mounted() {
     this.grid = new Grid({

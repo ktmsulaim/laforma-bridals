@@ -132,4 +132,40 @@ class Booking extends Model
 
         return 0;
     }
+
+    public function isCancelled()
+    {
+        return $this->cancelled && $this->cancelled === 1;
+    }
+
+    public function cancelledBy()
+    {
+        if($this->isCancelled()) {
+            if($this->cancelled_by === 'customer') {
+                return 'customer';
+            } else {
+                $admin = User::find($this->cancelled_by_id);
+
+                if($admin) {
+                    return $admin->name;
+                }
+                return 'Admin';
+            }
+        }
+
+        return null;
+    }
+
+    public function cancelledOn()
+    {
+        if($this->isCancelled() && $this->cancelled_at) {
+            $cancelledOn = $this->cancelled_at;
+            
+            if(!$this->cancelled_on instanceof Carbon) {
+                $cancelledOn = Carbon::parse($this->cancelled_at);
+            }
+
+            return $cancelledOn->diffForHumans();
+        }
+    }
 }

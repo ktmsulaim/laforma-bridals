@@ -86,27 +86,23 @@ export default {
           name: "Status",
           formatter: (_, row) => {
             let status = row.cells[4].data;
+            let color;
+
             if (status === "Pending") {
-              return html(
-                `<span class="badge badge-info badge-pill">Pending</span>`
-              );
+              color = "info";
             } else if (status === "Booking Charge Pending") {
-              return html(
-                `<span class="badge badge-warning badge-pill">Booking Charge Pending</span>`
-              );
+              color = "warning";
             } else if (status === "Full Amount Pending") {
-              return html(
-                `<span class="badge badge-info badge-pill">Booked</span>`
-              );
+              color = "info";
             } else if (status === "Cancelled") {
-              return html(
-                `<span class="badge badge-danger badge-pill">Cancelled</span>`
-              );
+              color = "danger";
             } else if (status === "Completed") {
-              return html(
-                `<span class="badge badge-success badge-pill">Completed</span>`
-              );
+              color = "success";
+            } else if( status === 'Booked') {
+              color = "primary";
             }
+
+            return html(`<span class="badge badge-${color} badge-pill">${status}</span>`)
           },
         },
         {

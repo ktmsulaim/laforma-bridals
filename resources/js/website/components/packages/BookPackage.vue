@@ -17,7 +17,9 @@
       </div>
       <div class="col-lg-6 mt-2 mt-md-0">
         <button
-          :disabled="booking.loading || availability.loading || availability.status"
+          :disabled="
+            booking.loading || availability.loading || availability.status
+          "
           class="btn_1 gray"
           @click="checkAvailability"
         >
@@ -39,7 +41,7 @@
             <select
               class="form-control"
               id="time"
-              v-model="booking.selectedTime"
+              v-model="availability.selectedTime"
               :disabled="booking.loading"
             >
               <option :value="null">Select time</option>
@@ -53,10 +55,14 @@
             </select>
           </div>
           <div class="col-lg-6 mt-2 mt-md-0">
-            <button @click="book" :disabled="!validDateTime || booking.loading" class="btn_1">
+            <button
+              @click="book"
+              :disabled="!validDateTime || booking.loading"
+              class="btn_1"
+            >
               <span v-if="booking.loading"
-            ><span class="mdi mdi-loading mdi-spin"></span
-          ></span>
+                ><span class="mdi mdi-loading mdi-spin"></span
+              ></span>
               <span v-else>Book now</span>
             </button>
           </div>
@@ -99,6 +105,8 @@ import { mapGetters } from "vuex";
 import Loading from "../Loading.vue";
 import Auth from "../Auth.vue";
 
+import BookPackageMixin from "../../mixins/bookPackageMixin";
+
 export default {
   name: "BookPackage",
   props: ["package_id", "razorpay_key_id"],
@@ -107,19 +115,13 @@ export default {
     Auth,
     Loading,
   },
+  mixins: [BookPackageMixin],
   data() {
     return {
       loading: false,
       packages: null,
-      availability: {
-        status: false,
-        selectedDate: null,
-        loading: false,
-        slots: [],
-      },
       booking: {
         loading: false,
-        selectedTime: null,
         id: null,
       },
       data: {
@@ -139,58 +141,65 @@ export default {
         image: "/img/2.png",
         order_id: null,
         handler: (response) => {
-          this.data.date = this.availability.selectedDate
-          this.data.time = this.booking.selectedTime
+          this.data.date = this.availability.selectedDate;
+          this.data.time = this.availability.selectedTime;
 
-          axios.post(route('customer.book'), this.data)
-          .then(resp => {
-            let booking = resp.data;
-            
-            if(booking) {
-              this.booking.id = booking.id;
-            }
+          axios
+            .post(route("customer.book"), this.data)
+            .then((resp) => {
+              let booking = resp.data;
 
-            return axios.post(route('customer.book.payment'), {
-              booking_id: this.booking.id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              signature: response.razorpay_signature,
-              type: 'booking_charge',
-              status: 'success'
+              if (booking) {
+                this.booking.id = booking.id;
+              }
+
+              return axios.post(route("customer.book.payment"), {
+                booking_id: this.booking.id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                signature: response.razorpay_signature,
+                type: "booking_charge",
+                status: "success",
+              });
             })
-          })
-          .then(resp => {
-            let summary = resp.data.data;
+            .then((resp) => {
+              let summary = resp.data.data;
 
-            this.$swal({
-                titleText: 'Your booking has been processed',
+              this.$swal({
+                titleText: "Your booking has been processed",
                 text: summary,
-                icon: 'success',
+                icon: "success",
                 allowOutsideClick: false,
-                confirmButtonText: 'Show',
-                confirmButtonColor: '#a21d23',
+                confirmButtonText: "Show",
+                confirmButtonColor: "#a21d23",
+              })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    window.location = route("customer.bookings.show", {
+                      booking: this.booking.id,
+                    });
+                  }
+                })
+                .catch((error) => {
+                  console.error(error);
+                  this.$swal(
+                    "Sorry! Unable to prcess the request. Try again later",
+                    "",
+                    "error"
+                  );
+                  this.booking.loading = false;
+                });
             })
-            .then(result => {
-                if(result.isConfirmed) {
-                    window.location = route('customer.bookings.show', {booking: this.booking.id})
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                this.$swal('Sorry! Unable to prcess the request. Try again later', '', 'error')
-                this.booking.loading = false;
-            })
-          })
-          .catch(err => {
-            this.$toast.open({
+            .catch((err) => {
+              this.$toast.open({
                 message: "Unable to process the request",
                 type: "error",
               });
-          })
-          .finally(() => {
-            this.availability.selectedDate = null;
-            this.resetAvailabilityStatus()
-          })
+            })
+            .finally(() => {
+              this.availability.selectedDate = null;
+              this.resetAvailabilityStatus();
+            });
         },
         prefill: {
           name: null,
@@ -200,11 +209,11 @@ export default {
         theme: {
           color: "#a21d23",
         },
-        "modal": {
-            "ondismiss": () => {
-                this.resetAvailabilityStatus()
-            }
-        }
+        modal: {
+          ondismiss: () => {
+            this.resetAvailabilityStatus();
+          },
+        },
       },
     };
   },
@@ -215,12 +224,6 @@ export default {
     }),
     isShopOpen() {
       return Settings.isShopOpen;
-    },
-    validDateTime() {
-      return (
-        !_.isEmpty(this.availability.selectedDate) &&
-        !_.isEmpty(this.booking.selectedTime)
-      );
     },
   },
   methods: {
@@ -236,67 +239,6 @@ export default {
           })
         )
         .finally(() => (this.loading = false));
-    },
-    disabledDates(date) {
-      const today = moment().startOf("day");
-      date = moment(date).startOf("day");
-      let holidays = [];
-
-      if (Settings.holidays) {
-        holidays = Settings.holidays.split(",");
-      }
-
-      return (
-        holidays.includes(date.format("DD/MM/YYYY")) ||
-        date === today ||
-        date < today
-      );
-    },
-    checkAvailability() {
-      if (this.availability.selectedDate) {
-        this.availability.loading = true;
-
-        axios
-          .post(
-            route("packages.check.availability", { package: this.packages.id }),
-            { date: this.availability.selectedDate }
-          )
-          .then((resp) => {
-            let slots = resp.data;
-            let formattedDate = moment(
-              this.availability.selectedDate,
-              "YYYY-MM-DD"
-            ).format("DD-MM-YYYY");
-
-            this.availability.slots = slots;
-            this.availability.status = slots.length > 0;
-
-            if (slots.length) {
-              this.$toast.open({
-                message: `The package is available to book on ${formattedDate}`,
-                type: "success",
-              });
-            } else {
-              this.$toast.open({
-                message: `Sorry! the package is not available to book on ${formattedDate}`,
-                type: "error",
-              });
-            }
-          })
-          .catch((err) =>
-            this.$toast.open({
-              message: "Unable to check availability",
-              type: "error",
-            })
-          )
-          .finally(() => (this.availability.loading = false));
-      }
-    },
-    resetAvailabilityStatus() {
-      this.availability.status = false;
-      this.booking.selectedTime = null;
-      this.availability.loading = false;
-      this.booking.loading = false;
     },
     showAuthForm() {
       this.$modal.show("authForm");
@@ -342,9 +284,9 @@ export default {
             this.booking.loading = false;
 
             this.$toast.open({
-                message: "Unable to process the booking",
-                type: "error",
-              });
+              message: "Unable to process the booking",
+              type: "error",
+            });
           });
       }
     },

@@ -51,6 +51,8 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
 
     Route::post('book', [WebsitePackageController::class, 'book'])->name('book');
     Route::post('book/payment', [RazorpayController::class, 'makeBookingPayment'])->name('book.payment');
+    Route::post('book/change', [BookingController::class, 'changeTime'])->name('book.change');
+    Route::post('book/cancel/{booking}', [BookingController::class, 'cancel'])->name('book.cancel');
 
     Route::get('orders', [CustomerController::class, 'orders'])->name('orders');
     Route::get('orders/list', [OrderController::class, 'listOrders'])->name('orders.list');

@@ -59,6 +59,8 @@ import CustomerAddress from './components/customer/addresses/CustomerAddress'
 import SingleAddress from './components/customer/addresses/SingleAddress'
 import ListOrders from './components/customer/orders/ListOrders'
 import ListBookings from './components/customer/bookings/ListBookings'
+import ChangeTime from './components/customer/bookings/ChangeTime'
+import CancelBooking from './components/customer/bookings/CancelBooking'
 
 
 Vue.component('single-address', SingleAddress)
@@ -83,6 +85,8 @@ const app = new Vue({
         BookPackage,
         ShowFeatures,
         ListBookings,
+        ChangeTime,
+        CancelBooking,
     },
     store,
 });

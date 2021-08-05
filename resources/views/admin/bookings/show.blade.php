@@ -7,6 +7,16 @@
         </div>
     </div>
 
+    @if ($booking->isCancelled())    
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-danger">
+                    <strong>Oh snap!</strong> The booking was cancelled by <b>{{ $booking->cancelledBy() }}</b> {{ $booking->cancelledOn() }}
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-6 col-md-6">
             <div class="card">

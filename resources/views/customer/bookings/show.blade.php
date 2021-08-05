@@ -99,6 +99,23 @@
                     </ul>
                 </div>
             </div>
+            <div class="row mt-2">
+            @if (!$booking->isCancelled())    
+                <div class="col d-flex">
+                    <change-time :booking='@json($booking)'></change-time>
+                    <cancel-booking :booking='@json($booking)'></cancel-booking>
+                </div>
+                @else
+                    <div class="col">
+                        <div class="alert alert-danger">
+                            <p>
+                                <strong>Oops!</strong> This appointment was cancelled by {{ $booking->cancelledBy() === 'customer' ? 'you' : 'Admin' }}
+                            </p>
+                            <small>{{ $booking->cancelledOn() }}</small>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 @endsection

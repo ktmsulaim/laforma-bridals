@@ -10,6 +10,7 @@
           format="DD-MM-YYYY"
           v-model="filter.date_range"
           :disabled-date="disabledDate"
+          @change="resetFilter"
           @clear="clearDateRanges"
         ></date-picker>
       </div>
@@ -18,6 +19,7 @@
         <select
           class="form-control"
           v-model="filter.status"
+          @change="resetFilter"
           id="status-options"
         >
           <option value="pending">Pending</option>
@@ -25,6 +27,7 @@
           <option value="on_hold">On hold</option>
           <option value="confirmed">Confirmed</option>
           <option value="processing">Processing</option>
+          <option value="completed">Completed</option>
           <option value="cancelled">Cancelled</option>
           <option value="refunded">Refunded</option>
         </select>
@@ -174,6 +177,11 @@ export default {
 
       this.grid.updateConfig(config).forceRender();
     },
+    resetFilter() {
+      if(this.filter.filter_enabled) {
+        this.filter.filter_enabled = false;
+      }
+    }
   },
   mounted() {
     this.grid = new Grid({

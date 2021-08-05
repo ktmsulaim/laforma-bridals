@@ -4,10 +4,14 @@ namespace App\Providers;
 
 use App\Events\BookingProgressChanged;
 use App\Events\BookingStatusChanged;
+use App\Events\CustomerCancelledBookingEvent;
+use App\Events\CustomerChangedBookingTimeEvent;
 use App\Events\CustomerEmailVerified;
 use App\Events\NewBookingMade;
 use App\Events\NewOrderPlaced;
 use App\Events\OrderStatusChanged;
+use App\Listeners\NotifyAdminBookingCancellation;
+use App\Listeners\NotifyAdminBookingTimeChange;
 use App\Listeners\SendBookingConfirmationToCustomer;
 use App\Listeners\SendBookingProgressMail;
 use App\Listeners\SendBookingStatusMail;
@@ -53,6 +57,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         BookingProgressChanged::class => [
             SendBookingProgressMail::class
+        ],
+        CustomerChangedBookingTimeEvent::class => [
+            NotifyAdminBookingTimeChange::class
+        ],
+        CustomerCancelledBookingEvent::class => [
+            NotifyAdminBookingCancellation::class
         ]
     ];
 
