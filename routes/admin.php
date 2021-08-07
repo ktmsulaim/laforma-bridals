@@ -17,7 +17,9 @@ use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\ManageBookings;
 use App\Http\Controllers\Admin\ManageOrders;
 use App\Http\Controllers\Admin\TransactionsController;
-use App\Http\Controllers\SettingController;
+
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\SettingController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -140,4 +142,13 @@ Route::middleware('auth')->group(function(){
      */
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings/save', [SettingController::class, 'save'])->name('settings.save');
+
+    /**
+     * -------------------------------------------------------------------
+     * Notifications
+     * -------------------------------------------------------------------
+     */
+    Route::get('notifications/unread', [NotificationController::class, 'listUnread'])->name('notifications.unread');
+    Route::post('notifications/markAsRead', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 });

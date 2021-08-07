@@ -25,6 +25,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import JwPagination from 'jw-vue-pagination';
 import VueHtmlToPaper from 'vue-html-to-paper';
 import InputTag from 'vue-input-tag'
+import VueSlimScroll from 'vue-slimscroll'
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -46,6 +47,7 @@ Vue.use(VueSlugify)
 Vue.use(Select2)
 Vue.use(VueSweetalert2)
 Vue.use(VueHtmlToPaper);
+Vue.use(VueSlimScroll)
 
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('jw-pagination', JwPagination)
@@ -77,6 +79,7 @@ Vue.mixin({
  * Components
  * -----------------------------------------------------
  */
+import Notifications from './components/layout/Notifications'
 
 import Card from './components/Card'
 import FileManager from './components/FileManager'
@@ -109,6 +112,8 @@ Vue.component('order-status', OrderStatus)
 const app = new Vue({
     el: '#app',
     components: {
+        Notifications,
+
         Card,
         ProductsForm,
         ListProducts,
