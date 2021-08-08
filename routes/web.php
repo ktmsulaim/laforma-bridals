@@ -30,6 +30,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 |
 */
 
+Route::get('/products', [WebsiteResourceController::class, 'allProducts'])->name('products.index');
+Route::get('/products/get', [WebsiteResourceController::class, 'getProducts'])->name('products.get');
+Route::get('/products/count/byPrice', [WebsiteResourceController::class, 'getCategoryWiseFilteredProductsCount'])->name('products.count.byPrice');
 Route::get('/products/featured', [WebsiteResourceController::class, 'featuredProducts'])->name('featuredProducts');
 Route::get('/products/{slug}/view', [WebsiteController::class, 'singleProduct'])->name('singleProduct');
 Route::get('/products/{product}', [WebsiteController::class, 'product'])->name('products.show');

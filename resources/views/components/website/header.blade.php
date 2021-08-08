@@ -79,10 +79,10 @@
 									<a href="{{ route("website.index") }}">Home</a>
 								</li>
 								<li>
-									<a href="javascript:void(0)">Products</a>
+									<a href="{{ route('products.index') }}">Products</a>
 								</li>
 								<li>
-									<a href="javascript:void(0)">Packages</a>
+									<a href="{{ route('packages.index') }}">Packages</a>
 								</li>
 								<li>
 									<a href="javascript:void(0)">Jobs</a>

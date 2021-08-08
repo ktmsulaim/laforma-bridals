@@ -24,7 +24,7 @@ class ProductResource extends JsonResource
             }) : null,
             'category' => [
                 'name' => $this->category->name,
-                'url' => 'javascript:void(0)'
+                'url' => route('products.index', ['category' => $this->category->slug]),
             ],
             'sku' => $this->sku,
             'tags' => $this->tags,

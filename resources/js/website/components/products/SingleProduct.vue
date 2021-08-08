@@ -3,8 +3,74 @@
   <div v-else>
     <div class="container margin_30">
       <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
           <image-slider :images="product.images"></image-slider>
+        </div>
+        <div class="col-lg-6">
+          <div class="mb-2" v-html="product.description"></div>
+          <div class="prod_options version_2" v-if="product.is_orderable">
+                        <product-options
+                          :product="product"
+                          @updatePrice="updatePrice"
+                          @updateOptions="updateOptions"
+                        ></product-options>
+
+                        <div class="row mt-3">
+                          <div class="col">
+                            <div class="price_main">
+                              <span v-if="product.special_price.has_special_price" class="old_price">{{ productOriginalPriceFormatted }}</span>
+                              <span class="new_price">
+                                  <span v-if="product.special_price.has_special_price">{{ productPriceFormatted }}</span>
+                                  <span v-else>{{ productOriginalPriceFormatted }}</span>
+                              </span>
+                              <span
+                                v-if="product.special_price.has_special_price"
+                                class="percentage"
+                                >-{{ product.special_price.percentage }}%</span>
+                            
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                          <div class="col-lg-6 col-md-6">
+                            <div class="numbers-row">
+                              <input
+                                type="text"
+                                v-model="quantity"
+                                id="quantity_1"
+                                class="qty2"
+                                name="quantity_1"
+                                :max="product.qty"
+                                @input="checkQuantity(productQuantity)"
+                              />
+                              <div
+                                @click="updateQuantity('increase')"
+                                class="inc button_inc"
+                              >
+                                +
+                              </div>
+                              <div
+                                @click="updateQuantity('decrease')"
+                                class="dec button_inc"
+                              >
+                                -
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-md-6">
+                            <div class="btn_add_to_cart">
+                              <button
+                                :disabled="!product.in_stock"
+                                @click="addToCart(product, quantity)"
+                                class="btn_1 text-uppercase w-100"
+                              >
+                                Add to Cart
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
         </div>
       </div>
     </div>
@@ -19,7 +85,7 @@
                 class="nav-link active"
                 data-toggle="tab"
                 role="tab"
-                >Description</a
+                >Specifications</a
               >
             </li>
             <li class="nav-item">
@@ -55,7 +121,7 @@
                     aria-expanded="false"
                     aria-controls="collapse-A"
                   >
-                    Description
+                    Specifications
                   </a>
                 </h5>
               </div>
@@ -67,11 +133,8 @@
                 aria-labelledby="heading-A"
               >
                 <div class="card-body">
-                  <div class="row justify-content-between">
-                    <div class="col-lg-8">
-                      <h3>Details</h3>
-                      <div class="mb-2" v-html="product.description"></div>
-                      <h3>Specifications</h3>
+                  <div class="row">
+                    <div class="col-lg-6 mx-auto">
                       <div class="table-responsive">
                         <table class="table table-sm table-striped">
                           <tbody>
@@ -98,9 +161,9 @@
                               <td><strong>Tags</strong></td>
                               <td>
                                 <a
-                                  href="javascript:void(0)"
+                                  :href="getTagLink(tag.slug)"
                                   class="label label-secondary"
-                                  v-for="(tag, index) in tags"
+                                  v-for="(tag, index) in product.tags"
                                   :key="index"
                                   >{{ tag.name }}</a
                                 >
@@ -110,72 +173,6 @@
                         </table>
                       </div>
                       <!-- /table-responsive -->
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="prod_options version_2">
-                        <product-options
-                          :product="product"
-                          @updatePrice="updatePrice"
-                          @updateOptions="updateOptions"
-                        ></product-options>
-                        <div class="row mt-3">
-                          <label class="col-xl-7 col-lg-5 col-md-6 col-6"
-                            ><strong>Quantity</strong></label
-                          >
-                          <div class="col-xl-5 col-lg-5 col-md-6 col-6">
-                            <div class="numbers-row">
-                              <input
-                                type="text"
-                                v-model="quantity"
-                                id="quantity_1"
-                                class="qty2"
-                                name="quantity_1"
-                                :max="product.qty"
-                                @input="checkQuantity(prodcutQuantity)"
-                              />
-                              <div
-                                @click="updateQuantity('increase')"
-                                class="inc button_inc"
-                              >
-                                +
-                              </div>
-                              <div
-                                @click="updateQuantity('decrease')"
-                                class="dec button_inc"
-                              >
-                                -
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-lg-7 col-md-6">
-                            <div class="price_main">
-                              <span v-if="product.special_price.has_special_price" class="old_price">{{ productOriginalPriceFormatted }}</span>
-                              <span class="new_price">
-                                  <span v-if="product.special_price.has_special_price">{{ productPriceFormatted }}</span>
-                                  <span v-else>{{ productOriginalPriceFormatted }}</span>
-                              </span>
-                              <span
-                                v-if="product.special_price.has_special_price"
-                                class="percentage"
-                                >-{{ product.special_price.percentage }}%</span>
-                            
-                            </div>
-                          </div>
-                          <div class="col-lg-5 col-md-6">
-                            <div class="btn_add_to_cart">
-                              <button
-                                :disabled="!product.in_stock"
-                                @click="addToCart(product, quantity)"
-                                class="btn_1 text-uppercase w-100"
-                              >
-                                Add to Cart
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -366,6 +363,11 @@ export default {
     updateOptions(options) {
       this.selectedOptions = options;
     },
+    getTagLink(slug) {
+      if(slug) {
+        return route('products.index', {tag: slug})
+      }
+    }
   },
   created() {
     this.getProduct();

@@ -95,7 +95,14 @@ export default {
             if(this.redirect) {
               window.location = route('customer.dashboard')
             } else {
-              this.$store.commit('authenticate', resp.data)
+              let token = resp.data.token;
+              this.$store.commit('authenticate', resp.data.user)
+
+              if(token) {
+                $('meta[name="csrf-token"]').attr('content', token);
+                window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+              }
+
             }
 
           })

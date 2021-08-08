@@ -4554,6 +4554,7 @@ body.modal-open .mm-slideout {
   text-align: center;
   position: relative;
   cursor: pointer;
+  background-color: #fff;
   border: 1px solid #e1e1e1;
 }
 .grid_item:hover ul li {
@@ -4675,6 +4676,12 @@ body.modal-open .mm-slideout {
   color: #444;
   font-weight: 500;
   display: inline-block;
+  white-space: nowrap;
+  word-break: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 15px;
+  max-width: 100%;
 }
 .grid_item a h3:hover {
   color: #a21d23;
@@ -5063,6 +5070,7 @@ input.qty2:focus {
   font-size: 1.625rem;
   font-weight: 300 !important;
   color: #999;
+  user-select: none;
 }
 .button_inc:hover {
   color: #a21d23;
@@ -6226,6 +6234,7 @@ a.social_bt.google:before {
 .pagination li:first-child {
   border: none;
 }
+.pagination li,
 .pagination a,
 .pagination span {
   background: none;
@@ -6240,12 +6249,12 @@ a.social_bt.google:before {
   min-width: 40px;
   padding: 0;
 }
-.pagination a {
+.pagination a, .pagination li {
   outline: none;
   position: relative;
   transition: all 170ms linear;
 }
-.pagination a:before {
+.pagination li:before {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   content: "";
@@ -6259,15 +6268,15 @@ a.social_bt.google:before {
   top: 50%;
   width: 0;
 }
-.pagination a:hover:not(.active) {
+.pagination li:hover:not(.active) {
   color: black;
 }
-.pagination a:hover:not(.active):before {
+.pagination li:hover:not(.active):before {
   animation: hoverAnimation 510ms linear forwards;
   height: 40px;
   width: 40px;
 }
-.pagination a.active {
+.pagination .active {
   background: rgba(0, 0, 0, 0.1);
   color: black;
   cursor: default;

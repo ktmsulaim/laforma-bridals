@@ -78,4 +78,17 @@ class Product extends Model
         }
     }
 
+    public static function maxPrice()
+    {
+        if(self::count()) {
+            $max = self::max('price');
+            
+            if($max) {
+                return $max;
+            }
+        }
+
+        return 0;
+    }
+
 }

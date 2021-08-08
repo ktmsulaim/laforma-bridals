@@ -98,6 +98,7 @@
 <!-- COMMON SCRIPTS -->
 <script src="{{ asset('assets/website/js/common_scripts.min.js') }}"></script>
 <script src="{{ asset('assets/app/libs/ntc/ntc.js') }}"></script>
+<script src="{{ asset('assets/website/js/sticky_sidebar.min.js') }}"></script>
 <script src="{{ asset('assets/website/js/website.js') }}"></script>
 <script src="{{ asset('assets/website/js/main.js') }}"></script>
 

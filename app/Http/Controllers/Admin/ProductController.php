@@ -9,6 +9,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Traits\Controllers\Images;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -28,13 +29,14 @@ class ProductController extends Controller
         $products = Product::latest()->get();
 
         $products->transform(function($product){
+            $currentYear = Carbon::now()->year;
             return [
                 'id' => $product->id,
                 'image' => $product->baseImage(), 
                 'name' => $product->name,
                 'price' => $product->price(),
                 'is_active' => $product->is_active,
-                'created_at' => $product->created_at->format('d F, Y'),
+                'created_at' => $currentYear === $product->created_at->year ? $product->created_at->format('d F') : $product->created_at->format('d F, Y'),
                 'edit' => route('admin.products.edit', $product->id)
             ];
         });

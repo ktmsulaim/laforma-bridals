@@ -65,7 +65,10 @@ class LoginController extends Controller
     }
 
     public function authenticated(Request $request, $user) {
-        return response()->json($user);
+        return response()->json([
+            'user' => $user,
+            'token' => csrf_token(),
+        ]);
     }
 
     /**

@@ -11,7 +11,10 @@
         </div>
         <div v-else-if="option.type === 'radiobutton'">
             <label v-for="(value,i) in option.values" :for="`value-${value.label}`" :key="i" class="container_radio">
-                <input type="radio" v-model="selected[option.name]" :value="value.label" @change="updatePrice(value, option)" :disabled="!value.in_stock" :id="`value-${value.label}`" :name="option.name"> {{ value.label }}
+                <input type="radio" v-model="selected[option.name]" :value="value.label" @change="updatePrice(value, option)" :disabled="!value.in_stock" :id="`value-${value.label}`" :name="option.name"> 
+                <span v-if="value.in_stock">{{ value.label }}</span>
+                <strike v-else>{{ value.label }}</strike>
+                
                 <span class="checkmark"></span>
             </label>
         </div>

@@ -58,15 +58,16 @@ class ManageOrders extends Controller
             }
         }
         
-
+        
         $orders = $orders->transform(function ($order) {
+            $currentYear = Carbon::now()->year;
             return [
                 'id' => $order->id,
                 'customer_name' => $order->customer->name,
                 'customer_phone' => $order->customer->phone,
                 'total' => $order->total,
                 'status' => $order->status(),
-                'created_at' => $order->created_at->format('F d, Y'),
+                'created_at' => $currentYear === $order->created_at->year ? $order->created_at->format('F d') : $order->created_at->format('F d, Y'),
                 'url' => [
                     'view' => route('admin.orders.show', $order->id)
                 ]

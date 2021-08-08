@@ -438,6 +438,11 @@ export default {
         window.location = route("cart");
       }
     },
+    user(newVal) {
+      if(newVal && !_.isEmpty(newVal)) {
+        this.data.customer_id = newVal.id;
+      }
+    }
   },
   created() {
     if (this.user) {

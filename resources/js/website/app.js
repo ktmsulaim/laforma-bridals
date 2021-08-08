@@ -49,6 +49,8 @@ import ShowFeatures from './components/packages/ShowFeatures'
 import NoData from './components/NoData'
 import SingleProduct from './components/products/SingleProduct'
 import Price from './components/Price'
+import ProductsIndex from './components/products/ProductsIndex'
+import ProductsToolBox from './components/products/ProductsToolBox'
 
 import Cart from './components/Cart'
 import CartItemOptions from './components/cart/CartItemOptions'
@@ -66,6 +68,7 @@ import CancelBooking from './components/customer/bookings/CancelBooking'
 Vue.component('single-address', SingleAddress)
 Vue.component('cart-item-options', CartItemOptions)
 Vue.component('no-data', NoData)
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 
 const app = new Vue({
@@ -77,6 +80,8 @@ const app = new Vue({
         Packages,
         SingleProduct,
         Price,
+        ProductsIndex,
+        ProductsToolBox,
         Cart,
         CartIndex,
         CheckoutIndex,

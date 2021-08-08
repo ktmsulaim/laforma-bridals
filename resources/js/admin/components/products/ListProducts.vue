@@ -37,6 +37,7 @@ export default {
         },
         {
           name: "Created",
+          minWidth: 116,
         },
         {
           name: "Action",
@@ -44,6 +45,7 @@ export default {
             html(
               `<a href="${row.cells[6].data}" class="btn btn-sm btn-info"><span class="mdi mdi-pencil-box-outline"></span> Edit</a>`
             ),
+            minWidth: 120
         },
       ],
       search: {

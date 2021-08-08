@@ -59,7 +59,7 @@ export default {
     },
     created() {
         if(!this.product.options.has_options) {
-            this.$store.commit('setProductMaxQuantity', this.product.qty)
+            // this.$store.commit('setProductMaxQuantity', this.product.qty)
         }
     }
 }

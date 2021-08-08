@@ -46,6 +46,16 @@ export default {
     methods: {
         addToCart(product, quantity = 1) {
             if (product) {
+
+                if(!product.is_orderable){
+                    this.$toast.open({
+                        message: 'Sorry! This product can\'t be ordered',
+                        type: 'error'
+                    });
+
+                    return;
+                }
+
                 if (product.options.has_options) {
                     let validOptions = true;
                     product.options.items.forEach(option => {

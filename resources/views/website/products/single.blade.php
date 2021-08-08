@@ -9,52 +9,48 @@
     <meta property="og:image" content="{{ $product->baseImage() }}" />
 @endpush
 
-@section('content')
-    @include('components.website.page_header', ['pageTitle' => $product->name, 'links' => [
+@section('content_fluid')
+    @include('components.website.page_header2', ['pageTitle' => $product->name, 'links' => [
         [
-            'url' => 'javascript:void(0)',
+            'url' => route('products.index'),
             'label' => 'Products'
         ],
-        [
-            'url' => route('singleProduct', $product->slug),
-            'label' => $product->name
-        ]
     ]])
+    <single-product :product-id="{{ $product->id }}"></single-product>
 @endsection
 
-@section('content_fluid')
-    <single-product :product-id="{{ $product->id }}"></single-product>
-    <div class="feat">
-        <div class="container">
-            <ul>
-                <li>
-                    <div class="box">
-                        <i class="ti-gift"></i>
-                        <div class="justify-content-center">
-                            <h3>Free Shipping</h3>
-                            <p>For all oders</p>
-                        </div>
+@section('content')
+<div class="feat">
+    <div class="container">
+        <ul>
+            <li>
+                <div class="box">
+                    <i class="ti-gift"></i>
+                    <div class="justify-content-center">
+                        <h3>Free Shipping</h3>
+                        <p>For all orders</p>
                     </div>
-                </li>
-                <li>
-                    <div class="box">
-                        <i class="ti-wallet"></i>
-                        <div class="justify-content-center">
-                            <h3>Secure Payment</h3>
-                            <p>100% secure payment</p>
-                        </div>
+                </div>
+            </li>
+            <li>
+                <div class="box">
+                    <i class="ti-wallet"></i>
+                    <div class="justify-content-center">
+                        <h3>Secure Payment</h3>
+                        <p>100% secure payment</p>
                     </div>
-                </li>
-                <li>
-                    <div class="box">
-                        <i class="ti-headphone-alt"></i>
-                        <div class="justify-content-center">
-                            <h3>24/7 Support</h3>
-                            <p>Online top support</p>
-                        </div>
+                </div>
+            </li>
+            <li>
+                <div class="box">
+                    <i class="ti-headphone-alt"></i>
+                    <div class="justify-content-center">
+                        <h3>24/7 Support</h3>
+                        <p>Online top support</p>
                     </div>
-                </li>
-            </ul>
-        </div>
+                </div>
+            </li>
+        </ul>
     </div>
+</div>
 @endsection
