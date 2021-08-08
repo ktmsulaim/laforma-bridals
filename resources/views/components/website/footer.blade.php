@@ -16,42 +16,60 @@
             <div class="col-lg-3 col-md-6">
                 <h3 data-target="#collapse_2">Categories</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_2">
-                    <ul>
-                        <li><a href="listing-grid-1-full.html">Clothes</a></li>
-                        <li><a href="listing-grid-2-full.html">Electronics</a></li>
-                        <li><a href="listing-grid-1-full.html">Furniture</a></li>
-                        <li><a href="listing-grid-3.html">Glasses</a></li>
-                        <li><a href="listing-grid-1-full.html">Shoes</a></li>
-                        <li><a href="listing-grid-1-full.html">Watches</a></li>
-                    </ul>
+                    @if ($categories && count($categories))
+                        <ul>
+                            @foreach ($categories as $category)
+                                <li><a href="{{ route('products.index', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No categories!</p>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                    <h3 data-target="#collapse_3">Contacts</h3>
+                <h3 data-target="#collapse_3">Contacts</h3>
                 <div class="collapse dont-collapse-sm contacts" id="collapse_3">
                     <ul>
                         <li><i class="ti-home"></i>{!! setting('address', 'Ring Road Tirur, Japan square building<br>1st floor Kotak Mahindra Bank Tirur<br>676101') !!}</li>
-                        <li><i class="ti-headphone-alt"></i><a href="tel:{{ str_replace(' ', '', setting('primary_contact_number')) }}">{{ setting('primary_contact_number', '+91 9846 374 743') }}</a></li>
-                        <li><i class="ti-email"></i><a href="mailto:{{ setting('email', 'laformabridals@gmail.com') }}">{{ setting('email', 'laformabridals@gmail.com') }}</a></li>
+                        <li><i class="ti-headphone-alt"></i><a
+                                href="tel:{{ str_replace(' ', '', setting('primary_contact_number')) }}">{{ setting('primary_contact_number', '+91 9846 374 743') }}</a>
+                        </li>
+                        <li><i class="ti-email"></i><a
+                                href="mailto:{{ setting('email', 'laformabridals@gmail.com') }}">{{ setting('email', 'laformabridals@gmail.com') }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                    <h3 data-target="#collapse_4">Keep in touch</h3>
+                <h3 data-target="#collapse_4">Keep in touch</h3>
                 <div class="collapse dont-collapse-sm" id="collapse_4">
                     <div id="newsletter">
                         <div class="form-group">
-                            <input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Your email">
+                            <input type="email" name="email_newsletter" id="email_newsletter" class="form-control"
+                                placeholder="Your email">
                             <button type="submit" id="submit-newsletter"><i class="ti-angle-double-right"></i></button>
                         </div>
                     </div>
                     <div class="follow_us">
                         <h5>Follow Us</h5>
                         <ul>
-                            <li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{ asset('assets/website/img/twitter_icon.svg') }}" alt="" class="lazy"></a></li>
-                            <li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{ asset('assets/website/img/facebook_icon.svg') }}" alt="" class="lazy"></a></li>
-                            <li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{ asset('assets/website/img/instagram_icon.svg') }}" alt="" class="lazy"></a></li>
-                            <li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{ asset('assets/website/img/youtube_icon.svg') }}" alt="" class="lazy"></a></li>
+                            <li><a href="#0"><img
+                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        data-src="{{ asset('assets/website/img/twitter_icon.svg') }}" alt=""
+                                        class="lazy"></a></li>
+                            <li><a href="#0"><img
+                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        data-src="{{ asset('assets/website/img/facebook_icon.svg') }}" alt=""
+                                        class="lazy"></a></li>
+                            <li><a href="#0"><img
+                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        data-src="{{ asset('assets/website/img/instagram_icon.svg') }}" alt=""
+                                        class="lazy"></a></li>
+                            <li><a href="#0"><img
+                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        data-src="{{ asset('assets/website/img/youtube_icon.svg') }}" alt=""
+                                        class="lazy"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -76,7 +94,9 @@
                             </select>
                         </div>
                     </li>
-                    <li><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{ asset('assets/website/img/cards_all.svg') }}" alt="" width="198" height="30" class="lazy"></li>
+                    <li><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                            data-src="{{ asset('assets/website/img/cards_all.svg') }}" alt="" width="198" height="30"
+                            class="lazy"></li>
                 </ul>
             </div>
             <div class="col-lg-6">
@@ -118,4 +138,5 @@
 
 
 </body>
+
 </html>
