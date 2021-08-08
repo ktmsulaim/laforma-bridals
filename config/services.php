@@ -20,8 +20,8 @@ return [
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
     'mailjet' => [
-        'key' => env('MAILJET_APIKEY'),
-        'secret' => env('MAILJET_APISECRET'),
+        'key' => env('MAILJET_APIKEY', 'b7cdf4668a8290720945549f9efbe790'),
+        'secret' => env('MAILJET_APISECRET', '46e1a4d65e6778b8bb9b3a24fc8b7157'),
         'transactional' => [
             'call' => true,
             'options' => [

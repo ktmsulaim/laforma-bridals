@@ -14,7 +14,7 @@ class CategoryComposer {
      */
     public function compose(View $view)
     {
-        $categories = Category::active()->get();
+        $categories = Category::active()->forNav()->get();
         $view->with('categories', $categories);
     }
 }

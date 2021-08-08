@@ -12,7 +12,7 @@
           <li v-for="category in categories" :key="category.id">
             <label class="container_check"
               >{{ category.name }} <small>{{ category.products }}</small>
-              <input type="checkbox" name="category" :value="category.id" v-model="filter.category" />
+              <input type="checkbox" name="category" :value="category.id" v-model="filter.categories" />
               <span class="checkmark"></span>
             </label>
           </li>
@@ -47,8 +47,29 @@
         <ul>
           <li>
             <label class="container_check"
-              >Orderable <small>0</small>
+              >Orderable
               <input type="checkbox" name="tag" v-model="filter.attributes.orderable" />
+              <span class="checkmark"></span>
+            </label>
+          </li>
+          <li>
+            <label class="container_check"
+              >In stock
+              <input type="checkbox" name="tag" v-model="filter.attributes.in_stock" />
+              <span class="checkmark"></span>
+            </label>
+          </li>
+          <li>
+            <label class="container_check"
+              >New arrival
+              <input type="checkbox" name="tag" v-model="filter.attributes.is_new" />
+              <span class="checkmark"></span>
+            </label>
+          </li>
+          <li>
+            <label class="container_check"
+              >Offer price
+              <input type="checkbox" name="tag" v-model="filter.attributes.has_offer" />
               <span class="checkmark"></span>
             </label>
           </li>
@@ -91,31 +112,44 @@ export default {
     data() {
         return {
             filter: {
-                category: [],
+                categories: [],
                 tags: [],
                 price: {
                   min: 0,
                   max: 0
                 },
                 attributes: {
-                  orderable: 1,
+                  orderable: 0,
+                  in_stock: 0,
+                  is_new: 0,
+                  has_offer: 0
                 }
             }
         }
     },
     methods: {
         resetFilter() {
-            this.filter.category = [];
+            this.filter.categories = [];
             this.filter.tags = [];
+            this.filter.price = {min: 0, max: this.maxPrice ? this.maxPrice : 100}
+            this.filter.attributes = {
+              orderable: 0,
+              in_stock: 0,
+              is_new: 0,
+              has_offer: 0
+            }
 
+            //clear current url
+            window.history.replaceState({}, document.title, route('products.index'))
             this.$store.commit('clearFilter')
             this.$emit('updateFilter')
         },
         applyFilter() {
             this.$store.commit('applyFilter', {
-                categories: JSON.stringify(this.filter.category),
+                categories: JSON.stringify(this.filter.categories),
                 tags: JSON.stringify(this.filter.tags),
-                price: JSON.stringify({min: this.filter.price.min, max: this.filter.price.max})
+                price: JSON.stringify({min: this.filter.price.min, max: this.filter.price.max}),
+                attributes: JSON.stringify(this.filter.attributes)
             })
 
             this.$emit('updateFilter')
@@ -134,10 +168,11 @@ export default {
         ...mapGetters({
             'loading': 'getLoading',
             'categories': 'getCategories',
-            'tags': 'getTags'
+            'tags': 'getTags',
+            'filters': 'getFilters'
         }),
         hasFilter() {
-            if((this.filter.category && this.filter.category.length) || 
+            if((this.filter.categories && this.filter.categories.length) || 
             (this.filter.tags && this.filter.tags.length) ||
             this.filter.price)
             {
@@ -150,6 +185,16 @@ export default {
     created() {
       if(this.maxPrice) {
         this.filter.price.max = this.maxPrice;
+      }
+
+      if(this.filters) {
+        if(!_.isEmpty(this.filters.categories)) {
+          this.filter.categories = JSON.parse(this.filters.categories)
+        }
+
+        if(!_.isEmpty(this.filters.tags)) {
+          this.filter.tags = JSON.parse(this.filters.tags)
+        }
       }
     }
 };

@@ -42,6 +42,11 @@ class Category extends Model
         return $query->where('status', 1);
     }
 
+    public function scopeForNav($query)
+    {
+        return $query->where('show_in_nav', 1);
+    }
+
     public function getChildren()
     {
         $children = new Collection();

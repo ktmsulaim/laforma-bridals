@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class WebsiteResourceController extends Controller
@@ -17,6 +18,8 @@ class WebsiteResourceController extends Controller
         $maxPrice = Product::maxPrice();
         
         $search = $request->get('search');
+        $category = $request->get('category');
+        $tag = $request->get('tag');
 
 
         if($categories) {
@@ -42,7 +45,11 @@ class WebsiteResourceController extends Controller
             'categories' => $categories, 
             'tags' => $tags,
             'maxPrice' => $maxPrice,
-            'search' => $search,
+            'query' => [
+                'search' => $search,
+                'category' => $category,
+                'tag' => $tag,
+            ],
         ]);
     }
 
@@ -52,13 +59,43 @@ class WebsiteResourceController extends Controller
         $categories = json_decode(stripslashes($request->get('categories')));
         $tags = json_decode(stripslashes($request->get('tags')));
         $price = json_decode(stripslashes($request->get('price')));
+        
+        // query
         $search = json_decode(stripslashes($request->get('search')));
+        // attributes
+        $attributes = json_decode(stripslashes($request->get('attributes')));
+
         
         $products = Product::available();
 
         if($search) {
             $products->where('name', 'like', "%{$search}%");
         }
+
+        if($attributes) {
+            $orderable = $attributes->orderable;
+            $inStock = $attributes->in_stock;
+            $isNew = $attributes->is_new;
+            $hasOffer = $attributes->has_offer;
+
+            if($orderable) {
+                $products->where('is_orderable', 1)->whereHas('category', fn($query) => $query->where('is_orderable', 1));
+            }
+    
+            if($inStock) {
+                $products->where('in_stock', 1);
+            }
+    
+            if($isNew) {
+                $products->where('is_new', 1);
+            }
+    
+            if($hasOffer) {
+                $date = Carbon::today()->format('Y-m-d');
+                $products->whereNotNull('special_price')->where('special_price_start', '<=', $date)->where('special_price_end', '<=', $date);
+            }
+        }
+
 
         if($categories && is_array($categories) && count($categories)) {
             $products->whereHas('category', function($query) use($categories){

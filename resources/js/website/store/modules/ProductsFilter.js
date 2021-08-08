@@ -9,6 +9,7 @@ const state = {
             categories: [],
             tags: [],
             price: null,
+            attributes: null,
         }
     }
 };
@@ -43,11 +44,13 @@ const mutations = {
         state.filter.selected.categories = data.categories;
         state.filter.selected.tags = data.tags;
         state.filter.selected.price = data.price;
+        state.filter.selected.attributes = data.attributes;
     },
     clearFilter(state) {
         state.filter.selected.categories = [];
         state.filter.selected.tags = [];
         state.filter.selected.price = null;
+        state.filter.selected.attributes = null;
     }    
 };
 

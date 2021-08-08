@@ -65,7 +65,7 @@
 
 		<ul id="banners_grid" class="clearfix">
 			<li>
-				<a href="#0" class="img_container">
+				<a href="{{ route('products.index', ['category' => setting('ornaments_category', 'ornaments')]) }}" class="img_container">
 					<img src="{{ asset('assets/website/img/ornaments.jpg') }}" data-src="{{ asset('assets/website/img/ornaments.jpg') }}" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 						<h3>Ornaments</h3>
@@ -74,7 +74,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#0" class="img_container">
+				<a href="{{ route('products.index', ['category' => setting('garments_category', 'garments')]) }}" class="img_container">
 					<img src="{{ asset('assets/website/img/garments.jpeg') }}" data-src="{{ asset('assets/website/img/garments.jpeg') }}" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 						<h3>Garments</h3>
@@ -83,7 +83,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#0" class="img_container">
+				<a href="{{ route('products.index', ['category' => setting('jewells_category', 'jewells')]) }}" class="img_container">
 					<img src="{{ asset('assets/website/img/jewells.jpg') }}" data-src="{{ asset('assets/website/img/jewells.jpg') }}" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 						<h3>Jewells</h3>
@@ -98,7 +98,6 @@
 			<div class="main_title">
 				<h2>Products</h2>
 				<span>Featured</span>
-				{{-- <p>Cum doctus civibus efficiantur in imperdiet deterruisset</p> --}}
 			</div>
 			<featured-products></featured-products>
 			<!-- /row -->

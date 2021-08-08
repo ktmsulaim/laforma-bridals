@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <products-index :categories='@json($categories)' :tags='@json($tags)' search="{{ $search }}" :max-price={{$maxPrice}}></products-index>
+    <products-index :categories='@json($categories)' :tags='@json($tags)' :query='@json($query)' :max-price={{$maxPrice}}></products-index>
 @endsection
 
 @push('js_libs')

@@ -1,7 +1,10 @@
 <template>
   <div class="row">
     <aside class="col-lg-3" id="sidebar_fixed">
-      <products-filter-side :maxPrice="maxPrice" @updateFilter="fetchProducts"></products-filter-side>
+      <products-filter-side
+        :maxPrice="maxPrice"
+        @updateFilter="fetchProducts"
+      ></products-filter-side>
     </aside>
     <!-- /col -->
     <div class="col-lg-9">
@@ -18,8 +21,15 @@
       <div v-else>
         <NoData />
       </div>
-      <div class="pagination__wrapper" v-if="hasProducts && productsData.meta.last_page > 1 && !loading">
-        <pagination :data="productsData" @pagination-change-page="fetchProducts" align="center"></pagination>
+      <div
+        class="pagination__wrapper"
+        v-if="hasProducts && productsData.meta.last_page > 1 && !loading"
+      >
+        <pagination
+          :data="productsData"
+          @pagination-change-page="fetchProducts"
+          align="center"
+        ></pagination>
       </div>
     </div>
     <!-- /col -->
@@ -32,13 +42,13 @@ import Loading from "../Loading.vue";
 import Product from "../Product.vue";
 import NoData from "../NoData.vue";
 
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 
-import ProductsFilterSide from './ProductsFilterSide.vue'
+import ProductsFilterSide from "./ProductsFilterSide.vue";
 
 export default {
   name: "ProductsIndex",
-  props: ["categories", "tags", "search", "maxPrice"],
+  props: ["categories", "tags", "query", "maxPrice"],
   components: {
     Loading,
     Product,
@@ -50,50 +60,69 @@ export default {
       productsData: [],
     };
   },
-  computed:{
+  computed: {
     ...mapGetters({
-      'loading': 'getLoading',
-      'filters': 'getFilters',
+      loading: "getLoading",
+      filters: "getFilters",
     }),
     hasProducts() {
-      return this.productsData && this.productsData.data && this.productsData.data.length;
+      return (
+        this.productsData &&
+        this.productsData.data &&
+        this.productsData.data.length
+      );
     },
     hasFilter() {
-      return this.filters && (!_.isEmpty(this.filters.categories) || !_.isEmpty(this.filters.tags))
-    }
+      return (
+        this.filters &&
+        (!_.isEmpty(this.filters.categories) || !_.isEmpty(this.filters.tags ) ||
+        !_.isEmpty(this.filters.price) || !_.isEmpty(this.filters.attributes)
+        )
+      );
+    },
   },
   methods: {
     setLoading(status) {
-      this.$store.commit('setLoading', status)
+      this.$store.commit("setLoading", status);
     },
     fetchProducts(page = 1) {
       let params = {
-          page
+        page,
       };
-      
+
       this.setLoading(true);
 
-      if(this.hasFilter) {
-        if(this.filters.categories) {
+      if (this.hasFilter) {
+        if (this.filters.categories) {
           params.categories = this.filters.categories;
         }
 
-        if(this.filters.tags) {
+        if (this.filters.tags) {
           params.tags = this.filters.tags;
         }
 
-        if(this.filters.price) {
+        if (this.filters.price) {
           params.price = this.filters.price;
+        }
+
+        if(this.filters.attributes) {
+          params.attributes = this.filters.attributes
         }
       }
 
-      if(this.search) {
-        params.search = JSON.stringify(this.search);
+      if (this.query) {
+        if (this.query.search) {
+          params.search = JSON.stringify(this.query.search);
+        }
+
+        if (this.query.tag) {
+          params.tag = JSON.stringify(this.query.tag);
+        }
       }
 
       axios
-        .get(route('products.get'), {
-          params
+        .get(route("products.get"), {
+          params,
         })
         .then((resp) => (this.productsData = resp.data))
         .catch((err) =>
@@ -102,7 +131,7 @@ export default {
             type: "error",
           })
         )
-        .finally(() => (this.setLoading(false)));
+        .finally(() => this.setLoading(false));
     },
   },
   mounted() {
@@ -142,14 +171,37 @@ export default {
     });
   },
   created() {
-    if(this.categories) {
-      this.$store.commit('setCategories', this.categories)
+    if (this.categories) {
+      this.$store.commit("setCategories", this.categories);
     }
 
-    if(this.tags) {
-      this.$store.commit('setTags', this.tags)
+    if (this.tags) {
+      this.$store.commit("setTags", this.tags);
     }
-  }
+
+    if (this.query) {
+      let category,tag;
+      let categorySlug = this.query.category;
+      let tagSlug = this.query.tag;
+
+      if (this.categories) {
+        category = this.categories.find((cat) => cat.slug === categorySlug);
+      }
+
+      if(this.tags) {
+        tag = this.tags.find(singleTag => singleTag.slug === tagSlug)
+      }
+
+      if(category || tag) {
+        this.$store.commit("applyFilter", {
+          categories: category ? JSON.stringify([category.id]) : [],
+          tags: tag ? JSON.stringify([tag.id]) : [],
+          price: null,
+        });
+      }
+
+    }
+  },
 };
 </script>
 

@@ -5576,6 +5576,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ProductsFilterSide',
@@ -5583,33 +5604,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       filter: {
-        category: [],
+        categories: [],
         tags: [],
         price: {
           min: 0,
           max: 0
         },
         attributes: {
-          orderable: 1
+          orderable: 0,
+          in_stock: 0,
+          is_new: 0,
+          has_offer: 0
         }
       }
     };
   },
   methods: {
     resetFilter: function resetFilter() {
-      this.filter.category = [];
+      this.filter.categories = [];
       this.filter.tags = [];
+      this.filter.price = {
+        min: 0,
+        max: this.maxPrice ? this.maxPrice : 100
+      };
+      this.filter.attributes = {
+        orderable: 0,
+        in_stock: 0,
+        is_new: 0,
+        has_offer: 0
+      }; //clear current url
+
+      window.history.replaceState({}, document.title, route('products.index'));
       this.$store.commit('clearFilter');
       this.$emit('updateFilter');
     },
     applyFilter: function applyFilter() {
       this.$store.commit('applyFilter', {
-        categories: JSON.stringify(this.filter.category),
+        categories: JSON.stringify(this.filter.categories),
         tags: JSON.stringify(this.filter.tags),
         price: JSON.stringify({
           min: this.filter.price.min,
           max: this.filter.price.max
-        })
+        }),
+        attributes: JSON.stringify(this.filter.attributes)
       });
       this.$emit('updateFilter');
     },
@@ -5626,10 +5663,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
     'loading': 'getLoading',
     'categories': 'getCategories',
-    'tags': 'getTags'
+    'tags': 'getTags',
+    'filters': 'getFilters'
   })), {}, {
     hasFilter: function hasFilter() {
-      if (this.filter.category && this.filter.category.length || this.filter.tags && this.filter.tags.length || this.filter.price) {
+      if (this.filter.categories && this.filter.categories.length || this.filter.tags && this.filter.tags.length || this.filter.price) {
         return true;
       }
 
@@ -5639,6 +5677,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     if (this.maxPrice) {
       this.filter.price.max = this.maxPrice;
+    }
+
+    if (this.filters) {
+      if (!_.isEmpty(this.filters.categories)) {
+        this.filter.categories = JSON.parse(this.filters.categories);
+      }
+
+      if (!_.isEmpty(this.filters.tags)) {
+        this.filter.tags = JSON.parse(this.filters.tags);
+      }
     }
   }
 });
@@ -5696,6 +5744,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5703,7 +5761,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ProductsIndex",
-  props: ["categories", "tags", "search", "maxPrice"],
+  props: ["categories", "tags", "query", "maxPrice"],
   components: {
     Loading: _Loading_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     Product: _Product_vue__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -5716,19 +5774,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)({
-    'loading': 'getLoading',
-    'filters': 'getFilters'
+    loading: "getLoading",
+    filters: "getFilters"
   })), {}, {
     hasProducts: function hasProducts() {
       return this.productsData && this.productsData.data && this.productsData.data.length;
     },
     hasFilter: function hasFilter() {
-      return this.filters && (!_.isEmpty(this.filters.categories) || !_.isEmpty(this.filters.tags));
+      return this.filters && (!_.isEmpty(this.filters.categories) || !_.isEmpty(this.filters.tags) || !_.isEmpty(this.filters.price) || !_.isEmpty(this.filters.attributes));
     }
   }),
   methods: {
     setLoading: function setLoading(status) {
-      this.$store.commit('setLoading', status);
+      this.$store.commit("setLoading", status);
     },
     fetchProducts: function fetchProducts() {
       var _this = this;
@@ -5751,13 +5809,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (this.filters.price) {
           params.price = this.filters.price;
         }
+
+        if (this.filters.attributes) {
+          params.attributes = this.filters.attributes;
+        }
       }
 
-      if (this.search) {
-        params.search = JSON.stringify(this.search);
+      if (this.query) {
+        if (this.query.search) {
+          params.search = JSON.stringify(this.query.search);
+        }
+
+        if (this.query.tag) {
+          params.tag = JSON.stringify(this.query.tag);
+        }
       }
 
-      axios.get(route('products.get'), {
+      axios.get(route("products.get"), {
         params: params
       }).then(function (resp) {
         return _this.productsData = resp.data;
@@ -5802,11 +5870,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     if (this.categories) {
-      this.$store.commit('setCategories', this.categories);
+      this.$store.commit("setCategories", this.categories);
     }
 
     if (this.tags) {
-      this.$store.commit('setTags', this.tags);
+      this.$store.commit("setTags", this.tags);
+    }
+
+    if (this.query) {
+      var category, tag;
+      var categorySlug = this.query.category;
+      var tagSlug = this.query.tag;
+
+      if (this.categories) {
+        category = this.categories.find(function (cat) {
+          return cat.slug === categorySlug;
+        });
+      }
+
+      if (this.tags) {
+        tag = this.tags.find(function (singleTag) {
+          return singleTag.slug === tagSlug;
+        });
+      }
+
+      if (category || tag) {
+        this.$store.commit("applyFilter", {
+          categories: category ? JSON.stringify([category.id]) : [],
+          tags: tag ? JSON.stringify([tag.id]) : [],
+          price: null
+        });
+      }
     }
   }
 });
@@ -6866,7 +6960,8 @@ var state = {
     selected: {
       categories: [],
       tags: [],
-      price: null
+      price: null,
+      attributes: null
     }
   }
 };
@@ -6898,11 +6993,13 @@ var mutations = {
     state.filter.selected.categories = data.categories;
     state.filter.selected.tags = data.tags;
     state.filter.selected.price = data.price;
+    state.filter.selected.attributes = data.attributes;
   },
   clearFilter: function clearFilter(state) {
     state.filter.selected.categories = [];
     state.filter.selected.tags = [];
     state.filter.selected.price = null;
+    state.filter.selected.attributes = null;
   }
 };
 var actions = {};
@@ -55389,20 +55486,20 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.filter.category,
-                            expression: "filter.category"
+                            value: _vm.filter.categories,
+                            expression: "filter.categories"
                           }
                         ],
                         attrs: { type: "checkbox", name: "category" },
                         domProps: {
                           value: category.id,
-                          checked: Array.isArray(_vm.filter.category)
-                            ? _vm._i(_vm.filter.category, category.id) > -1
-                            : _vm.filter.category
+                          checked: Array.isArray(_vm.filter.categories)
+                            ? _vm._i(_vm.filter.categories, category.id) > -1
+                            : _vm.filter.categories
                         },
                         on: {
                           change: function($event) {
-                            var $$a = _vm.filter.category,
+                            var $$a = _vm.filter.categories,
                               $$el = $event.target,
                               $$c = $$el.checked ? true : false
                             if (Array.isArray($$a)) {
@@ -55412,19 +55509,19 @@ var render = function() {
                                 $$i < 0 &&
                                   _vm.$set(
                                     _vm.filter,
-                                    "category",
+                                    "categories",
                                     $$a.concat([$$v])
                                   )
                               } else {
                                 $$i > -1 &&
                                   _vm.$set(
                                     _vm.filter,
-                                    "category",
+                                    "categories",
                                     $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                                   )
                               }
                             } else {
-                              _vm.$set(_vm.filter, "category", $$c)
+                              _vm.$set(_vm.filter, "categories", $$c)
                             }
                           }
                         }
@@ -55521,9 +55618,7 @@ var render = function() {
         _c("ul", [
           _c("li", [
             _c("label", { staticClass: "container_check" }, [
-              _vm._v("Orderable "),
-              _c("small", [_vm._v("0")]),
-              _vm._v(" "),
+              _vm._v("Orderable\n            "),
               _c("input", {
                 directives: [
                   {
@@ -55564,6 +55659,162 @@ var render = function() {
                       }
                     } else {
                       _vm.$set(_vm.filter.attributes, "orderable", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkmark" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "container_check" }, [
+              _vm._v("In stock\n            "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.attributes.in_stock,
+                    expression: "filter.attributes.in_stock"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "tag" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.attributes.in_stock)
+                    ? _vm._i(_vm.filter.attributes.in_stock, null) > -1
+                    : _vm.filter.attributes.in_stock
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.attributes.in_stock,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter.attributes,
+                            "in_stock",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter.attributes,
+                            "in_stock",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter.attributes, "in_stock", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkmark" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "container_check" }, [
+              _vm._v("New arrival\n            "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.attributes.is_new,
+                    expression: "filter.attributes.is_new"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "tag" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.attributes.is_new)
+                    ? _vm._i(_vm.filter.attributes.is_new, null) > -1
+                    : _vm.filter.attributes.is_new
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.attributes.is_new,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter.attributes,
+                            "is_new",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter.attributes,
+                            "is_new",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter.attributes, "is_new", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkmark" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "container_check" }, [
+              _vm._v("Offer price\n            "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.attributes.has_offer,
+                    expression: "filter.attributes.has_offer"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "tag" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.attributes.has_offer)
+                    ? _vm._i(_vm.filter.attributes.has_offer, null) > -1
+                    : _vm.filter.attributes.has_offer
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.attributes.has_offer,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter.attributes,
+                            "has_offer",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter.attributes,
+                            "has_offer",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter.attributes, "has_offer", $$c)
                     }
                   }
                 }
