@@ -2058,7 +2058,7 @@ main.freeze {
 
 header .main_header {
   position: relative;
-  z-index: 99999;
+  z-index: 999;
 }
 @media (max-width: 991px) {
   header .main_header {

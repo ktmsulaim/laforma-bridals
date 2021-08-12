@@ -2,6 +2,7 @@ import _ from "lodash";
 
 const state = {
     items: [],
+    drawer: null,
 };
 
 const getters = {
@@ -30,6 +31,9 @@ const getters = {
 
             return price;
         }
+    },
+    getDrawer(state) {
+        return state.drawer;
     }
 };
 
@@ -71,6 +75,9 @@ const mutations = {
         localStorage.removeItem('cartItems')
         state.items = []
     },
+    defineDrawer(state, drawer) {
+        state.drawer = drawer;
+    }
 };
 
 const actions = {

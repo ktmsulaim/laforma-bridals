@@ -12,6 +12,7 @@ export default {
             getTotal: "getTotal",
             getSubTotal: "getSubTotal",
             items: 'getCartItems',
+            drawer: 'getDrawer',
         }),
         total() {
             return this.formatMoney(this.getTotal)
@@ -130,6 +131,7 @@ export default {
                             message: "The product has been added to cart",
                             type: "info"
                         });
+
                     } else {
                         let data = Object.assign({}, cartItemData);
                         
@@ -155,6 +157,10 @@ export default {
                         });
 
                     }
+
+                    if(this.drawer) {
+                        this.drawer.open()
+                    }
                 } else {
                     let data = Object.assign({}, cartItemData);
 
@@ -164,6 +170,9 @@ export default {
                         message: "The product has been added to cart",
                         type: "info"
                     });
+                }
+                if(this.drawer) {
+                    this.drawer.open()
                 }
             }
 

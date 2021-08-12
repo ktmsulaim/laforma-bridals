@@ -73,6 +73,7 @@ class OrderController extends Controller
 
                 // Save product options
                 if($cartItem['options'] && 
+                key_exists('options', $cartItem) &&
                 !empty($cartItem['options']) && 
                 is_array($cartItem['options']) &&
                 count($cartItem['options'])) {
