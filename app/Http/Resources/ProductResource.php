@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class ProductResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'summary' => $this->description ? Str::limit(strip_tags(htmlspecialchars_decode($this->description)), 150) : null,
             'base_image' => $this->baseImage(),
             'images' => $this->images()->exists() ? $this->images()->get()->transform(function($image){
                 return $image->path;

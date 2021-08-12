@@ -11,7 +11,9 @@ const state = {
             price: null,
             attributes: null,
         }
-    }
+    },
+    mode: 'grid',
+    sort: 'date'
 };
 
 const getters = {
@@ -26,6 +28,12 @@ const getters = {
     },
     getFilters(state) {
         return state.filter.selected;
+    },
+    getMode(state) {
+        return state.mode;
+    },
+    getSort(state) {
+        return state.sort;
     }
 };
 
@@ -51,7 +59,13 @@ const mutations = {
         state.filter.selected.tags = [];
         state.filter.selected.price = null;
         state.filter.selected.attributes = null;
-    }    
+    },
+    setMode(state, mode) {
+        state.mode = mode;
+    },
+    setSort(state, sort) {
+        state.sort = sort;
+    }
 };
 
 const actions = {

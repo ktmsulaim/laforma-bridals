@@ -11,11 +11,12 @@
       <loading v-if="loading"></loading>
       <div class="row small-gutters" v-else-if="hasProducts">
         <div
-          class="col-6 col-lg-4 col-md-4"
+          :class="{'col-6 col-lg-4 col-md-4': mode === 'grid', 'col-12': mode === 'list'}"
           v-for="product in productsData.data"
           :key="product.id"
         >
-          <product :product="product"></product>
+          <product v-if="mode === 'grid'" :product="product"></product>
+          <product-vertical v-else-if="mode === 'list'" :product="product"></product-vertical>
         </div>
       </div>
       <div v-else>
@@ -40,6 +41,7 @@
 <script>
 import Loading from "../Loading.vue";
 import Product from "../Product.vue";
+import ProductVertical from "../ProductVertical.vue";
 import NoData from "../NoData.vue";
 
 import { mapGetters } from "vuex";
@@ -52,6 +54,7 @@ export default {
   components: {
     Loading,
     Product,
+    ProductVertical,
     NoData,
     ProductsFilterSide,
   },
@@ -64,6 +67,8 @@ export default {
     ...mapGetters({
       loading: "getLoading",
       filters: "getFilters",
+      mode: 'getMode',
+      sort: 'getSort'
     }),
     hasProducts() {
       return (
@@ -110,6 +115,10 @@ export default {
         }
       }
 
+      if(this.sort) {
+        params.sort = this.sort;
+      }
+
       if (this.query) {
         if (this.query.search) {
           params.search = JSON.stringify(this.query.search);
@@ -133,6 +142,13 @@ export default {
         )
         .finally(() => this.setLoading(false));
     },
+  },
+  watch:{
+    sort(newVal) {
+      if(newVal) {
+        this.fetchProducts()
+      }
+    }
   },
   mounted() {
     this.fetchProducts();

@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .product-image {
         display: flex;
         height: 290px;

@@ -65,6 +65,9 @@ class WebsiteResourceController extends Controller
         // attributes
         $attributes = json_decode(stripslashes($request->get('attributes')));
 
+        // sort
+        $sort = $request->get('sort');
+
         
         $products = Product::available();
 
@@ -118,57 +121,28 @@ class WebsiteResourceController extends Controller
             }
         }
 
-
-        $products = $products->orderBy('id', 'desc')->paginate(20);
-        return ProductResource::collection($products);            
-    }
-
-    public function getCategoryWiseFilteredProductsCount(Request $request)
-    {
-        $price = json_decode(stripslashes($request->get('price')));
-        $categories = Category::active()->get();
-        $tags = Tag::all();
-
-        $hasPrice = false;
-
-        if($price) {
-            $min = $price->min;
-            $max = $price->max;
-
-            if($min >= 0 && $max) {
-                $hasPrice = true;
+        if($sort) {
+            if($sort === 'date') {
+                $products = $products->orderBy('created_at', 'desc');
+            } elseif($sort === 'price') {
+                $products = $products->orderBy('price', 'asc');
+            } elseif($sort === 'price-desc') {
+                $products = $products->orderBy('price', 'desc');
+            } elseif($sort === 'popularity') {
+                $products = $products->leftJoin('order_products','products.id','=','order_products.product_id')
+                ->selectRaw('products.*, COALESCE(sum(order_products.qty),0) total')
+                ->groupBy('products.id')
+                ->orderBy('total','desc');
+            } else {
+                $products = $products->orderBy('id', 'desc');
             }
+        } else {
+            $products = $products->orderBy('id', 'desc');
         }
 
-        if($categories) {
-            $categories = $categories->transform(fn($category) => [
-                'id' => $category->id,
-                'name' => $category->name,
-                'slug' => $category->slug,
-                'products' => $hasPrice ? $category->products()->where(function($query) use($price){
-                    $query->where('price', '>=', $price->min);
-                    $query->where('price', '<=', $price->max);
-                })->count() : $category->products->count(),
-            ]);
-        }
+        $products = $products->paginate(20);
 
-        if($tags) {
-            $tags =  $tags->transform(fn($tag) => [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'slug' => $tag->slug,
-                'products' => $hasPrice ? $tag->products()->where(function($query) use($price){
-                    $query->where('price', '>=', $price->min);
-                    $query->where('price', '<=', $price->max);
-                })->count() : $tag->products->count(),
-            ]);
-        }
-
-        return response()->json([
-            'categories' => $categories,
-            'tags' => $tags
-        ]);
-
+        return ProductResource::collection($products);            
     }
 
     public function featuredProducts(Request $request)

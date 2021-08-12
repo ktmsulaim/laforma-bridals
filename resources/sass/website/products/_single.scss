@@ -7,11 +7,27 @@
 }
 
 .row_item {
-    #product-options {
-        .product-option {
+    background: #fff;
+    transition: box-shadow .3s;
+
+    &:hover {
+        box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+    }
+
+    figure {
+        box-shadow: none;
+    }
+
+    .product-data {
+        padding: 15px 0;
+    }
+
+    #product-actions {
+        .product-action {
             padding: 8px 15px;
             border-radius: 3px;
             transition: all .3s;
+            cursor: pointer;
 
             i {
                 margin-right: 8px;

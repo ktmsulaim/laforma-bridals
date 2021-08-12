@@ -63,6 +63,11 @@ class Product extends Model
         return $this->hasMany(Option::class);
     }
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function hasOptions()
     {
         if($this->options()->exists()) {

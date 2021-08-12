@@ -4,6 +4,10 @@
     box-shadow: 0 0 10px rgba(46, 59, 125, 0.23);
     color: #84697c;
 
+    @media screen and(max-width: 768px) {
+        margin-bottom: 15px;
+    }
+
     .package-header {
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;

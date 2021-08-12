@@ -49,6 +49,7 @@ export default {
                     items: 1,
                     nav: false,
                     dots: false,
+                    autoHeight: true,
                 },
                 768: {
                     items: 2, 

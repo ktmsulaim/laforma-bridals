@@ -1,30 +1,18 @@
 <template>
   <div>
-    <ul>
-      <li>
+    <ul id="product-actions">
+      <li class="product-action add-to-favourites">
         <span
-          class="tooltip-1"
-          data-toggle="tooltip"
-          data-placement="left"
-          title="Add to favorites"
           ><i class="ti-heart"></i><span>Add to favorites</span></span
         >
       </li>
-      <li v-if="available && product.options.has_options" @click="showOptions">
+      <li class="product-action view-options" v-if="available && product.options.has_options" @click="showOptions">
         <span
-          data-toggle="tooltip"
-          data-placement="left"
-          class="tooltip-1"
-          title="View options"
           ><i class="mdi mdi-eye-outline"></i><span>View options</span></span
         >
       </li>
-      <li v-else-if="available" @click="addToCart(product)">
+      <li class="product-action add-to-cart" v-else-if="available" @click="addToCart(product)">
         <span
-          class="tooltip-1"
-          data-toggle="tooltip"
-          data-placement="left"
-          title="Add to cart"
           ><i class="ti-shopping-cart"></i><span>Add to cart</span></span
         >
       </li>
