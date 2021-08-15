@@ -207,86 +207,12 @@
                 <div class="card-body">
                   <div class="row justify-content-between">
                     <div class="col-lg-5">
-                      <div class="review_content">
-                        <div class="clearfix add_bottom_10">
-                          <span class="rating"
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star"></i><em>5.0/5.0</em></span
-                          >
-                          <em>Published 54 minutes ago</em>
-                        </div>
-                        <h4>"Commpletely satisfied"</h4>
-                        <p>
-                          Eos tollit ancillae ea, lorem consulatu qui ne, eu
-                          eros eirmod scaevola sea. Et nec tantas accusamus
-                          salutatus, sit commodo veritus te, erat legere fabulas
-                          has ut. Rebum laudem cum ea, ius essent fuisset ut.
-                          Viderer petentium cu his.
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-lg-5">
-                      <div class="review_content">
-                        <div class="clearfix add_bottom_10">
-                          <span class="rating"
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star"></i
-                            ><i class="icon-star empty"></i
-                            ><i class="icon-star empty"></i
-                            ><em>4.0/5.0</em></span
-                          >
-                          <em>Published 1 day ago</em>
-                        </div>
-                        <h4>"Always the best"</h4>
-                        <p>
-                          Et nec tantas accusamus salutatus, sit commodo veritus
-                          te, erat legere fabulas has ut. Rebum laudem cum ea,
-                          ius essent fuisset ut. Viderer petentium cu his.
-                        </p>
-                      </div>
+                      <review :review="{title: 'Hello', rating: 3.5, published: '1 second ago', review: 'It was very amazing'}"></review>
                     </div>
                   </div>
-                  <!-- /row -->
-                  <div class="row justify-content-between">
-                    <div class="col-lg-5">
-                      <div class="review_content">
-                        <div class="clearfix add_bottom_10">
-                          <span class="rating"
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star empty"></i
-                            ><em>4.5/5.0</em></span
-                          >
-                          <em>Published 3 days ago</em>
-                        </div>
-                        <h4>"Outstanding"</h4>
-                        <p>
-                          Eos tollit ancillae ea, lorem consulatu qui ne, eu
-                          eros eirmod scaevola sea. Et nec tantas accusamus
-                          salutatus, sit commodo veritus te, erat legere fabulas
-                          has ut. Rebum laudem cum ea, ius essent fuisset ut.
-                          Viderer petentium cu his.
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-lg-5">
-                      <div class="review_content">
-                        <div class="clearfix add_bottom_10">
-                          <span class="rating"
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star"></i><i class="icon-star"></i
-                            ><i class="icon-star"></i><em>5.0/5.0</em></span
-                          >
-                          <em>Published 4 days ago</em>
-                        </div>
-                        <h4>"Excellent"</h4>
-                        <p>
-                          Sit commodo veritus te, erat legere fabulas has ut.
-                          Rebum laudem cum ea, ius essent fuisset ut. Viderer
-                          petentium cu his.
-                        </p>
-                      </div>
+                  <div class="row">
+                    <div class="col-lg-6 mx-auto">
+                      <review-form :product="productId"></review-form>
                     </div>
                   </div>
                   <!-- /row -->
@@ -312,7 +238,9 @@
 import Loading from "../Loading.vue";
 import ImageSlider from "./ImageSlider.vue";
 import CartMixin from "../../mixins/CartMixin";
-import ProductOptions from './ProductOptions.vue'
+import ProductOptions from './ProductOptions.vue';
+import ReviewForm from '../reviews/ReviewForm.vue';
+import Review from '../reviews/SingleReview.vue'
 export default {
   name: "SingleProduct",
   props: ["productId"],
@@ -320,7 +248,9 @@ export default {
   components: {
     Loading,
     ImageSlider,
-    ProductOptions
+    ProductOptions,
+    ReviewForm,
+    Review
   },
   data() {
     return {
