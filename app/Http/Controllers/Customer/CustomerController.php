@@ -29,7 +29,7 @@ class CustomerController extends Controller
    
     public function wishlist()
     {
-        
+        return view('customer.wishlist.index');
     }
     
     public function reviews()

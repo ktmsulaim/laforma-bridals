@@ -1459,6 +1459,12 @@ ul.cart-items-list li .new_price {
   border: 1px solid #e1e1e1;
 }
 
+@media screen and (max-width: 767px) {
+  .prod_options.version_2 {
+    border: none;
+  }
+}
+
 .price_main {
   line-height: 1;
   padding-top: 10px;
@@ -2292,6 +2298,15 @@ ul.cart-items-list li .new_price {
 
 #product-options .product-option:hover {
   cursor: pointer;
+}
+
+.grid_item #product-actions .product-action.add-to-favourites:hover i {
+  color: #fff;
+}
+
+.grid_item #product-actions .product-action.add-to-favourites i {
+  color: #a21d23;
+  transition: color 0.3s;
 }
 
 .row_item {

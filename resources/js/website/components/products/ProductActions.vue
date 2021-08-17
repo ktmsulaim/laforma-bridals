@@ -1,11 +1,7 @@
 <template>
   <div>
     <ul id="product-actions">
-      <li class="product-action add-to-favourites">
-        <span
-          ><i class="ti-heart"></i><span>Add to favorites</span></span
-        >
-      </li>
+      <favorite-control :isFavorite="product.isFavorite" :productId="product.id"></favorite-control>
       <li class="product-action view-options" v-if="available && product.options.has_options" @click="showOptions">
         <span
           ><i class="mdi mdi-eye-outline"></i><span>View options</span></span
@@ -70,12 +66,14 @@
 <script>
 import CartMixin from "../../mixins/CartMixin";
 import ProductOptions from "./ProductOptions.vue";
+import FavoriteControl from './FavoriteControl.vue'
 export default {
   name: "ProductActions",
   props: ["product"],
   mixins: [CartMixin],
   components: {
     ProductOptions,
+    FavoriteControl,
   },
   data() {
     return {

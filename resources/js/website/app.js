@@ -36,6 +36,17 @@ Vue.mixin({
         },
         isEmpty(obj) {
             return _.isEmpty(obj);
+        },
+        str_limit(value, size) {
+            if (!value) 
+                return "";
+            
+            value = value.toString();
+
+            if (value.length <= size) {
+                return value;
+            }
+            return value.substr(0, size) + "...";
         }
     }
 });
@@ -76,6 +87,8 @@ import CancelBooking from "./components/customer/bookings/CancelBooking";
 import ListReviews from "./components/customer/reviews/ListReviews";
 import ReviewActions from './components/customer/reviews/ReviewActions'
 
+import ListWishlist from './components/customer/wishlist/ListFavoriteProducts'
+
 Vue.component("single-address", SingleAddress);
 Vue.component("cart-item-options", CartItemOptions);
 Vue.component("no-data", NoData);
@@ -106,6 +119,7 @@ const app = new Vue({
         CancelBooking,
         ListReviews,
         ReviewActions,
+        ListWishlist,
     },
     store
 });

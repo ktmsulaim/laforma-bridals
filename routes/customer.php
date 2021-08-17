@@ -7,6 +7,7 @@ use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\WebsitePackageController;
+use App\Http\Controllers\Customer\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -77,7 +78,16 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
 
 
     Route::get('account', [CustomerController::class, 'account'])->name('account');
+    
+    /**
+    * ---------------------------------------------------------------------
+    * Wishlist
+    * ---------------------------------------------------------------------
+    */
     Route::get('wishlist', [CustomerController::class, 'wishlist'])->name('wishlist');
+    Route::get('wishlist/list', [WishlistController::class, 'list'])->name('wishlist.list');
+    Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::post('wishlist/destroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
     
     /**
     * ---------------------------------------------------------------------

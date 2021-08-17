@@ -343,6 +343,10 @@
   }
   .prod_options.version_2 {
     border: 1px solid #e1e1e1;
+
+    @media screen and (max-width: 767px) {
+      border: none;
+    }
   }
   
   .price_main {

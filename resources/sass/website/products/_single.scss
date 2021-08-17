@@ -6,6 +6,23 @@
     }
 }
 
+.grid_item {
+    #product-actions {
+        .product-action {
+            &.add-to-favourites {
+                &:hover i {
+                    color: #fff;
+                }
+
+                i {
+                    color: $primary-color;
+                    transition: color .3s;
+                }
+            }
+        }
+    }
+}
+
 .row_item {
     background: #fff;
     transition: box-shadow .3s;

@@ -51,6 +51,7 @@ class ProductResource extends JsonResource
                 'items' => OptionResource::collection($this->options)
             ],
             'rating' => $this->rating(),
+            'isFavorite' => $this->isFavorite(),
         ];
     }
 }

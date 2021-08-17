@@ -5042,7 +5042,11 @@ body.modal-open .mm-slideout {
   background-color: #fff;
   text-align: left !important;
 }
-
+@media screen and (max-width: 767px) {
+  .numbers-row {
+    margin-bottom: 10px;
+  }
+}
 input.qty2 {
   position: relative;
   width: 40px;

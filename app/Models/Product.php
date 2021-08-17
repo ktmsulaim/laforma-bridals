@@ -111,4 +111,18 @@ class Product extends Model
         ];
     }
 
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function isFavorite()
+    {
+        if(auth('customer')->check()) {
+            return $this->wishlist()->where('customer_id', auth('customer')->id())->exists();
+        }
+
+        return false;
+    }
+
 }
