@@ -61,7 +61,7 @@
         </a>
         </div>
         <div class="col-md-6">
-            <a class="box_topic_2" href="{{ route('customer.reviews') }}">
+            <a class="box_topic_2" href="{{ route('customer.reviews.index') }}">
             <i class="ti-comments"></i>
             <h3>Reviews</h3>
             <p>Manage your reviews. You can edit or delete the reviews here</p>

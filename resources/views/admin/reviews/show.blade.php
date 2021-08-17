@@ -26,6 +26,11 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th width="100">Rating</th>
+                                <td>{{ $review->rating }}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th width="100">Status</th>
                                 <td>
                                     <div class="d-flex justify-content-between align-center">

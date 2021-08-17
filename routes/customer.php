@@ -4,6 +4,7 @@ use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\BookingController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\WebsitePackageController;
 use Illuminate\Support\Facades\Route;
@@ -36,11 +37,7 @@ Route::post('email/resend', 'Auth\VerificationController@resend')->name('verific
 
 Route::get('inactive', [LoginController::class, 'inactive'])->name('inactive');
 
-/**
- * ---------------------------------------------------------------------
- * Account
- * ---------------------------------------------------------------------
- */
+
 Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->group(function(){
     Route::get('dashboard', [CustomerController::class, 'index'])->name('dashboard');
 
@@ -49,15 +46,31 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
     Route::post('payment/getOrder/{type}', [RazorpayController::class, 'getOrderId'])->name('payment.razorpay.getOrder');
     Route::post('payment/makePayment', [RazorpayController::class, 'makePayment'])->name('payment.razorpay.makePayment');
 
+    /**
+    * ---------------------------------------------------------------------
+    * Book packages
+    * ---------------------------------------------------------------------
+    */
+
     Route::post('book', [WebsitePackageController::class, 'book'])->name('book');
     Route::post('book/payment', [RazorpayController::class, 'makeBookingPayment'])->name('book.payment');
     Route::post('book/change', [BookingController::class, 'changeTime'])->name('book.change');
     Route::post('book/cancel/{booking}', [BookingController::class, 'cancel'])->name('book.cancel');
 
+    /**
+    * ---------------------------------------------------------------------
+    * Orders
+    * ---------------------------------------------------------------------
+    */
     Route::get('orders', [CustomerController::class, 'orders'])->name('orders');
     Route::get('orders/list', [OrderController::class, 'listOrders'])->name('orders.list');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     
+    /**
+    * ---------------------------------------------------------------------
+    * Bookings
+    * ---------------------------------------------------------------------
+    */
     Route::get('bookings', [CustomerController::class, 'bookings'])->name('bookings');
     Route::get('bookings/list', [BookingController::class, 'list'])->name('bookings.list');
     Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
@@ -65,7 +78,17 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
 
     Route::get('account', [CustomerController::class, 'account'])->name('account');
     Route::get('wishlist', [CustomerController::class, 'wishlist'])->name('wishlist');
-    Route::get('reviews', [CustomerController::class, 'reviews'])->name('reviews');
+    
+    /**
+    * ---------------------------------------------------------------------
+    * Reviews
+    * ---------------------------------------------------------------------
+    */
+    Route::get('reviews', [CustomerController::class, 'reviews'])->name('reviews.index');
+    Route::get('reviews/list', [ReviewController::class, 'list'])->name('reviews.list');
+    Route::get('reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
+    Route::patch('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
     Route::post('products/getMaxQuantity', [OrderController::class, 'getMaxQuantity'])->name('max.quantity');
 

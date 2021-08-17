@@ -30,7 +30,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('customer.reviews') }}" class="{{ Route::currentRouteName() === 'customer.reviews' ? 'active' : '' }}">
+        <a href="{{ route('customer.reviews.index') }}" class="{{ Route::currentRouteName() === 'customer.reviews.index' ? 'active' : '' }}">
             <span class="ti-comments"></span> Reviews
         </a>
     </li>

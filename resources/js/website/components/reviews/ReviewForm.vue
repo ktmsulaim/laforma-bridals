@@ -65,7 +65,7 @@ import {mapGetters} from 'vuex'
 
 export default {
     name: 'ReviewForm',
-    props: ['product'],
+    props: ['product', 'old'],
     mixins: [ValidationMixin],
     components: {
         StarRating
@@ -158,13 +158,24 @@ export default {
         },
        submitForm() {
            if(this.captcha.validate) {
-               axios.post(route('reviews.store'), this.data)
+               let url;
+               if(this.old) {
+                   url = route('customer.reviews.update', {review: this.old.id})
+                   this.data._method = 'PATCH';
+               } else {
+                   url = route('reviews.store')
+               }
+               axios.post(url, this.data)
                .then(resp => {
                    this.$toast.open({
-                       message: 'The review has been posted',
+                       message: `The review has been ${this.old ? 'saved' : 'posted'}`,
                        type: 'success'
                    })
-                    this.$store.commit('addToReviews', resp.data)
+                   
+                   if(!this.old) {
+                       this.$store.commit('addToReviews', resp.data)
+                   }
+
                    this.$emit('save')
                })
                .catch(err => {
@@ -172,7 +183,7 @@ export default {
                    this.errors = errors;
 
                    this.$toast.open({
-                       message: 'Unable to post the review',
+                       message: `Unable to ${this.old ? 'save' : 'post'} the review`,
                        type: 'error'
                    })
 
@@ -197,6 +208,18 @@ export default {
             this.data.customer_id = this.authenticatedUser.id;
             this.data.reviewer_name = this.authenticatedUser.name;
             this.data.status = 1;
+        }
+
+        if(this.old) {
+            this.data = {
+                product_id: this.old.product_id,
+                customer_id: this.old.customer_id,
+                reviewer_name: this.old.reviewer_name,
+                title: this.old.title,
+                review: this.old.review,
+                rating: this.old.rating,
+                status: this.old.status,
+            }
         }
     }
 }

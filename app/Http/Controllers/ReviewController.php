@@ -30,7 +30,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_id' => 'required|integer',
+            'customer_id' => 'integer',
             'product_id' => 'required|integer',
             'reviewer_name' => 'required',
             'title' => 'required|max:50',

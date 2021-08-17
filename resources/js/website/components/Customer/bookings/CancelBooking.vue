@@ -43,7 +43,6 @@ export default {
                 }
             })
             .catch(err => {
-                console.log(err);
                 this.$swal('Sorry! Unable to cancel the booking. Try again later', '', 'error')
             })
         }

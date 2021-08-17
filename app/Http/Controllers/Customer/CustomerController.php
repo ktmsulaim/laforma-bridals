@@ -34,6 +34,6 @@ class CustomerController extends Controller
     
     public function reviews()
     {
-        
+        return view('customer.reviews.index');
     }
 }

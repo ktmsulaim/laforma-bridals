@@ -37,3 +37,34 @@
     font-size: 20px;
     font-weight: bold;
 }
+
+
+/**
+* ----------------------------------------------------------------------------------
+* Customer reviews
+* ----------------------------------------------------------------------------------
+*/
+ul.meta-list {
+    padding: 8px;
+    list-style: none;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+
+    li {
+        display: inline-block;
+        margin-right: 10px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        @media screen and (max-width: 568px) {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        i {
+            margin-right: 4px;
+        }
+    }
+}

@@ -2408,6 +2408,39 @@ span.product-view-mode.active {
   font-weight: bold;
 }
 
+/**
+* ----------------------------------------------------------------------------------
+* Customer reviews
+* ----------------------------------------------------------------------------------
+*/
+
+ul.meta-list {
+  padding: 8px;
+  list-style: none;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+ul.meta-list li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+ul.meta-list li:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 568px) {
+  ul.meta-list li {
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+ul.meta-list li i {
+  margin-right: 4px;
+}
+
 a.box_topic {
   text-align: center;
   background: #fff;
