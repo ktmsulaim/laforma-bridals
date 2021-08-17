@@ -14,7 +14,7 @@
             </div>
         </figure>
         <div class="rating">
-            <i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
+            <star-rating :increment=".5" :rating="product.rating.rating" :show-rating="false" :read-only="true" :star-size="15"></star-rating> <small class="ml-1">({{ product.rating.total }})</small>
         </div>
         <a :href="product.url">
             <h3>{{ product.name }}</h3>
@@ -32,11 +32,13 @@
 
 <script>
 import ProductActions from './products/ProductActions.vue'
+import StarRating from 'vue-star-rating'
 export default {
     name: 'Product',
     props: ['product'],
     components: {
-        ProductActions
+        ProductActions,
+        StarRating,
     },
     mounted() {
         this.$nextTick(() => {
@@ -74,5 +76,11 @@ export default {
 
     .product-image img {
         object-fit: cover;
+    }
+
+    @media screen and (max-width: 568px) {
+        .product-image {
+            height: 150px;
+        }
     }
 </style>

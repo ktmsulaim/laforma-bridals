@@ -2470,6 +2470,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _products_ProductActions_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./products/ProductActions.vue */ "./resources/js/website/components/products/ProductActions.vue");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/VueStarRating.common.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2503,11 +2505,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Product',
   props: ['product'],
   components: {
-    ProductActions: _products_ProductActions_vue__WEBPACK_IMPORTED_MODULE_0__.default
+    ProductActions: _products_ProductActions_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    StarRating: (vue_star_rating__WEBPACK_IMPORTED_MODULE_1___default())
   },
   mounted: function mounted() {
     this.$nextTick(function () {
@@ -2547,8 +2551,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _products_ProductActions_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./products/ProductActions.vue */ "./resources/js/website/components/products/ProductActions.vue");
-//
-//
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/VueStarRating.common.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2596,11 +2600,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ProductVertical",
   props: ["product"],
   components: {
-    ProductActions: _products_ProductActions_vue__WEBPACK_IMPORTED_MODULE_0__.default
+    ProductActions: _products_ProductActions_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    StarRating: (vue_star_rating__WEBPACK_IMPORTED_MODULE_1___default())
   },
   mounted: function mounted() {
     this.$nextTick(function () {
@@ -8397,7 +8403,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.product-image[data-v-56efe4c8] {\n    display: flex;\n    height: 290px;\n    overflow: hidden;\n}\n.product-image img[data-v-56efe4c8] {\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.product-image[data-v-56efe4c8] {\n    display: flex;\n    height: 290px;\n    overflow: hidden;\n}\n.product-image img[data-v-56efe4c8] {\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n@media screen and (max-width: 568px) {\n.product-image[data-v-56efe4c8] {\n        height: 150px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8421,7 +8427,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.product-image[data-v-c0247544] {\n  display: flex;\n  height: 290px;\n  overflow: hidden;\n}\n.product-image img[data-v-c0247544] {\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.product-image[data-v-c0247544] {\n  display: flex;\n  height: 290px;\n  overflow: hidden;\n}\n.product-image img[data-v-c0247544] {\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n@media screen and (max-width: 568px) {\n.product-image[data-v-c0247544] {\n            height: 150px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -54448,7 +54454,26 @@ var render = function() {
             ])
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c(
+        "div",
+        { staticClass: "rating" },
+        [
+          _c("star-rating", {
+            attrs: {
+              increment: 0.5,
+              rating: _vm.product.rating.rating,
+              "show-rating": false,
+              "read-only": true,
+              "star-size": 15
+            }
+          }),
+          _vm._v(" "),
+          _c("small", { staticClass: "ml-1" }, [
+            _vm._v("(" + _vm._s(_vm.product.rating.total) + ")")
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("a", { attrs: { href: _vm.product.url } }, [
         _c("h3", [_vm._v(_vm._s(_vm.product.name))])
@@ -54473,20 +54498,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "rating" }, [
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54542,7 +54554,26 @@ var render = function() {
         "div",
         { staticClass: "product-data" },
         [
-          _vm._m(0),
+          _c(
+            "div",
+            { staticClass: "rating" },
+            [
+              _c("star-rating", {
+                attrs: {
+                  increment: 0.5,
+                  rating: _vm.product.rating.rating,
+                  "show-rating": false,
+                  "read-only": true,
+                  "star-size": 15
+                }
+              }),
+              _vm._v(" "),
+              _c("small", { staticClass: "ml-1" }, [
+                _vm._v("(" + _vm._s(_vm.product.rating.total) + ")")
+              ])
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("a", { attrs: { href: _vm.product.url } }, [
             _c("h3", [_vm._v(_vm._s(_vm.product.name))])
@@ -54573,20 +54604,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "rating" }, [
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star voted" }),
-      _c("i", { staticClass: "icon-star" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

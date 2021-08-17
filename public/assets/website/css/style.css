@@ -4694,8 +4694,9 @@ body.modal-open .mm-slideout {
   font-size: 0.875rem;
 }
 .grid_item .rating {
-  display: block;
+  display: flex;
   margin-bottom: 0;
+  justify-content: center;
 }
 
 .rating {
