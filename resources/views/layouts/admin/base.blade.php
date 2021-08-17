@@ -195,6 +195,7 @@
                                     <li><a href="{{ route('admin.products.index') }}">Catalog</a></li>
                                     <li><a href="{{ route("admin.categories.index") }}">Categories</a></li>
                                     <li><a href="{{ route('admin.tags.index') }}">Tags</a></li>
+                                    <li><a href="{{ route('admin.reviews.index') }}">Reviews</a></li>
                                 </ul>
                             </li>
                             <li>

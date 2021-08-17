@@ -10,8 +10,10 @@ use App\Events\CustomerEmailVerified;
 use App\Events\NewBookingMade;
 use App\Events\NewOrderPlaced;
 use App\Events\OrderStatusChanged;
+use App\Events\ReviewPosted;
 use App\Listeners\NotifyAdminBookingCancellation;
 use App\Listeners\NotifyAdminBookingTimeChange;
+use App\Listeners\NotifyAdminNewReview;
 use App\Listeners\SendBookingConfirmationToCustomer;
 use App\Listeners\SendBookingProgressMail;
 use App\Listeners\SendBookingStatusMail;
@@ -63,6 +65,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CustomerCancelledBookingEvent::class => [
             NotifyAdminBookingCancellation::class
+        ],
+        ReviewPosted::class => [
+            NotifyAdminNewReview::class,
         ]
     ];
 

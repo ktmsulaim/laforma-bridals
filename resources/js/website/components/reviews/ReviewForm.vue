@@ -3,12 +3,12 @@
       <div class="form-group">
           <star-rating :star-size="25" :increment=".5" v-model="data.rating" active-color="#fec348"></star-rating>
       </div>
-      <div class="form-group" :class="{ 'is-invalid': hasError('name') }">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" v-model="data.name" :readonly="authenticated">
+      <div class="form-group" :class="{ 'is-invalid': hasError('reviewer_name') }">
+          <label for="reviewer_name">Name</label>
+          <input type="text" class="form-control" id="reviewer_name" v-model="data.reviewer_name" :readonly="authenticated">
           
-          <div v-if="hasError('name')" class="has-error">
-            <p>{{ getError("name") }}</p>
+          <div v-if="hasError('reviewer_name')" class="has-error">
+            <p>{{ getError("reviewer_name") }}</p>
           </div>
       </div>
       <div class="form-group" :class="{ 'is-invalid': hasError('title') }">
@@ -32,17 +32,27 @@
         <div>
             <div class="row">
                 <div class="col">
-                    <span v-if="captcha.loading" class="mdi mdi-loading mdi-spin"></span>
-                    <img v-else-if="captcha.img" :src="captcha.img" alt="Captcha">
+                    <span v-if="captcha.loading" class="mdi mdi-loading mdi-spin loading-inline"></span>
+                    <div v-else-if="captcha.img">
+                        <img :src="captcha.img" alt="Captcha">
+                        <span @click="getCaptcha" id="refresh-captcha" class="mdi mdi-refresh"></span>
+                    </div>
+
                 </div>
                 <div class="col" v-if="!captcha.loading">
-                    <input type="text" class="form-control" v-model="data.captcha">
+                    <input type="text" class="form-control" v-model="captcha.answer">
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <button :disabled="submit.loading" @click="submit" class="btn_1">Submit</button>
+        <button :disabled="submit.loading" @click="validateCaptcha" class="btn_1">
+            <span v-if="submit.loading">
+                <i class="mdi mdi-spin mdi-loading"></i>
+                Processing
+            </span> 
+            <span v-else>Submit</span>
+        </button>
     </div>
   </div>
 </template>
@@ -69,15 +79,17 @@ export default {
                 key: null,
                 img: null,
                 loading: true,
+                answer: null,
+                validate: false,
             },
             data: {
                 product_id: null,
                 customer_id: null,
-                name: null,
+                reviewer_name: null,
                 title: null,
                 review: null,
-                rating: 0,
-                captcha: null,
+                rating: 1,
+                status: 0,
             },
             errors: [],
         }
@@ -109,8 +121,69 @@ export default {
             })
             .finally(() => this.captcha.loading = false)
         },
-        submit() {
+        validateCaptcha() {
+            if(this.captcha.key && this.captcha.answer) {
+                this.submit.loading = true;
 
+               axios.post(route('captcha.validate'), {
+                    captcha: this.captcha.answer,
+                    key: this.captcha.key,
+                })
+                .then(resp => {
+                    this.captcha.validate = true;
+                    this.submitForm()
+                })
+                .catch(err => {
+                    let message = err.response.data.error;
+
+                    if(!message) {
+                        message = "Unable to validate captcha. Try again later";
+                    }
+
+                    this.$toast.open({
+                        message,
+                        type: 'error'
+                    })
+
+                    this.resetCaptcha()
+                })
+                .finally(() => {
+                    this.submit.loading = false;
+                })
+            }
+        },
+        resetCaptcha() {
+            this.captcha.answer = null;
+            this.getCaptcha()
+        },
+       submitForm() {
+           if(this.captcha.validate) {
+               axios.post(route('reviews.store'), this.data)
+               .then(resp => {
+                   this.$toast.open({
+                       message: 'The review has been posted',
+                       type: 'success'
+                   })
+                    this.$store.commit('addToReviews', resp.data)
+                   this.$emit('save')
+               })
+               .catch(err => {
+                   const errors = err.response.data.errors;
+                   this.errors = errors;
+
+                   this.$toast.open({
+                       message: 'Unable to post the review',
+                       type: 'error'
+                   })
+
+                   this.resetCaptcha()
+               })
+               .finally(() => {
+                   if(this.submit.loading) {
+                       this.submit.loading = false;
+                   }
+               })
+           }
         }
     },
     created() {
@@ -122,12 +195,13 @@ export default {
 
         if(this.authenticated && !this.isEmpty(this.authenticatedUser)) {
             this.data.customer_id = this.authenticatedUser.id;
-            this.data.name = this.authenticatedUser.name;
+            this.data.reviewer_name = this.authenticatedUser.name;
+            this.data.status = 1;
         }
     }
 }
 </script>
 
 <style>
-
+    
 </style>

@@ -38,7 +38,6 @@ class TransactionsController extends Controller
         $data = [
             'data' => $transactions,
             'count' => Transaction::count()
-
         ];
        
 

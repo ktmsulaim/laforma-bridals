@@ -135,6 +135,11 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-lg-6 mx-auto">
+                      <span class="rating-text">{{ product.rating.rating.toFixed(2) }} out of 5</span>
+                      <div class="rating">
+                        <star-rating :increment=".5" :rating="product.rating.rating" :show-rating="false" :read-only="true" :star-size="20"></star-rating>
+                        <span class="rating-total">({{ product.rating.total }})</span>
+                      </div>
                       <div class="table-responsive">
                         <table class="table table-sm table-striped">
                           <tbody>
@@ -205,20 +210,7 @@
                 aria-labelledby="heading-B"
               >
                 <div class="card-body">
-                  <div class="row justify-content-between">
-                    <div class="col-lg-5">
-                      <review :review="{title: 'Hello', rating: 3.5, published: '1 second ago', review: 'It was very amazing'}"></review>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6 mx-auto">
-                      <review-form :product="productId"></review-form>
-                    </div>
-                  </div>
-                  <!-- /row -->
-                  <p class="text-right">
-                    <a href="leave-review.html" class="btn_1">Leave a review</a>
-                  </p>
+                  <reviews v-if="product" :product-id="product.id"></reviews>
                 </div>
                 <!-- /card-body -->
               </div>
@@ -239,8 +231,9 @@ import Loading from "../Loading.vue";
 import ImageSlider from "./ImageSlider.vue";
 import CartMixin from "../../mixins/CartMixin";
 import ProductOptions from './ProductOptions.vue';
-import ReviewForm from '../reviews/ReviewForm.vue';
-import Review from '../reviews/SingleReview.vue'
+import Reviews from '../reviews/Reviews.vue';
+import StarRating from 'vue-star-rating'
+
 export default {
   name: "SingleProduct",
   props: ["productId"],
@@ -249,8 +242,8 @@ export default {
     Loading,
     ImageSlider,
     ProductOptions,
-    ReviewForm,
-    Review
+    Reviews,
+    StarRating,
   },
   data() {
     return {

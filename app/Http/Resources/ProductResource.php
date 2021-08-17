@@ -49,7 +49,8 @@ class ProductResource extends JsonResource
             'options' => [
                 'has_options' => $this->hasOptions(),
                 'items' => OptionResource::collection($this->options)
-            ]
+            ],
+            'rating' => $this->rating(),
         ];
     }
 }

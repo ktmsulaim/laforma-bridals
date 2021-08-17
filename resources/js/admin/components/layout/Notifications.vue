@@ -29,29 +29,31 @@
             <span class="mdi mdi-loading mdi-spin"></span> Loading notifications
         </div>
       <div v-else-if="notifications && notifications.length">
-        <div class="noti-scroll" v-slimscroll>
-          <!-- item-->
-          <a
-            v-for="notification in notifications"
-            :key="notification.id"
-            href="javascript:void(0);"
-            @click="markAsRead(notification.id, notification.url)"
-            class="dropdown-item notify-item active"
-            :disabled="read.loading && read.id === notification.id"
-          >
-            <div class="notify-icon">
-              <img
-                :src="notification.photo"
-                class="img-fluid rounded-circle"
-                alt="Customer Photo"
-              />
-            </div>
-            <p class="notify-details">{{ notification.title }}</p>
-            <p class="text-muted mb-0 user-msg">
-              <small v-html="notification.message ? notification.message : notification.time"></small>
-            </p>
-          </a>
-        </div>
+        <perfect-scrollbar>
+          <div class="noti-scroll">
+            <!-- item-->
+            <a
+              v-for="notification in notifications"
+              :key="notification.id"
+              href="javascript:void(0);"
+              @click="markAsRead(notification.id, notification.url)"
+              class="dropdown-item notify-item active"
+              :disabled="read.loading && read.id === notification.id"
+            >
+              <div class="notify-icon">
+                <img
+                  :src="notification.photo"
+                  class="img-fluid rounded-circle"
+                  alt="Customer Photo"
+                />
+              </div>
+              <p class="notify-details">{{ notification.title }}</p>
+              <p class="text-muted mb-0 user-msg">
+                <small v-html="notification.message ? notification.message : notification.time"></small>
+              </p>
+            </a>
+          </div>
+        </perfect-scrollbar>
 
         <!-- All-->
         <a
@@ -111,6 +113,16 @@ export default {
             if(!this.read.loading) {
                 axios.post(route('admin.notifications.markAsRead', {notification_id: id}))
                 .then(resp => {
+                    if(resp.data === true) {
+                      const notification = this.notifications.find(noti => noti.id === id)
+                      const index = this.notifications.indexOf(notification)
+
+                      if(index > -1) {
+                        this.notifications.splice(index, 1)
+                      }
+
+                    }
+
                     if(url) {
                         window.location = url
                     }

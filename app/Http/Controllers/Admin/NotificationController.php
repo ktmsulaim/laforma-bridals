@@ -8,6 +8,7 @@ use App\Http\Resources\NotificationResource;
 use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -60,13 +61,13 @@ class NotificationController extends Controller
                     if($booking) {
                         if($type === 'NewBookingNotification') {
                             $title = 'New booking';
-                            $message = '<b>'.$notificationData['customer'] . '</b> booked appointment for ' . $notificationData['package']. ' on ' . $notificationData['time'] . '@' . $notificationData['date'];
+                            $message = '<b>'.$booking->customer->name . '</b> booked appointment for ' . $notificationData['package']. ' on ' . $notificationData['time'] . '@' . $notificationData['date'];
                         } else if ($type === 'BookingTimeChangedNotification') {
                             $title = 'Booking time changed';
-                            $message = '<b>'.$notificationData['customer'] . "</b> has changed their booking time to {$notificationData['time']}@{$notificationData['date']} "; 
+                            $message = '<b>'.$booking->customer->name . "</b> has changed their booking time to {$notificationData['time']}@{$notificationData['date']} "; 
                         } else if ($type === 'BookingTimeChangedNotification') {
                             $title = 'Booking cancelled';
-                            $message = "<b>{$notificationData['customer']}</b> cancelled their appointment";
+                            $message = "<b>{$booking->customer->name}</b> cancelled their appointment";
                         }
 
                         $single['photo'] = $booking->customer->photo();
@@ -74,7 +75,18 @@ class NotificationController extends Controller
                         $single['message'] = $message;
                         $single['url'] = route('admin.bookings.show', $booking->id);
                     }
-                } 
+                } else if($type === 'AdminNewReviewNotification') {
+                    $notificationData = $notification->data;
+                    $review = Review::find($notificationData['review_id']);
+
+                    if($review) {
+                        $single['photo'] = $review->customer->photo();
+                    }
+
+                    $single['title'] = "New review";
+                    $single['message'] = "{$notificationData['customer']} has posted a new review on {$notificationData['product']}";
+                    $single['url'] = route('admin.reviews.show', $notificationData['review_id']);
+                }
 
                 array_push($data, $single);
 

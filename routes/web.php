@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\WebsitePackageController;
 use App\Http\Controllers\WebsiteResourceController;
-use App\Mail\NewOrderSummaryMail;
-use App\Models\Order;
+use App\Http\Controllers\CaptchaController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,6 +36,7 @@ Route::get('/products/count/byPrice', [WebsiteResourceController::class, 'getCat
 Route::get('/products/featured', [WebsiteResourceController::class, 'featuredProducts'])->name('featuredProducts');
 Route::get('/products/{slug}/view', [WebsiteController::class, 'singleProduct'])->name('singleProduct');
 Route::get('/products/{product}', [WebsiteController::class, 'product'])->name('products.show');
+
 Route::get('/cart', [WebsiteController::class, 'cart'])->name('cart');
 Route::get('/checkout', [WebsiteController::class, 'checkout'])->name('checkout');
 
@@ -51,3 +52,13 @@ Route::get('/packages/{slug}', [WebsitePackageController::class, 'show'])->name(
 Route::get('/packages/get/{package}', [WebsitePackageController::class, 'get'])->name('packages.get');
 
 Route::post('/packages/{package}/check/availability', [WebsitePackageController::class, 'checkAvailability'])->name('packages.check.availability');
+
+/*
+|--------------------------------------------------------------------------
+| Reviews
+|--------------------------------------------------------------------------
+|
+*/
+Route::post('/captcha/validate', [CaptchaController::class, 'validateCaptcha'])->name('captcha.validate');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/reviews/byProduct', [ReviewController::class, 'get'])->name('reviews.get');

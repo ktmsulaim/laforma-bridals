@@ -1660,7 +1660,7 @@ ul.cart-items-list li .new_price {
 
 .tab_content_wrapper {
   background-color: #fff;
-  padding: 60px 0 35px 0;
+  padding: 35px 0;
 }
 
 @media (max-width: 991px) {
@@ -2364,6 +2364,48 @@ span.product-view-mode:last-child {
 span.product-view-mode:hover,
 span.product-view-mode.active {
   color: #a21d23;
+}
+
+#refresh-captcha,
+.loading-inline {
+  margin-left: 5px;
+  font-size: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#refresh-captcha:hover,
+.loading-inline:hover {
+  color: #a21d23;
+}
+
+.review-form {
+  padding: 15px;
+}
+
+.review-form .form-title {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.rating {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.rating .rating-total {
+  margin-left: 5px;
+  vertical-align: middle;
+  height: 20px;
+}
+
+.rating-text {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 a.box_topic {

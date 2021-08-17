@@ -25,7 +25,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import JwPagination from 'jw-vue-pagination';
 import VueHtmlToPaper from 'vue-html-to-paper';
 import InputTag from 'vue-input-tag'
-import VueSlimScroll from 'vue-slimscroll'
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -41,13 +42,13 @@ import store from './store'
 
 
 window.Vue = Vue
-Vue.use(VueFileAgent);
+Vue.use(VueFileAgent)
 Vue.use(VueQuillEditor)
 Vue.use(VueSlugify)
 Vue.use(Select2)
 Vue.use(VueSweetalert2)
-Vue.use(VueHtmlToPaper);
-Vue.use(VueSlimScroll)
+Vue.use(VueHtmlToPaper)
+Vue.use(PerfectScrollbar)
 
 Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 Vue.component('jw-pagination', JwPagination)
@@ -102,6 +103,7 @@ import ListTransactions from './components/transactions/ListTransactions'
 import ListBookings from './components/bookings/ListBookings'
 import BookingStatus from './components/bookings/BookingStatus'
 import BookingProgress from './components/bookings/BookingProgress'
+import ListReviews from './components/reviews/ListReviews'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
@@ -129,7 +131,8 @@ const app = new Vue({
         ListTransactions,
         ListBookings,
         BookingStatus,
-        BookingProgress
+        BookingProgress,
+        ListReviews,
     },
     store
 })

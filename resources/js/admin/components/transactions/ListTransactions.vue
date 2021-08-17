@@ -7,9 +7,9 @@ import { Grid, html } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
 
 export default {
-    name: 'ListTransactions',
-    mounted() {
-        new Grid({
+  name: "ListTransactions",
+  mounted() {
+    new Grid({
       columns: [
         {
           name: "#",
@@ -41,7 +41,7 @@ export default {
             item.created_at,
             item.urls.order,
           ]),
-        total: data => data.count,
+        total: (data) => data.count,
         handle: (res) => {
           if (res.status == 400) return { data: [] };
           if (res.ok) return res.json();
@@ -51,17 +51,17 @@ export default {
       },
       pagination: {
         enabled: true,
-        limit: 2,
+        limit: 10,
         server: {
-            url: (prev, page, limit) => `${prev}?limit=${limit}&offset=${page * limit}`
+          url: (prev, page, limit) =>
+            `${prev}?limit=${limit}&offset=${page * limit}`,
         },
         summary: true,
       },
     }).render(this.$refs.transactionsList);
-    }
-}
+  },
+};
 </script>
 
 <style>
-
 </style>

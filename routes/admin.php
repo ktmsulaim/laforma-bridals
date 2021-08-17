@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\ManageBookings;
 use App\Http\Controllers\Admin\ManageOrders;
+use App\Http\Controllers\Admin\ManageReviews;
 use App\Http\Controllers\Admin\TransactionsController;
 
 use App\Http\Controllers\Admin\NotificationController;
@@ -80,6 +81,16 @@ Route::middleware('auth')->group(function(){
     Route::post('/orders/{order}/status', [ManageOrders::class, 'status'])->name('orders.status');
     Route::get('/orders/{order}/print', [ManageOrders::class, 'print'])->name('orders.print');
     Route::get('/orders/{order}', [ManageOrders::class, 'show'])->name('orders.show');
+
+    /**
+     * -------------------------------------------------------------------
+     * Reviews
+     * -------------------------------------------------------------------
+     */
+    Route::get('/reviews', [ManageReviews::class, 'index'])->name('reviews.index');
+    Route::get('/reviews/list', [ManageReviews::class, 'list'])->name('reviews.list');
+    Route::get('/reviews/{review}', [ManageReviews::class, 'show'])->name('reviews.show');
+    Route::post('/reviews/{review}', [ManageReviews::class, 'update'])->name('reviews.update');
     
     /**
      * -------------------------------------------------------------------
