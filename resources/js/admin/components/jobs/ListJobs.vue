@@ -33,10 +33,10 @@ export default {
           formatter: (_, row) =>
             row.cells[5].data == 1
               ? html(
-                  `<span class="badge badge-success badge-pill">Active</span>`
+                  `<span class="badge badge-success badge-pill">Enabled</span>`
                 )
               : html(
-                  `<span class="badge badge-danger badge-pill">Inactive</span>`
+                  `<span class="badge badge-danger badge-pill">Disabled</span>`
                 ),
         },
         {

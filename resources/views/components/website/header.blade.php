@@ -84,7 +84,7 @@
 									<a href="{{ route('packages.index') }}">Packages</a>
 								</li>
 								<li>
-									<a href="javascript:void(0)">Jobs</a>
+									<a href="{{ route('jobs.index') }}">Jobs</a>
 								</li>
 								<li>
 									<a href="javascript:void(0)">Collections</a>

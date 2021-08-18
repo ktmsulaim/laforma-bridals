@@ -2442,7 +2442,7 @@ ul.meta-list li {
 }
 
 ul.meta-list li:last-child {
-  margin-right: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 568px) {
@@ -2961,6 +2961,89 @@ ul.package-info-list li .show-features-trigger {
   #home-packages .owl-carousel .owl-stage {
     padding-bottom: 15px;
   }
+}
+
+.job {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  transition: all 0.3s;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 568px) {
+  .job {
+    flex-direction: column;
+  }
+}
+
+.job:last-child {
+  margin-bottom: 0;
+}
+
+.job:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.job .job-poster {
+  width: 35%;
+  display: flex;
+}
+
+@media screen and (max-width: 568px) {
+  .job .job-poster {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.job .job-poster img {
+  max-width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.job .job-data {
+  width: 75%;
+  padding: 15px;
+}
+
+@media screen and (max-width: 568px) {
+  .job .job-data {
+    width: 100%;
+  }
+}
+
+.job .job-data .read-more {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job .job-data .read-more small {
+  color: #666;
+}
+
+.job-single {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.job-single .job-poster {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+.job-single .job-poster img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.job-single .job-data {
+  padding: 20px;
 }
 
 

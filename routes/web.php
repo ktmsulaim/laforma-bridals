@@ -5,6 +5,7 @@ use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\WebsitePackageController;
 use App\Http\Controllers\WebsiteResourceController;
 use App\Http\Controllers\CaptchaController;
+use App\Http\Controllers\WebsiteJobController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -62,3 +63,25 @@ Route::post('/packages/{package}/check/availability', [WebsitePackageController:
 Route::post('/captcha/validate', [CaptchaController::class, 'validateCaptcha'])->name('captcha.validate');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/reviews/byProduct', [ReviewController::class, 'get'])->name('reviews.get');
+
+/*
+|--------------------------------------------------------------------------
+| Jobs
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('jobs', [WebsiteJobController::class, 'index'])->name('jobs.index');
+Route::get('jobs/{slug}', [WebsiteJobController::class, 'show'])->name('jobs.show');
+/*
+|--------------------------------------------------------------------------
+| Collections
+|--------------------------------------------------------------------------
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Pages
+|--------------------------------------------------------------------------
+|
+*/

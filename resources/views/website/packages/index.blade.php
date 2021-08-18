@@ -1,12 +1,14 @@
 @extends('layouts.website.secondary', ['title' => 'Packages'])
 
-@section('content')
-    @include('components.website.page_header', ['pageTitle' => "Packages", 'links' => [
-    [
-    'url' => route('packages.index'),
-    'label' => 'Packages'
-    ],
+@section('content_fluid')
+    @include('components.website.page_header2', ['pageTitle' => "Packages", 'links' => [
+        [
+            'url' => route('packages.index'),
+            'label' => 'Packages'
+        ],
     ]])
-
-<packages></packages>
+    
+@endsection
+@section('content')
+    <packages></packages>
 @endsection
