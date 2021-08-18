@@ -129,7 +129,9 @@ class RazorpayController extends Controller
 
         if($razorpayPayment) {
             if($this->verifySignature($signature, $razorpayPaymentId, $razorpayOrderId)) {
-                $razorpayPayment->capture(['amount' => Money::toRazorPay($bookingAmount), 'currency' => "INR"]);
+                if(!$razorpayPayment->captured) {
+                    $razorpayPayment->capture(['amount' => Money::toRazorPay($bookingAmount), 'currency' => "INR"]);
+                }
                 
                 $booking->status = 'full_amount_pending';
                 $booking->save();

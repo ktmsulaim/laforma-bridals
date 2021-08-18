@@ -13,8 +13,7 @@ class WebsitePackageController extends Controller
 {
     public function index()
     {
-        $packages = Package::available()->get();
-        return view('website.packages.index', ['packages' => $packages]);   
+        return view('website.packages.index');   
     }
 
     public function list()
