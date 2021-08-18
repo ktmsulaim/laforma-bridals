@@ -105,11 +105,15 @@ import BookingStatus from './components/bookings/BookingStatus'
 import BookingProgress from './components/bookings/BookingProgress'
 import ListReviews from './components/reviews/ListReviews'
 
+import ListGalleries from './components/galleries/ListGalleries'
+import GalleryForm from './components/galleries/GalleryForm'
+
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
 Vue.component('cart-item-options', CartItemOptions)
 Vue.component('print-invoice', PrintInvoice)
 Vue.component('order-status', OrderStatus)
+Vue.component("pagination", require("laravel-vue-pagination"));
 
 const app = new Vue({
     el: '#app',
@@ -133,6 +137,9 @@ const app = new Vue({
         BookingStatus,
         BookingProgress,
         ListReviews,
+
+        ListGalleries,
+        GalleryForm,
     },
     store
 })

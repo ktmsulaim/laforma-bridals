@@ -24,7 +24,7 @@
             <div class="image-popup" :title="image.filename">
               <img
                 :src="image.path"
-                class="thumb-img img-fluid"
+                class="thumb-img img-fluid popup"
                 alt="work-thumbnail"
               />
             </div>
@@ -51,6 +51,7 @@
               class="close"
               data-dismiss="modal"
               aria-hidden="true"
+              @click="reset"
             >
               ×
             </button>
@@ -394,6 +395,13 @@ export default {
       }
 
       this.setImages();
+    },
+    reset() {
+      if(this.type == 'base_image') {
+        this.baseImage = null;
+      } else if(this.type == 'additional_images' && this.additional_images.length && obj) {
+        this.additional_images = []
+      }
     }
   },
   computed: {
@@ -424,6 +432,10 @@ export default {
       this.baseImage = this.oldBaseImage;
     } else if(this.oldAdditionalImages) {
       this.additional_images = this.oldAdditionalImages;
+    }
+
+    if(this.hasSelectedImage) {
+      this.setImages()
     }
   },
   created() {

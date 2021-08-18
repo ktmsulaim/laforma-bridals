@@ -237,19 +237,19 @@
                             <li class="menu-title">Website</li>
 
                             <li>
-                                <a href="apps-chat.html">
+                                <a href="javascript:void(0)">
                                     <i class="mdi mdi-folder-multiple-image"></i>
                                     <span> Sliders </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="apps-chat.html">
+                                <a href="{{ route('admin.galleries.index') }}">
                                     <i class="mdi mdi-camera"></i>
                                     <span> Gallery </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="apps-chat.html">
+                                <a href="javascript:void(0)">
                                     <i class="mdi mdi-email-outline"></i>
                                     <span> Contact responses </span>
                                 </a>
@@ -258,7 +258,7 @@
                             <li class="menu-title">System</li>
 
                             <li>
-                                <a href="apps-chat.html">
+                                <a href="javascript:void(0)">
                                     <i class="mdi mdi-file-chart"></i>
                                     <span> Reports </span>
                                 </a>
@@ -339,9 +339,9 @@
         
         <script src="{{ asset('assets/app/libs/ntc/ntc.js') }}"></script>
         
+        @stack('libs_js')
         <script src="{{ mix('assets/app/js/admin.js') }}"></script>
 
-        @stack('libs_js')
 
         <!-- App js -->
         <script src="{{ asset('assets/app/js/app.min.js') }}"></script>

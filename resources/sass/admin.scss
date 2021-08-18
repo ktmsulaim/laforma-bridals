@@ -167,3 +167,52 @@
         }
     }
 }
+
+.gallery-item {
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+    &:hover {
+        cursor: pointer;
+
+        .gallery-item-thumbnail {
+            .overlay {
+                top: 0;
+                opacity: 1;
+            }
+        } 
+    }
+
+    .gallery-item-thumbnail {
+        position: relative;
+        overflow: hidden;
+        height: 300px;
+
+        .overlay {
+            position: absolute;
+            color: #fff;
+            background: rgba(0,0,0, .65);
+            left: 0;
+            top: -350px;
+            width: 100%;
+            height: 100%;
+            transition: all .3s;
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        img {
+            transition: all .3s;
+        }
+    }
+
+    .gallery-item-title {
+        padding: 15px;
+        text-align: center;
+    }
+}

@@ -157,4 +157,51 @@
   color: #a21d23;
 }
 
+.gallery-item {
+  background: #fff;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.gallery-item:hover {
+  cursor: pointer;
+}
+
+.gallery-item:hover .gallery-item-thumbnail .overlay {
+  top: 0;
+  opacity: 1;
+}
+
+.gallery-item .gallery-item-thumbnail {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+
+.gallery-item .gallery-item-thumbnail .overlay {
+  position: absolute;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  left: 0;
+  top: -350px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.gallery-item .gallery-item-thumbnail img {
+  transition: all 0.3s;
+}
+
+.gallery-item .gallery-item-title {
+  padding: 15px;
+  text-align: center;
+}
+
 

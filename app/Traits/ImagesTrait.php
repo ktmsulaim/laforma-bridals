@@ -20,6 +20,13 @@ trait ImagesTrait {
         return $image && $image->isFileExists();
     }
 
+    public function getBaseImage()
+    {
+        if($this->hasBaseImage()) {
+            return  $this->images()->wherePivot('type', '=', 'base_image')->first();
+        }
+    }
+
     public function baseImage()
     {
         if($this->hasBaseImage()){

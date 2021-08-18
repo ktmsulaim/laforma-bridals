@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\TransactionsController;
 
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\GalleryController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -134,7 +135,13 @@ Route::middleware('auth')->group(function(){
     Route::resource('jobs', JobController::class);
 
    
-   
+    /**
+     * -------------------------------------------------------------------
+     * Galleries
+     * -------------------------------------------------------------------
+     */
+    Route::get('galleries/list', [GalleryController::class, 'list'])->name('galleries.list');
+    Route::resource('galleries', GalleryController::class);
     /**
      * -------------------------------------------------------------------
      * File manager

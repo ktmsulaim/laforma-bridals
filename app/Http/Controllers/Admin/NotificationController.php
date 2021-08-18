@@ -79,7 +79,7 @@ class NotificationController extends Controller
                     $notificationData = $notification->data;
                     $review = Review::find($notificationData['review_id']);
 
-                    if($review) {
+                    if($review && $review->customer) {
                         $single['photo'] = $review->customer->photo();
                     }
 

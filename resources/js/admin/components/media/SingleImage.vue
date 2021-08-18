@@ -30,6 +30,11 @@ export default {
                 this.$store.commit('selectImage', this.image.id)
             }
         },
+    },
+    mounted() {
+        this.$nextTick(() => {
+            $(".image-popup").magnificPopup({ type: "image", closeOnContentClick: !0, mainClass: "mfp-fade", gallery: { enabled: !0, navigateByImgClick: !0, preload: [0, 1] } });
+        })
     }
 }
 </script>
