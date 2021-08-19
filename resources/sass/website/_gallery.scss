@@ -1,0 +1,49 @@
+.image-stack {
+    .image {
+        border-radius: 12px;
+        overflow: hidden;
+
+        a {
+            position: relative;
+            display: block;
+            height: 100%;
+
+            &:hover {
+                .overlay {
+                    top: 0;
+                    opacity: 1;
+                }
+            }
+
+            .overlay {
+                position: absolute;
+                top: -400px;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba($color: #000000, $alpha: .5);
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                opacity: 0;
+                transition: all .3s;
+
+                .gallery-name {
+                    font-size: 17px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+            }
+
+            .collection-name {
+                padding: 10px;
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: 600;
+                background: #f1f1f1;
+            }
+        }
+    }
+}

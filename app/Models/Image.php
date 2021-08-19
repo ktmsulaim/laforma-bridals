@@ -43,4 +43,9 @@ class Image extends Model
             }
         }
     }
+
+    public function gallery()
+    {
+        return $this->morphedByMany(Gallery::class, 'imageable')->withPivot('type');
+    }
 }

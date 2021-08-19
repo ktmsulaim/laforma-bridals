@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Tag;
 use Carbon\Carbon;
@@ -150,5 +152,12 @@ class WebsiteResourceController extends Controller
         $products = Product::available()->orderBy('id', 'desc')->limit(8)->get();
 
         return ProductResource::collection($products);
+    }
+
+    public function latestCollection()
+    {
+        $images = Image::has('gallery')->with('gallery')->orderBy('id', 'desc')->limit(10)->get();
+
+        return response()->json($images);
     }
 }

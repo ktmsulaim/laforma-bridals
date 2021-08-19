@@ -1,5 +1,14 @@
 @extends('layouts.website.secondary', ['title' => $job->title])
 
+@push('meta')
+    <meta name="title" content="{{ $job->title }}">
+    <meta name="description" content="{{ $job->summary() }}">
+
+    <meta property="og:title" content="{{ $job->title }}" />
+    <meta property="og:description" content="{{ $job->summary() }}" />
+    <meta property="og:image" content="{{ $job->baseImage() }}" />
+@endpush
+
 @section('content_fluid')
     @include('components.website.page_header2', ['pageTitle' => $job->title, 'links' => [
             [

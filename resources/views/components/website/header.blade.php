@@ -31,6 +31,8 @@
 	<!-- SPECIFIC CSS -->
     <link href="{{  asset('assets/website/css/home_1.css') }}" rel="stylesheet">
 
+	@stack('css_libs')
+
     <!-- YOUR CUSTOM CSS -->
     <link href="{{  asset('assets/website/css/website.css') }}" rel="stylesheet">
 
@@ -87,7 +89,7 @@
 									<a href="{{ route('jobs.index') }}">Jobs</a>
 								</li>
 								<li>
-									<a href="javascript:void(0)">Collections</a>
+									<a href="{{ route('collections.index') }}">Collections</a>
 								</li>
 							</ul>
 						</div>

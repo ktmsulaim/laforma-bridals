@@ -89,6 +89,10 @@ import ReviewActions from './components/customer/reviews/ReviewActions'
 
 import ListWishlist from './components/customer/wishlist/ListFavoriteProducts'
 
+import LatestCollection from './components/home/LatestCollection'
+import Collections from './components/galleries/Collections'
+import SingleCollection from './components/galleries/SingleCollection'
+
 Vue.component("single-address", SingleAddress);
 Vue.component("cart-item-options", CartItemOptions);
 Vue.component("no-data", NoData);
@@ -120,6 +124,9 @@ const app = new Vue({
         ListReviews,
         ReviewActions,
         ListWishlist,
+        LatestCollection,
+        Collections,
+        SingleCollection,
     },
     store
 });

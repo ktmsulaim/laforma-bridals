@@ -3046,4 +3046,50 @@ ul.package-info-list li .show-features-trigger {
   padding: 20px;
 }
 
+.image-stack .image {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image-stack .image a {
+  position: relative;
+  display: block;
+  height: 100%;
+}
+
+.image-stack .image a:hover .overlay {
+  top: 0;
+  opacity: 1;
+}
+
+.image-stack .image a .overlay {
+  position: absolute;
+  top: -400px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.image-stack .image a .overlay .gallery-name {
+  font-size: 17px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.image-stack .image a .collection-name {
+  padding: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: #f1f1f1;
+}
+
 

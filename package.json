@@ -41,6 +41,7 @@
         "vue-owl-carousel": "^2.0.3",
         "vue-quill-editor": "^3.0.6",
         "vue-slugify": "^0.1.0",
+        "vue-stack-grid": "^1.2.2",
         "vue-star-rating": "^1.7.0",
         "vue-swatches": "^2.1.1",
         "vue-sweetalert2": "^4.3.1",

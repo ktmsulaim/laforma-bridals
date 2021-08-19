@@ -5,6 +5,7 @@ use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\WebsitePackageController;
 use App\Http\Controllers\WebsiteResourceController;
 use App\Http\Controllers\CaptchaController;
+use App\Http\Controllers\WebsiteGalleryController;
 use App\Http\Controllers\WebsiteJobController;
 use Illuminate\Support\Facades\Route;
 
@@ -72,12 +73,18 @@ Route::get('/reviews/byProduct', [ReviewController::class, 'get'])->name('review
 */
 Route::get('jobs', [WebsiteJobController::class, 'index'])->name('jobs.index');
 Route::get('jobs/{slug}', [WebsiteJobController::class, 'show'])->name('jobs.show');
+
 /*
 |--------------------------------------------------------------------------
 | Collections
 |--------------------------------------------------------------------------
 |
 */
+Route::get('collections/latest', [WebsiteResourceController::class, 'latestCollection'])->name('collections.latest');
+Route::get('collections/list', [WebsiteGalleryController::class, 'list'])->name('collections.list');
+Route::get('collections/{id}/images', [WebsiteGalleryController::class, 'byCollection'])->name('collections.byCollection');
+Route::get('collections/{slug}/view', [WebsiteGalleryController::class, 'show'])->name('collections.show');
+Route::get('collections', [WebsiteGalleryController::class, 'index'])->name('collections.index');
 
 /*
 |--------------------------------------------------------------------------
