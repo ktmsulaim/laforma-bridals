@@ -92,3 +92,7 @@ Route::get('collections', [WebsiteGalleryController::class, 'index'])->name('col
 |--------------------------------------------------------------------------
 |
 */
+
+Route::get("/test", function() {
+    // dd($_SERVER['SERVER_NAME']);
+});

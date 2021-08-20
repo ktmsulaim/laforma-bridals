@@ -1,5 +1,4 @@
 require("./bootstrap");
-import _ from "lodash";
 
 import Vue from "vue";
 import VueToast from "vue-toast-notification";
@@ -12,12 +11,30 @@ import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import PerfectScrollbar from "vue2-perfect-scrollbar";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
+import VueAxios from "vue-axios";
+import VueSocialauth from 'vue-social-auth'
 
 window.Vue = Vue;
 Vue.use(VueToast);
 Vue.use(vmodal);
 Vue.use(VueSweetalert2);
 Vue.use(PerfectScrollbar);
+Vue.use(VueAxios, require('axios'))
+Vue.use(VueSocialauth, {
+
+    providers: {
+      google: {
+        clientId: '627842087471-sb2r9hran6vqu1qo01jnqnvtfgqce076.apps.googleusercontent.com',
+        clientSecret: '5qrEr4rXnRgyfCUPmQ3YVqhy',
+        redirectUri: 'https://laforma-local.com/customer/auth/google/callback'
+      },
+      facebook: {
+        clientId: '986746178791118',
+        clientSecret: '27623d24a74a7cf41320a4717ab2057a',
+        redirectUri: 'https://laforma-local.com/customer/auth/facebook/callback'
+      }
+    }
+  })
 
 Vue.component("vue-skeleton-loader", VueSkeletonLoader);
 Vue.component("start-rating", StarRating);

@@ -20,6 +20,8 @@ class Customer extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
+        'google_id',
+        'facebook_id',
         'name', 
         'photo', 
         'username', 
@@ -27,6 +29,7 @@ class Customer extends Authenticatable implements MustVerifyEmail
         'phone', 
         'password',
         'is_active',
+        'email_verified_at'
     ];
 
     /**
@@ -80,11 +83,21 @@ class Customer extends Authenticatable implements MustVerifyEmail
 
     public function photo()
     {
-        if($this->photo && Storage::exists('customers/' . $this->photo)) {
+        if($this->photo && $this->isExternal($this->photo)) {
+            return $this->photo;
+        } elseif($this->photo && Storage::exists('customers/' . $this->photo)) {
             return Storage::url('customers/' . $this->photo);
         } else {
             return asset('img/customer.svg');
         }
+    }
+
+    private function isExternal($file) {
+        if($file) {
+            $components = parse_url($file);
+            return !empty($components['host']) && strcasecmp($components['host'], $_SERVER['SERVER_NAME']);
+        }
+        return false;
     }
 
     public function addresses()

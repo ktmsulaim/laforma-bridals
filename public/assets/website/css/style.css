@@ -6024,7 +6024,7 @@ a#forgot {
   height: 100%;
 }
 
-a.social_bt {
+.social_bt {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -6043,15 +6043,16 @@ a.social_bt {
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  border: 0;
 }
-a.social_bt:hover {
+.social_bt:hover {
   -webkit-filter: brightness(115%);
   filter: brightness(115%);
 }
 
-a.social_bt.facebook:before,
-a.social_bt.google:before,
-a.social_bt.linkedin:before {
+.social_bt.facebook:before,
+.social_bt.google:before,
+.social_bt.linkedin:before {
   font-family: 'themify';
   position: absolute;
   left: 12px;
@@ -6060,21 +6061,32 @@ a.social_bt.linkedin:before {
   color: #fff;
 }
 
-a.social_bt.facebook {
+.social_bt.facebook {
   background-color: #3B5998;
 }
-a.social_bt.facebook:before {
+.social_bt.facebook:before {
   content: "\e741";
 }
 
-a.social_bt.google {
+.social_bt.google {
   background-color: #DC4E41;
 }
-a.social_bt.google:before {
+.social_bt.google:before {
   content: "\e73e";
   top: 12px;
 }
 
+.social_bt.google:focus, 
+.social_bt.google:active {
+  outline: none;
+  box-shadow: 0 0 0 2px #DC4E41;
+} 
+
+.social_bt.facebook:focus, 
+.social_bt.facebook:active {
+  outline: none;
+  box-shadow: 0 0 0 2px #3B5998;
+} 
 .divider {
   text-align: center;
   height: 1px;

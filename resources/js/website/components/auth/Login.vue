@@ -1,14 +1,7 @@
 <template>
   <div class="box_account">
     <div class="form_container">
-      <div class="row no-gutters">
-        <div class="col-lg-6 pr-lg-1">
-          <a href="#0" class="social_bt facebook">Sign in with Facebook</a>
-        </div>
-        <div class="col-lg-6 pl-lg-1">
-          <a href="#0" class="social_bt google">Sign in with Google</a>
-        </div>
-      </div>
+      <social-auth :redirect="redirect"></social-auth>
       <div class="divider"><span>Or</span></div>
      <form @submit.prevent="submit">
           <div class="form-group" :class="{ 'is-invalid': hasError('username') }">
@@ -63,10 +56,15 @@
 
 <script>
 import Validation from '../../mixins/validation'
+
+import SocialAuth from './SocialAuth.vue'
 export default {
   name: "Login",
   mixins: [Validation],
   props: ['redirect'],
+  components: {
+    SocialAuth,
+  },  
   data() {
       return {
           loading: false,

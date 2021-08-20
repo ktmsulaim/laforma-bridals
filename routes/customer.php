@@ -5,6 +5,7 @@ use App\Http\Controllers\Customer\BookingController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\ReviewController;
+use App\Http\Controllers\Customer\SocialController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\WebsitePackageController;
 use App\Http\Controllers\Customer\WishlistController;
@@ -26,6 +27,8 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
+
+
 // Confirm Password
 // Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 // Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirm.post');
@@ -35,6 +38,15 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
+/**
+* ---------------------------------------------------------------------
+* Social Login
+* ---------------------------------------------------------------------
+*/
+Route::post('auth/social/{provider}', [SocialController::class, 'handleProvider'])->name('social.auth');
+Route::get('auth/{provider}/callback', [SocialController::class, 'callback'])->where('provider', '.*');
+
 
 Route::get('inactive', [LoginController::class, 'inactive'])->name('inactive');
 

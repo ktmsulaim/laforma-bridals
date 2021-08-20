@@ -1,13 +1,5 @@
 @extends('layouts.website.secondary', ['title' => $gallery->name . " | Collections"])
 
-@push('css_libs')
-    {{-- <link rel="stylesheet" href="{{ asset('assets/app/libs/magnific-popup/magnific-popup.css') }}"> --}}
-@endpush
-
-@push('js_libs')
-    <script src="{{ asset('assets/app/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-@endpush
-
 @push('meta')
     <meta name="title" content="{{ $gallery->name }}">
     <meta name="description" content="{{ $gallery->description }}">
