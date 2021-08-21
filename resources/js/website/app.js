@@ -110,6 +110,9 @@ import LatestCollection from './components/home/LatestCollection'
 import Collections from './components/galleries/Collections'
 import SingleCollection from './components/galleries/SingleCollection'
 
+import EditProfile from './components/customer/account/EditProfile'
+import UploadProfilePicture from './components/customer/account/UploadProfilePicture'
+
 Vue.component("single-address", SingleAddress);
 Vue.component("cart-item-options", CartItemOptions);
 Vue.component("no-data", NoData);
@@ -144,6 +147,8 @@ const app = new Vue({
         LatestCollection,
         Collections,
         SingleCollection,
+        EditProfile,
+        UploadProfilePicture,
     },
     store
 });

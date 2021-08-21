@@ -4,6 +4,7 @@ use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\BookingController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\ProfileController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SocialController;
 use App\Http\Controllers\RazorpayController;
@@ -89,8 +90,15 @@ Route::middleware(['customer.auth', 'customer.verified', 'customer.active'])->gr
     Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
 
 
+    /**
+    * ---------------------------------------------------------------------
+    * Account
+    * ---------------------------------------------------------------------
+    */
     Route::get('account', [CustomerController::class, 'account'])->name('account');
-    
+    Route::post('account/basic', [ProfileController::class, 'basic'])->name('account.basic');
+    Route::post('account/photo', [ProfileController::class, 'photo'])->name('account.photo');
+
     /**
     * ---------------------------------------------------------------------
     * Wishlist

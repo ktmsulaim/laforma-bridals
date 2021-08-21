@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -24,7 +25,8 @@ class CustomerController extends Controller
     
     public function account()
     {
-        return view('customer.auth.account');
+        $customer = Customer::find(auth('customer')->id());
+        return view('customer.auth.account', ['customer' => $customer]);
     }
    
     public function wishlist()

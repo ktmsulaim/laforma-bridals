@@ -85,8 +85,8 @@ class Customer extends Authenticatable implements MustVerifyEmail
     {
         if($this->photo && $this->isExternal($this->photo)) {
             return $this->photo;
-        } elseif($this->photo && Storage::exists('customers/' . $this->photo)) {
-            return Storage::url('customers/' . $this->photo);
+        } elseif($this->photo && Storage::exists($this->photo)) {
+            return Storage::url($this->photo);
         } else {
             return asset('img/customer.svg');
         }
