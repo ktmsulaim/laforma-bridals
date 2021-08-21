@@ -278,11 +278,11 @@
 	
 	/* Footer reveal */
 	if ($(window).width() >= 1024) {
-		$('footer.revealed').footerReveal({
-		shadow: false,
-		opacity:0.6,
-		zIndex: 1
-	});
+			$('footer.revealed').footerReveal({
+				shadow: false,
+				opacity:0.6,
+				zIndex: 1
+			});
 	};
 
 	// Scroll to top

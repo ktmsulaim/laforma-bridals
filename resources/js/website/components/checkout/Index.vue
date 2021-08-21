@@ -441,6 +441,9 @@ export default {
     user(newVal) {
       if(newVal && !_.isEmpty(newVal)) {
         this.data.customer_id = newVal.id;
+        this.payment.prefill.name = newVal.name
+        this.payment.prefill.email = newVal.email
+        this.payment.prefill.phone = newVal.phone
       }
     }
   },

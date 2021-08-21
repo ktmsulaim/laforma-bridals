@@ -24,7 +24,7 @@ class CustomerController extends Controller
     
     public function account()
     {
-        
+        return view('customer.auth.account');
     }
    
     public function wishlist()

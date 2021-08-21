@@ -3,11 +3,11 @@
       <loading v-if="loading"></loading>
       <single-address v-else-if="defaultAddress" :address="defaultAddress" :readonly="true"></single-address>
       <div v-else>
-          <p class="text-muted">No addresses found. <a :href="addAddressUrl" class="btn btn-link">Add new</a></p>
-          
+          <!-- <p class="text-muted">No addresses found. <a :href="addAddressUrl" class="btn btn-link">Add new</a></p> -->
+          <address-form mode="create" @saved="fetchUserAddresses"></address-form>
       </div>
       <div class="mt-3">
-          <button class="btn_1" @click="showAddresses">Change address</button>
+          <button class="btn_1" v-if="canChangeAddress" @click="showAddresses">Change address</button>
 
           <modal name="addressSelector" :adaptive="true" height="auto" :scrollable="true">
               <div class="p-4">
@@ -32,6 +32,7 @@
 import { mapGetters } from 'vuex'
 import SingleAddress from '../customer/addresses/SingleAddress.vue'
 import Loading from '../Loading.vue'
+import AddressForm from '../customer/addresses/AddressForm.vue'
 
 export default {
     name: 'AddressSelector',
@@ -44,7 +45,8 @@ export default {
     },
     components: {
         SingleAddress,
-        Loading
+        Loading,
+        AddressForm,
     },
     computed:{
         ...mapGetters({
@@ -66,6 +68,9 @@ export default {
         },
         addAddressUrl() {
             return route('customer.address.index')
+        },
+        canChangeAddress() {
+            return !_.isEmpty(this.addresses) && this.addresses.length > 1
         }
     },
     methods: {
@@ -86,7 +91,7 @@ export default {
             .finally(() => this.loading = false)
         },
         showAddresses() {
-            if(!_.isEmpty(this.addresses) && this.addresses.length > 1) {
+            if(this.canChangeAddress) {
                 this.$modal.show('addressSelector')
             }
         },

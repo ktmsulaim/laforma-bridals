@@ -59,10 +59,16 @@ class OrderController extends Controller
                 $quantity = $cartItem['quantity'];
 
                 // check whether product is orderable and in stock
-                if(!$product->is_orderable || !$product->category->is_orderable || !$product->in_stock) {
+                if(!$product->is_orderable || !$product->category->is_orderable || (!$product->track_stock && !$product->in_stock)) {
+                    $message = 'This product can\'t be ordered right now';
+
+                    if(!$product->track_stock && !$product->in_stock) {
+                        $message = "Sorry! This product is out of stock";
+                    }
+
                     $order->delete();
-                    return response()->json(['error' => 'This product can\'t be ordered right now'], 422);
-                } 
+                    return response()->json(['error' => $message], 422);
+                }
                 
                 $orderProduct = $order->products()->create([
                     'product_id' => $product->id,

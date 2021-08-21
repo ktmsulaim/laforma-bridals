@@ -13,7 +13,9 @@
         <p>No address found!</p>
         <button @click="openModal('create')" class="button-text"><span class="mdi mdi-plus"></span> Add new</button>
     </div>
-        <address-form @saved="updateAddress" :mode="edit.status ? 'edit' : 'create'" :address="edit.data" @closeModal="clearEdit"></address-form>
+          <modal name="addressFormModal" :adaptive="true" height="auto" :scrollable="true" :clickToClose="false" @closed="clearInput">
+            <address-form ref="addressForm" @saved="updateAddress" :mode="edit.status ? 'edit' : 'create'" :modal="true" :address="edit.data" @closeModal="clearEdit"></address-form>
+        </modal>
     </div>
 </template>
 
@@ -63,7 +65,10 @@ export default {
             this.edit.status = true;
         }
 
-        this.$modal.show('addressForm')
+        this.$modal.show('addressFormModal')
+    },
+    closeModal() {
+        this.$modal.hide('addressFormModal')
     },
     editAddress(value) {
         this.edit.data = value;
@@ -89,6 +94,8 @@ export default {
                 this.addresses.push(address);
             }
         }
+
+        this.closeModal()
     },
     deleteAddress(address) {
         const index = this.addresses.indexOf(address)
@@ -100,6 +107,15 @@ export default {
     clearEdit() {
         this.edit.status = false;
         this.edit.data = null;
+        
+        this.clearInput();
+        this.closeModal()
+    },
+    clearInput() {
+        const form = this.$refs.addressForm;
+        if(form) {
+            form.clearInput()
+        }
     }
   },
   created() {
