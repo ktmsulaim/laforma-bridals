@@ -104,6 +104,9 @@ import ListBookings from './components/bookings/ListBookings'
 import BookingStatus from './components/bookings/BookingStatus'
 import BookingProgress from './components/bookings/BookingProgress'
 import ListReviews from './components/reviews/ListReviews'
+import ListSlides from './components/slides/ListSlides'
+import SlideForm from './components/slides/SlideForm'
+
 
 import ListGalleries from './components/galleries/ListGalleries'
 import GalleryForm from './components/galleries/GalleryForm'
@@ -140,6 +143,9 @@ const app = new Vue({
 
         ListGalleries,
         GalleryForm,
+
+        ListSlides,
+        SlideForm,
     },
     store
 })

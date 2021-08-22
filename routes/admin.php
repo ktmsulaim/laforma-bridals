@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\SlideController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -152,6 +153,15 @@ Route::middleware('auth')->group(function(){
     Route::get('images', [ImageController::class, 'index'])->name('images.index');
     Route::post('images', [ImageController::class, 'store'])->name('images.store');
     Route::delete('images', [ImageController::class, 'destroy'])->name('images.destroy');
+
+     /**
+     * -------------------------------------------------------------------
+     * Slides
+     * -------------------------------------------------------------------
+     */
+    Route::get('slides/list', [SlideController::class, 'list'])->name('slides.list');
+    Route::post('slides/sort', [SlideController::class, 'sort'])->name('slides.sort');
+    Route::resource('slides', SlideController::class);
 
     /**
      * -------------------------------------------------------------------

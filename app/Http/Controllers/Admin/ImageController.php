@@ -25,23 +25,32 @@ class ImageController extends Controller
             $images = Image::latest('id')->get(); 
         }
 
+        $images = $this->formatData($images);
         return response()->json($images);   
     }
 
     public function listImages()
     {
         $images = Image::latest()->get();
-        $images = $images->transform(function($image){
+        $images = $this->formatData($images);
+
+        return response()->json($images);
+    }
+
+    private function formatData($images) {
+        return  $images->transform(function($image){
+            $meta = getimagesize($image->path);
+
             return [
                 'id' => $image->id,
                 'path' => $image->path,
                 'filename' => $image->filename,
                 'size' => $image->size,
+                'width' => $meta[0],
+                'height' => $meta[1],
                 'created_at' => $image->created_at->format('d F, Y'),
             ];
         });
-
-        return response()->json($images);
     }
 
     public function store(Request $request)

@@ -237,9 +237,9 @@
                             <li class="menu-title">Website</li>
 
                             <li>
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('admin.slides.index') }}">
                                     <i class="mdi mdi-folder-multiple-image"></i>
-                                    <span> Sliders </span>
+                                    <span> Slides </span>
                                 </a>
                             </li>
                             <li>

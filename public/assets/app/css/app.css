@@ -496,7 +496,9 @@ body[data-sidebar="dark"].enlarged #wrapper .left-side-menu .nav-third-level li.
       text-align: center;
       margin-right: 10px;
       border-radius: 50%;
-      color: #fff; }
+      color: #fff;
+      overflow: hidden; 
+    }
     .notification-list .notify-item .notify-details {
       margin-bottom: 5px;
       overflow: hidden;

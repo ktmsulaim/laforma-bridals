@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\Slide;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
 {
     public function index()
     {
-        return view('website.index');
+        $slides = Slide::published()->orderBy('order')->get();
+        return view('website.index', ['slides' => $slides]);
     }
 
     public function singleProduct($slug)

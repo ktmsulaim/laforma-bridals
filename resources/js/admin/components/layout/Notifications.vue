@@ -43,7 +43,7 @@
               <div class="notify-icon">
                 <img
                   :src="notification.photo"
-                  class="img-fluid rounded-circle"
+                  class="img-fluid"
                   alt="Customer Photo"
                 />
               </div>

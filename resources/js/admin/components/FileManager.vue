@@ -206,7 +206,7 @@
                             class="img-fluid"
                           />
                         </div>
-                        <div class="mt-2">
+                        <div class="mt-2 image-info">
                           <p>
                             <b>Filename: </b>
                             <span v-text="baseImage.filename"></span>
@@ -218,6 +218,10 @@
                           <p>
                             <b>Size: </b>
                             <span v-text="baseImage.size"></span>
+                          </p>
+                          <p>
+                            <b>Dimensions:</b>
+                            <span>{{ baseImage.width }}px x {{ baseImage.height }}px</span>
                           </p>
                         </div>
                       </div>
@@ -402,7 +406,9 @@ export default {
       } else if(this.type == 'additional_images' && this.additional_images.length && obj) {
         this.additional_images = []
       }
-    }
+
+      this.setImages()
+    },
   },
   computed: {
     offset() {
@@ -460,5 +466,10 @@ export default {
   text-align: center;
   color: #fff;
   z-index: 1;
+}
+
+.image-info p {
+  margin-bottom: 5px;
+  font-size: 13.5px;
 }
 </style>

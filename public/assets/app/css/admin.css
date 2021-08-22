@@ -204,4 +204,31 @@
   text-align: center;
 }
 
+/**
+* -------------------------------------------------------------------
+* Slides
+* -------------------------------------------------------------------
+*/
+
+.slide {
+  background-color: #fff;
+  margin-bottom: 15px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.slide .slide-image {
+  display: flex;
+}
+
+.slide .slide-image img {
+  max-width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.slide .slide-meta {
+  padding: 10px;
+}
+
 

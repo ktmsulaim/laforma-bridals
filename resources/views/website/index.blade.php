@@ -4,23 +4,22 @@
     
 		<div id="carousel-home">
 			<div class="owl-carousel owl-theme">
-				<div class="owl-slide cover" style="background-image: url({{ asset('images/sliders/1.jpg') }});">
-					<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-						<div class="container">
-							<div class="row justify-content-center justify-content-md-end">
-								<div class="col-lg-6 static">
-									<div class="slide-text text-right white">
-										<h2 class="owl-slide-animated owl-slide-title">Katharine</h2>
-										<p class="owl-slide-animated owl-slide-subtitle">
-											La'forma Bridals
-										</p>
-										<div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="listing-grid-1-full.html" role="button">Book Now</a></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				@if ($slides && count($slides))
+					@foreach ($slides as $slide)
+						@include('components.website.slides.slide', 
+						[
+							'baseImage' => $slide->baseImage(), 
+							'overlay' => $slide->overlay, 
+							'actionButtonLink' => $slide->action_button_link, 
+							'actionButtonText' => $slide->action_button_text, 
+							'title' => $slide->title, 
+							'subTitle' => $slide->sub_title, 
+							'textAlign' => $slide->text_direction
+						])
+					@endforeach
+				@else
+					@include('components.website.slides.slide', ['baseImage' => null, 'overlay' => null, 'actionButtonLink' => null, 'actionButtonText' => null, 'title' => null, 'subTitle' => null, 'textAlign' => null])
+				@endif
 
 				{{-- <div class="owl-slide cover" style="background-image: url(img/slides/slide_home_2.jpg);">
 					<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
