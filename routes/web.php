@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +92,7 @@ Route::get('collections', [WebsiteGalleryController::class, 'index'])->name('col
 |--------------------------------------------------------------------------
 |
 */
+
 
 Route::get("/test", function() {
     // dd($_SERVER['SERVER_NAME']);

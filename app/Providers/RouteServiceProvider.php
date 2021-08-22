@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\PageController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -57,6 +58,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('web')
                 ->namespace('App\Http\Controllers\Customer')
                 ->group(base_path('routes/customer.php'));
+
+            Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
         });
     }
 

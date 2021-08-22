@@ -5,11 +5,11 @@
                 <h3 data-target="#collapse_1">Quick Links</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_1">
                     <ul>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="contacts.html">Products</a></li>
-                        <li><a href="contacts.html">Packages</a></li>
-                        <li><a href="contacts.html">Collections</a></li>
-                        <li><a href="help.html">Jobs</a></li>
+                        <li><a href="{{ setting('about_page') ? route('page.show', setting('about_page')) : 'javascript:void(0)' }}">About us</a></li>
+                        <li><a href="{{ route('products.index') }}">Products</a></li>
+                        <li><a href="{{ route('packages.index') }}">Packages</a></li>
+                        <li><a href="{{ route('collections.index') }}">Collections</a></li>
+                        <li><a href="{{ route('jobs.index') }}">Jobs</a></li>
                     </ul>
                 </div>
             </div>
@@ -54,19 +54,19 @@
                     <div class="follow_us">
                         <h5>Follow Us</h5>
                         <ul>
-                            <li><a href="#0"><img
+                            <li><a target="_blank" href="{{ setting('twitter_link') ?: 'javascript:void(0)' }}"><img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         data-src="{{ asset('assets/website/img/twitter_icon.svg') }}" alt=""
                                         class="lazy"></a></li>
-                            <li><a href="#0"><img
+                            <li><a target="_blank" href="{{ setting('facebook_link') ?: 'javascript:void(0)' }}"><img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         data-src="{{ asset('assets/website/img/facebook_icon.svg') }}" alt=""
                                         class="lazy"></a></li>
-                            <li><a href="#0"><img
+                            <li><a target="_blank" href="{{ setting('instagram_link') ?: 'javascript:void(0)' }}"><img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         data-src="{{ asset('assets/website/img/instagram_icon.svg') }}" alt=""
                                         class="lazy"></a></li>
-                            <li><a href="#0"><img
+                            <li><a target="_blank" href="{{ setting('youtube_link') ?: 'javascript:void(0)' }}"><img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         data-src="{{ asset('assets/website/img/youtube_icon.svg') }}" alt=""
                                         class="lazy"></a></li>
@@ -101,8 +101,9 @@
             </div>
             <div class="col-lg-6">
                 <ul class="additional_links">
-                    <li><a href="#0">Terms and conditions</a></li>
-                    <li><a href="#0">Privacy</a></li>
+                    <li><a href="{{ setting('terms_of_use_page') ? route('page.show', setting('terms_of_use_page')) : 'javascript:void(0)' }}">Terms and conditions</a></li>
+                    <li><a href="{{ setting('privacy_policy_page') ? route('page.show', setting('privacy_policy_page')) : 'javascript:void(0)' }}">Privacy Policy</a></li>
+                    <li><a href="{{ setting('refund_policy_page') ? route('page.show', setting('refund_policy_page')) : 'javascript:void(0)' }}">Refund Policy</a></li>
                     <li><span>© {{ date('Y') }} La'forma bridals</span></li>
                 </ul>
             </div>

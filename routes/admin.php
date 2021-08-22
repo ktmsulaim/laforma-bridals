@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Admin\PageController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -162,6 +163,14 @@ Route::middleware('auth')->group(function(){
     Route::get('slides/list', [SlideController::class, 'list'])->name('slides.list');
     Route::post('slides/sort', [SlideController::class, 'sort'])->name('slides.sort');
     Route::resource('slides', SlideController::class);
+
+    /**
+     * -------------------------------------------------------------------
+     * Pages
+     * -------------------------------------------------------------------
+     */
+    Route::get('pages/list', [PageController::class, 'list'])->name('pages.list');
+    Route::resource('pages', PageController::class);
 
     /**
      * -------------------------------------------------------------------

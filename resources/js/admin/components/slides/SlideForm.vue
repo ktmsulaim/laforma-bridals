@@ -113,7 +113,7 @@
           ></file-manager>
         </div>
       </div>
-      <div class="card">
+      <div class="card" v-if="mode === 'edit' && slide.id">
           <div class="card-header">
               <h4 class="m-0 text-danger">Delete slide</h4>
           </div>

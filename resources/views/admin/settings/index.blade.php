@@ -131,6 +131,48 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
+                                <h4>Pages</h4>
+                                <div class="row form-group">
+                                    <div class="col-lg-3 col-md-4">
+                                        <label for="about_page">About page</label>
+                                        <pages-selector name="about_page" value="{{ setting('about_page') }}" :pages='@json($pages)'></pages-selector>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4">
+                                        <label for="privacy_policy_page">Privcy policy</label>
+                                        <pages-selector name="privacy_policy_page" value="{{ setting('privacy_policy_page') }}" :pages='@json($pages)'></pages-selector>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4">
+                                        <label for="terms_of_use_page">Terms of use</label>
+                                        <pages-selector name="terms_of_use_page" value="{{ setting('terms_of_use_page') }}" :pages='@json($pages)'></pages-selector>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4">
+                                        <label for="refund_policy_page">Refund policy</label>
+                                        <pages-selector name="refund_policy_page" value="{{ setting('refund_policy_page') }}" :pages='@json($pages)'></pages-selector>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>Social Links</h4>
+                                <div class="row form-group">
+                                    <div class="col-lg-6 col-md-6">
+                                        <label for="twitter_link">Twitter</label>
+                                        <input type="url" name="twitter_link" value="{{ old('twitter_link', setting('twitter_link')) }}" id="twitter_link" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <label for="facebook_link">Facebook</label>
+                                        <input type="url" name="facebook_link" value="{{ old('facebook_link', setting('facebook_link')) }}" id="facebook_link" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-6 col-md-6">
+                                        <label for="instagram_link">Instagram</label>
+                                        <input type="url" name="instagram_link" value="{{ old('instagram_link', setting('instagram_link')) }}" id="instagram_link" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <label for="youtube_link">Youtube</label>
+                                        <input type="url" name="youtube_link" value="{{ old('youtube_link', setting('youtube_link')) }}" id="youtube_link" class="form-control">
+                                    </div>
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="payment-methods">
                                 <p class="mb-0">

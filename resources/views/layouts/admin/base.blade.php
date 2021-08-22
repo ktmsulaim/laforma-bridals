@@ -249,9 +249,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
-                                    <i class="mdi mdi-email-outline"></i>
-                                    <span> Contact responses </span>
+                                <a href="{{ route('admin.pages.index') }}">
+                                    <i class="mdi mdi-file-document-outline"></i>
+                                    <span> Pages </span>
                                 </a>
                             </li>
 

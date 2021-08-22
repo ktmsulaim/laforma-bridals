@@ -111,6 +111,11 @@ import SlideForm from './components/slides/SlideForm'
 import ListGalleries from './components/galleries/ListGalleries'
 import GalleryForm from './components/galleries/GalleryForm'
 
+import ListPages from './components/pages/ListPages'
+import PageForm from './components/pages/PageForm'
+
+import PagesSelector from './components/settings/PagesSelector'
+
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
 Vue.component('cart-item-options', CartItemOptions)
@@ -146,6 +151,11 @@ const app = new Vue({
 
         ListSlides,
         SlideForm,
+
+        ListPages,
+        PageForm,
+
+        PagesSelector,
     },
     store
 })
