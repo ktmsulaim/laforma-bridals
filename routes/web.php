@@ -7,6 +7,7 @@ use App\Http\Controllers\WebsiteResourceController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\WebsiteGalleryController;
 use App\Http\Controllers\WebsiteJobController;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
 
@@ -95,5 +96,7 @@ Route::get('collections', [WebsiteGalleryController::class, 'index'])->name('col
 
 
 Route::get("/test", function() {
-    // dd($_SERVER['SERVER_NAME']);
+    foreach(Setting::all() as $setting) {
+        echo "'{$setting->key}' => '{$setting->value}'<br />";
+    }
 });

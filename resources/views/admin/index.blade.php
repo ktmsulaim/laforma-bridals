@@ -22,94 +22,38 @@
 </div>
 
 <div class="row">
+    @include('components.admin.dashboard.charts', ['orders' => $chart['orders'], 'bookings' => $chart['bookings']])
+</div>
+<div class="row">
     <div class="col-xl-4">
         <div class="card-box">
-            <div class="dropdown float-right">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="mdi mdi-dots-vertical"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Something else</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Separated link</a>
-                </div>
-            </div>
 
             <h4 class="header-title mb-3">New customers</h4>
 
             <div class="inbox-widget">
+                @if ($customers && count($customers))
+                    @foreach ($customers as $customer)    
+                    <div class="inbox-item">
+                        <a href="{{ route('admin.customers.show', $customer->id) }}">
+                            <div class="inbox-item-img"><img src="{{ $customer->photo() }}" class="rounded-circle" alt=""></div>
+                            <h5 class="inbox-item-author mt-0 mb-1">{{ $customer->name }}</h5>
+                            <p class="inbox-item-text">{{ $customer->email }}</p>
+                            <p class="inbox-item-date">{{ $customer->created_at->format(Carbon\Carbon::today() === $customer->created_at->day ? 'g:i A' : 'd/m/Y') }}</p>
+                        </a>
+                    </div>
+                    @endforeach
+                @else
+                    <div class="inbox-item">
+                        <p>No new customers</p>
+                    </div>
+                @endif
                 
-                <div class="inbox-item">
-                    <a href="#">
-                        <div class="inbox-item-img"><card type="image"/></div>
-                        <h5 class="inbox-item-author mt-0 mb-1"><card type="title" /></h5>
-                        <p class="inbox-item-text"><card type="subtitle" /></p>
-                        <p class="inbox-item-date">13:40 PM</p>
-                    </a>
-                </div>
-                
-                <div class="inbox-item">
-                    <a href="#">
-                        <div class="inbox-item-img"><card type="image"/></div>
-                        <h5 class="inbox-item-author mt-0 mb-1"><card type="title" /></h5>
-                        <p class="inbox-item-text"><card type="subtitle" /></p>
-                        <p class="inbox-item-date">13:34 PM</p>
-                    </a>
-                </div>
-
-                <div class="inbox-item">
-                        <a href="#">
-                        <div class="inbox-item-img"><card type="image"/></div>
-                        <h5 class="inbox-item-author mt-0 mb-1"><card type="title" /></h5>
-                        <p class="inbox-item-text"><card type="subtitle" /></p>
-                        <p class="inbox-item-date">13:17 PM</p>
-                    </a>
-                </div>
-
-                <div class="inbox-item">
-                    <a href="#">
-                        <div class="inbox-item-img"><card type="image"/></div>
-                        <h5 class="inbox-item-author mt-0 mb-1"><card type="title" /></h5>
-                        <p class="inbox-item-text"><card type="subtitle" /></p>
-                        <p class="inbox-item-date">12:20 PM</p>
-                    </a>
-                </div>
-
-                <div class="inbox-item">
-                    <a href="#">
-                        <div class="inbox-item-img"><card type="image"/></div>
-                        <h5 class="inbox-item-author mt-0 mb-1"><card type="title" /></h5>
-                        <p class="inbox-item-text"><card type="subtitle" /></p>
-                        <p class="inbox-item-date">10:15 AM</p>
-                    </a>
-                </div>
             </div>
         </div>
     </div><!-- end col -->
 
     <div class="col-xl-8">
         <div class="card-box">
-            <div class="dropdown float-right">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="mdi mdi-dots-vertical"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Something else</a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">Separated link</a>
-                </div>
-            </div>
-
             <h4 class="header-title mt-0 mb-3">Latest Bookings</h4>
 
             <div class="table-responsive">
@@ -135,7 +79,9 @@
                                     <td>{{ $booking->date() }}</td>
                                     <td>{{ $booking->time }}</td>
                                     <td><span class="badge badge-success">Approved</span></td>
-                                    <td><i class="mdi mdi-eye"></i></td>
+                                    <td>
+                                        <a href="{{ route('admin.bookings.show', $booking->id) }}"><i class="mdi mdi-eye"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
 

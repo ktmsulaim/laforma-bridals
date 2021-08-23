@@ -2245,8 +2245,7 @@ header ul.top_tools > li .dropdown-access .dropdown-menu {
   font-size: 0.8125rem;
 }
 @media (max-width: 991px) {
-  header ul.top_tools > li .dropdown-cart .dropdown-menu,
-  header ul.top_tools > li .dropdown-access .dropdown-menu {
+  header ul.top_tools > li .dropdown-cart .dropdown-menu {
     display: none !important;
   }
 }
@@ -2718,6 +2717,11 @@ nav a.open_close#close_in > i {
 nav a.open_close#close_in > i:hover {
   color: #1a1a1a !important;
 }
+
+#header_menu a.open_close#close_in > i {
+  color: #fff !important;
+}
+
 @media (max-width: 991px) {
   nav a.open_close#close_in {
     display: block;
@@ -2842,6 +2846,8 @@ nav a.open_close#close_in > i:hover {
     position: relative;
     display: block;
     margin-bottom: 15px;
+    background-color: #a21d23;
+    color: #fff;
   }
   #header_menu img {
     height: 30px !important;

@@ -67,7 +67,7 @@ class AdminCustomersController extends Controller
 
     public function show(Customer $customer)
     {
-        
+        return view('admin.customers.show', ['customer' => $customer]);
     }
 
     public function update(Request $request, Customer $customer)

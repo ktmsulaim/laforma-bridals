@@ -26,12 +26,12 @@ Vue.use(VueSocialauth, {
       google: {
         clientId: '627842087471-sb2r9hran6vqu1qo01jnqnvtfgqce076.apps.googleusercontent.com',
         clientSecret: '5qrEr4rXnRgyfCUPmQ3YVqhy',
-        redirectUri: 'https://laforma-local.com/customer/auth/google/callback'
+        redirectUri: route('customer.social.redirect', {provider: 'google'})
       },
       facebook: {
         clientId: '986746178791118',
         clientSecret: '27623d24a74a7cf41320a4717ab2057a',
-        redirectUri: 'https://laforma-local.com/customer/auth/facebook/callback'
+        redirectUri: route('customer.social.redirect', {provider: 'facebook'})
       }
     }
   })
@@ -112,6 +112,7 @@ import SingleCollection from './components/galleries/SingleCollection'
 
 import EditProfile from './components/customer/account/EditProfile'
 import UploadProfilePicture from './components/customer/account/UploadProfilePicture'
+import { runInContext } from "lodash";
 
 Vue.component("single-address", SingleAddress);
 Vue.component("cart-item-options", CartItemOptions);

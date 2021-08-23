@@ -217,22 +217,16 @@
 		$button.parent().find("input").val(newVal);
 	});
 	
-	/* Cart dropdown */
-	$('.dropdown-cart, .dropdown-access').hover(function () {
-		$(this).find('.dropdown-menu').stop(true, true).delay(50).fadeIn(300);
-	}, function () {
-		$(this).find('.dropdown-menu').stop(true, true).delay(50).fadeOut(300);
-	});
 
 	/* Cart Dropdown Hidden From tablet */
-	$(window).bind('load resize', function () {
-		var width = $(window).width();
-		if (width <= 768) {
-			$('a.cart_bt, a.access_link').removeAttr("data-toggle", "dropdown")
-		} else {
-			$('a.cart_bt,a.access_link').attr("data-toggle", "dropdown")
-		}
-	});
+	// $(window).bind('load resize', function () {
+	// 	var width = $(window).width();
+	// 	if (width <= 768) {
+	// 		$('a.cart_bt,').removeAttr("data-toggle", "dropdown")
+	// 	} else {
+	// 		$('a.cart_bt').attr("data-toggle", "dropdown")
+	// 	}
+	// });
 
 	// Opacity mask
 	$('.opacity-mask').each(function(){

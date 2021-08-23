@@ -46,7 +46,7 @@ Route::post('email/resend', 'Auth\VerificationController@resend')->name('verific
 * ---------------------------------------------------------------------
 */
 Route::post('auth/social/{provider}', [SocialController::class, 'handleProvider'])->name('social.auth');
-Route::get('auth/{provider}/callback', [SocialController::class, 'callback'])->where('provider', '.*');
+Route::get('auth/{provider}/callback', [SocialController::class, 'callback'])->where('provider', '.*')->name('social.redirect');
 
 
 Route::get('inactive', [LoginController::class, 'inactive'])->name('inactive');
