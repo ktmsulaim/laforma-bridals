@@ -40,16 +40,20 @@ class ImageController extends Controller
     private function formatData($images) {
         return  $images->transform(function($image){
             $meta = getimagesize($image->path);
-
-            return [
+            $data = [
                 'id' => $image->id,
                 'path' => $image->path,
                 'filename' => $image->filename,
                 'size' => $image->size,
-                'width' => $meta[0],
-                'height' => $meta[1],
                 'created_at' => $image->created_at->format('d F, Y'),
             ];
+
+            if($meta) {
+                $data['width'] = $meta[0];
+                $data['height'] = $meta[1];
+            }
+
+            return $data;
         });
     }
 

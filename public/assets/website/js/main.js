@@ -154,7 +154,8 @@
 	$('#brands').owlCarousel({
 		autoplay:true,
 		items: 2,
-		loop: true,
+		loop: false,
+		rewind: true,
 		margin: 10,
 		dots:false,
 		nav:false,

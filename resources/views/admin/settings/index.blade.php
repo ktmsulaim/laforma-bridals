@@ -83,7 +83,7 @@
                         </li>
                     </ul>
         
-                    <form action="{{ route('admin.settings.save') }}" method="post">
+                    <form id="settingsForm" action="{{ route('admin.settings.save') }}" method="post">
                         @csrf
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="general">
@@ -257,7 +257,23 @@
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="home-page">
                                 <p class="mb-0">
-                                    Home page settings
+                                    <h4>Featured product</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="featured_product_id">Product</label>
+                                            <select-featured-product :image='@json($image)' value="{{ old('featured_product_id', setting('featured_product_id')) }}"></select-featured-product>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="tag">Tagline</label>
+                                                <input type="text" name="featured_product_tag" id="featured_product_tag" class="form-control" value="{{ old('featured_product_tag', setting('featured_product_tag')) }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <h4>Brands</h4>
+                                    <select-brands :brands='@json($brands)'></select-brands>
                                 </p>
                             </div>
                         </div>

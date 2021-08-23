@@ -24,9 +24,21 @@ class ProductController extends Controller
         return view('admin.products.index');
     }
 
-    public function listProducts()
+    public function listProducts(Request $request)
     {
-        $products = Product::latest()->get();
+        $products = Product::latest();
+
+        if($request->has('_type') && !empty($request->get('_type'))) {
+            $products->available()
+                     ->whereHas('category', fn($query) => $query->where('is_orderable', 1))
+                     ->where('is_orderable', 1);
+        }
+
+        if($request->has('q') && !empty($request->get('q'))){
+            $products->where('name', 'like', "%{$request->q}%");
+        }
+
+        $products= $products->get();
 
         $products->transform(function($product){
             $currentYear = Carbon::now()->year;

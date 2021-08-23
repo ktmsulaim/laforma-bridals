@@ -2850,6 +2850,13 @@ ul.list-group li.list-group-item:last-child {
   margin: 10px 0;
 }
 
+#brands .item a {
+  display: flex;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+}
+
 .package {
   border-radius: 8px;
   background-color: #fff;

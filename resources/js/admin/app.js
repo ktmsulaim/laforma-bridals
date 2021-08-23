@@ -115,6 +115,8 @@ import ListPages from './components/pages/ListPages'
 import PageForm from './components/pages/PageForm'
 
 import PagesSelector from './components/settings/PagesSelector'
+import SelectFeaturedProduct from './components/settings/SelectFeaturedProduct'
+import SelectBrands from './components/settings/SelectBrands'
 
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
@@ -156,6 +158,8 @@ const app = new Vue({
         PageForm,
 
         PagesSelector,
+        SelectFeaturedProduct,
+        SelectBrands,
     },
     store
 })

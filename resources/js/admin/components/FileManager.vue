@@ -5,7 +5,7 @@
     </div>
 
     <div v-if="baseImage">
-      <input type="hidden" name="base_image" :value="baseImage.id" />
+      <input type="hidden" :name="name" :value="baseImage.id" />
       <div class="thumb">
         <span @click="removeImage" class="close-btn mdi mdi-close-thick"></span>
         <img :src="baseImage.path" alt="" width="200" />
@@ -18,7 +18,7 @@
           :key="image.id"
           class="col-md-3"
         >
-          <input type="hidden" name="additional_images[]" :value="image.id" />
+          <input type="hidden" :name="name" :value="image.id" />
           <div class="gal-detail thumb">
             <span @click="removeImage(image)" class="close-btn mdi mdi-close-thick"></span>
             <div class="image-popup" :title="image.filename">
@@ -243,7 +243,7 @@
             </div>
           </div>
           <div class="modal-footer" v-if="hasSelectedImage">
-            <button @click="closeFileManager" class="btn btn-primary">
+            <button type="button" @click="closeFileManager" class="btn btn-primary">
               Save
             </button>
           </div>
@@ -261,7 +261,7 @@ import FileUploader from "./FileUploader.vue";
 
 export default {
   name: "FileManager",
-  props: ["type", "oldBaseImage", "oldAdditionalImages"],
+  props: ["type", "oldBaseImage", "oldAdditionalImages", 'baseImageName', 'additionalImagesName'],
   components: {
     FileUploader,
   },
@@ -432,6 +432,20 @@ export default {
         return this.additional_images.length > 0;
       }
     },
+    name() {
+      if(this.type === 'base_image') {
+        if(!this.baseImageName) {
+          return 'base_image';
+        }
+        return this.baseImageName;
+      } else if(this.type === 'additional_images') {
+        if(!this.additionalImagesName) {
+          return 'additional_images[]';
+        }
+
+        return `${this.additionalImagesName}[]`;
+      }
+    }
   },
   mounted(){
     if(this.oldBaseImage) {

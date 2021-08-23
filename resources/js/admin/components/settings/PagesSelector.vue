@@ -1,6 +1,7 @@
 <template>
   <div class="w-100">
     <select2
+      :id="name"
       :options="pagesOptions"
       :settings="{
         placeholder: 'Select a page',
