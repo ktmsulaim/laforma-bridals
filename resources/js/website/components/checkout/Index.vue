@@ -1,6 +1,6 @@
 <template>
   <div v-if="items && items.length" class="row">
-    <div class="col-lg-5">
+    <div class="col-md-5">
       <div class="step first">
         <h3>
           <span v-if="authenticated">Address</span>

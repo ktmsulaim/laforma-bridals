@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\ReportController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -188,4 +189,12 @@ Route::middleware('auth')->group(function(){
     Route::get('notifications/unread', [NotificationController::class, 'listUnread'])->name('notifications.unread');
     Route::post('notifications/markAsRead', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+
+
+    /**
+     * -------------------------------------------------------------------
+     * Reports
+     * -------------------------------------------------------------------
+     */
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 });

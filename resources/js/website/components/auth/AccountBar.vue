@@ -102,13 +102,13 @@ export default {
     slideToggle() {
       this.toggle = !this.toggle;
 
-      this.$nextTick(() => {
         if (this.toggle === true) {
-          $(this.$refs.dropDownMenu).show().slideUp(300);
+          $(this.$refs.dropDownMenu).show(300);
         } else {
-          $(this.$refs.dropDownMenu).slideDown(300);
+          $(this.$refs.dropDownMenu).hide(300);
         }
-      });
+      // this.$nextTick(() => {
+      // });
     },
   },
   created() {

@@ -85,6 +85,10 @@
     left: 0;
   }
   @media (max-width: 767px) {
+    .step:not(.first) {
+      margin-top: 35px;
+    }
+
     .step h3:before {
       border: none;
     }

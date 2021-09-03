@@ -118,6 +118,8 @@ import PagesSelector from './components/settings/PagesSelector'
 import SelectFeaturedProduct from './components/settings/SelectFeaturedProduct'
 import SelectBrands from './components/settings/SelectBrands'
 
+import FiltersControl from './components/reports/FiltersControl'
+
 Vue.component('file-manager', FileManager)
 Vue.component('errors', Errors)
 Vue.component('cart-item-options', CartItemOptions)
@@ -160,6 +162,8 @@ const app = new Vue({
         PagesSelector,
         SelectFeaturedProduct,
         SelectBrands,
+
+        FiltersControl,
     },
     store
 })

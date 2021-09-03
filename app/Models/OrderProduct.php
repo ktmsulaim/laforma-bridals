@@ -11,6 +11,7 @@ class OrderProduct extends Model
 
     protected $guarded = [];
     protected $with = ['product', 'options'];
+    protected $table = 'order_products';
 
     public function order()
     {

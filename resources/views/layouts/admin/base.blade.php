@@ -258,7 +258,7 @@
                             <li class="menu-title">System</li>
 
                             <li>
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('admin.reports.index') }}">
                                     <i class="mdi mdi-file-chart"></i>
                                     <span> Reports </span>
                                 </a>

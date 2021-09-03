@@ -62,9 +62,9 @@ class Product extends Model
         return $this->hasMany(Option::class);
     }
 
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsToMany(Order::class, 'order_products')->withPivot(['unit_price', 'qty', 'line_total']);
     }
 
     public function hasOptions()

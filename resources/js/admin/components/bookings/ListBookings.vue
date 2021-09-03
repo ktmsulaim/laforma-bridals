@@ -22,7 +22,7 @@
           id="status-options"
         >
           <option value="pending">Pending</option>
-          <option value="booking_charge_pending">Booking charge Pending</option>
+          <option value="booking_charge_pending">Booking Charge Pending</option>
           <option value="full_amount_pending">Booked</option>
           <option value="completed">Completed</option>
           <option value="on_hold">On hold</option>
