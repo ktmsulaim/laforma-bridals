@@ -75,6 +75,7 @@ Vue.mixin({
  */
 import Auth from "./components/Auth";
 import AccountBar from "./components/auth/AccountBar";
+import ResetPassword from './components/auth/ResetPassword'
 
 import FeaturedProducts from "./components/home/FeaturedProducts";
 import Packages from "./components/home/Packages";
@@ -124,6 +125,7 @@ const app = new Vue({
     components: {
         Auth,
         AccountBar,
+        ResetPassword,
         FeaturedProducts,
         Packages,
         SingleProduct,

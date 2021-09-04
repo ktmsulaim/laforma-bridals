@@ -30,7 +30,7 @@
         </div>
       <div v-else-if="notifications && notifications.length">
         <perfect-scrollbar>
-          <div class="noti-scroll">
+          <div>
             <!-- item-->
             <a
               v-for="notification in notifications"
@@ -159,4 +159,8 @@ export default {
 </script>
 
 <style>
+
+.ps {
+  height: 400px;
+}
 </style>

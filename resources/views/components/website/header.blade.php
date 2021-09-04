@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Ansonika">
+    <meta name="description" content="Designers make over studio">
+    <meta name="author" content="La'forma Bridals PVT LTD">
     <title>{{ $title }} | {{ setting('store_name', "La'forma Bridals") }} - {{ date('Y') }}</title>
 
     <!-- Favicons-->
@@ -37,6 +37,10 @@
     <link href="{{  asset('assets/website/css/website.css') }}" rel="stylesheet">
 
     <meta name="theme-color" content="#a21d23">
+
+	<meta property="og:title" content="{{ $title }} | {{ setting('store_name', "La'forma Bridals") }} - {{ date('Y') }}" />
+	<meta property="og:description" content="Designers make over studio" />
+	<meta property="og:image" content="{{ asset('img/favicon.png') }}" />
 
 	@stack('meta')
 

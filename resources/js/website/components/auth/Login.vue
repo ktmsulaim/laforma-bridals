@@ -37,12 +37,13 @@
           </label>
         </div>
         <div class="float-right">
-          <a href="javascript:void(0);">Lost Password?</a>
+          <forgot-password></forgot-password>
         </div>
       </div>
       <div class="text-center">
           <button :disabled="loading" @click="submit" class="btn_1 full-width">
-              Sign in
+            <span v-if="loading"><i class="mdi mdi-spin mdi-loading"></i> Processing</span>
+            <span v-else>Sign in</span>
           </button>
       </div>
      </form>
@@ -56,6 +57,7 @@
 
 <script>
 import Validation from '../../mixins/validation'
+import ForgotPassword from './Forgot.vue'
 
 import SocialAuth from './SocialAuth.vue'
 export default {
@@ -64,6 +66,7 @@ export default {
   props: ['redirect'],
   components: {
     SocialAuth,
+    ForgotPassword
   },  
   data() {
       return {

@@ -80,7 +80,7 @@
         </div>
         <div class="text-center">
           <button @click="submit" :disabled="loading" class="btn_1 full-width">
-            <span v-if="loading">Proccessing</span>
+            <span v-if="loading"><i class="mdi mdi-loading mdi-spin"></i> Proccessing</span>
             <span v-else>Sign up</span>
           </button>
         </div>
