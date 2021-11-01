@@ -94,9 +94,15 @@ Route::get('collections', [WebsiteGalleryController::class, 'index'])->name('col
 |
 */
 
+function test($x) {
+    return function ($y) use($x) {
+        return str_repeat($y, $x);
+    };
+}
 
 Route::get("/test", function() {
-    foreach(Setting::all() as $setting) {
-        echo "'{$setting->key}' => '{$setting->value}'<br />";
-    }
+    $a = test(2);
+    $b = test(3);
+
+    echo $a(3) . $b(2);
 });
