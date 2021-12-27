@@ -72,6 +72,7 @@ export default {
         display: flex;
         height: 290px;
         overflow: hidden;
+        justify-content: center;
     }
 
     .product-image img {
